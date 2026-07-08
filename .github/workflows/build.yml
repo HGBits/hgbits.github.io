@@ -13,10 +13,11 @@ on:
 permissions:
   pages: write
   contents: read
+  id-token: write
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -31,14 +32,20 @@ jobs:
         with:
           python-version: '3.12'
       
+      - name: Display structure
+        run: ls -R
+      
       - name: Build site
         run: |
           python build.py
+          ls -la *.html posts/ 2>/dev/null || echo "No HTML files generated!"
       
-+ - name: Create .nojekyll
-
-+   run: touch .nojekyll
-
+      - name: Create .nojekyll
+        run: touch .nojekyll
+      
+      - name: List artifacts
+        run: ls -la
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
