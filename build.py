@@ -213,6 +213,7 @@ def tag_pills(tags):
 
 def main():
     posts = []
+    (ROOT_DIR / "posts").mkdir(parents=True, exist_ok=True)  # ← ADICIONAR ESTA LINHA
     for md_file in sorted((CONTENT / "posts").glob("*.md")):
         raw = md_file.read_text(encoding="utf-8")
         meta, body = parse_frontmatter(raw)
