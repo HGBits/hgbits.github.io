@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESCRIPTION}}">
+<meta name="color-scheme" content="dark">
+<link rel="stylesheet" href="{{ROOT}}css/style.css">
+</head>
+<body>
+<div class="term">
+
+  <div class="term-chrome">
+    <span class="dot blue"></span><span class="dot yellow"></span><span class="dot white"></span>
+    <span class="path">{{CHROME_PATH}}</span>
+  </div>
+
+  <main class="term-body">
+    <nav class="crumbs" aria-label="navegação principal">
+      <a href="{{ROOT}}index.html">inicio</a> · <a href="{{ROOT}}sobre.html">sobre</a>
+    </nav>
+
+{{BODY}}
+
+  </main>
+</div>
+<script src="{{ROOT}}js/effects.js" defer></script>
+</body>
+</html>

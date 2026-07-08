@@ -1,0 +1,322 @@
+/* =========================================================
+   hgbits :: style.css
+   Tema: preto/azul de fundo, branco como texto, amarelo só
+   para bordas e detalhes de destaque. Fonte 100% monoespaçada
+   (system stack, zero fontes externas/CDN).
+   Este CSS é cosmético — o HTML sozinho já lê bem em qualquer
+   navegador de texto (lynx/w3m/links), sem depender de nada aqui.
+   ========================================================= */
+
+:root {
+  --bg:        #05070c;   /* preto com leve tom azul */
+  --bg-panel:  #0b1930;   /* azul bem escuro, painéis */
+  --blue:      #2e7dd6;   /* azul vibrante — links, títulos */
+  --blue-dim:  #163a63;   /* azul apagado — bordas internas, hr */
+  --fg:        #e7ebf2;   /* branco levemente frio — texto */
+  --fg-dim:    #9aa7ba;   /* cinza-azulado — texto secundário */
+  --yellow:    #ffcf3f;   /* amarelo vibrante — SÓ para bordas/detalhes */
+  --mono: ui-monospace, "JetBrains Mono", "Cascadia Code", "Fira Code",
+          "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --measure: 68ch;
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--bg); }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 16px;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: var(--yellow); color: #05070c; }
+
+/* foco visível em qualquer elemento navegável */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: 2px;
+}
+
+a {
+  color: var(--blue);
+  text-decoration-color: var(--blue-dim);
+  text-underline-offset: 3px;
+}
+a:hover, a:focus-visible { color: var(--yellow); text-decoration-color: var(--yellow); }
+
+/* ---------- moldura estilo "janela de terminal" ----------
+   É só casca visual: os divs abaixo não carregam conteúdo,
+   então quem lê em modo texto nunca perde nada. */
+.term {
+  max-width: 860px;
+  margin: 2.5rem auto;
+  padding: 0 1rem 3rem;
+}
+
+.term-chrome {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .6rem .9rem;
+  background: var(--bg-panel);
+  border: 1px solid var(--blue-dim);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+}
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.dot.blue   { background: var(--blue); }
+.dot.yellow { background: var(--yellow); }
+.dot.white  { background: var(--fg); }
+.term-chrome span.path {
+  margin-left: .5rem;
+  color: var(--fg-dim);
+  font-size: .85rem;
+}
+
+.term-body {
+  background: var(--bg-panel);
+  border: 1px solid var(--blue-dim);
+  border-top: 2px solid var(--yellow); /* único detalhe amarelo estrutural */
+  border-radius: 0 0 6px 6px;
+  padding: 1.6rem clamp(1rem, 4vw, 2.6rem) 2.2rem;
+}
+
+/* banner ASCII — é <pre>, então em lynx/w3m aparece igual, como texto puro */
+pre.banner {
+  color: var(--blue);
+  font-size: clamp(.5rem, 1.6vw, .78rem);
+  line-height: 1.15;
+  overflow-x: auto;
+  margin: 0 0 .3rem;
+}
+.tagline {
+  color: var(--fg-dim);
+  margin: 0 0 1.4rem;
+}
+.tagline .cursor {
+  display: inline-block;
+  color: var(--yellow);
+  animation: blink 1.1s step-end infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tagline .cursor { animation: none; }
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+nav.crumbs {
+  border-top: 1px dashed var(--blue-dim);
+  border-bottom: 1px dashed var(--blue-dim);
+  padding: .6rem 0;
+  margin: 0 0 1.6rem;
+  font-size: .92rem;
+}
+nav.crumbs a { margin: 0 .3rem; }
+nav.crumbs { color: var(--yellow); } /* colore os separadores "·" que já estão no HTML */
+nav.crumbs a { color: var(--blue); }
+
+h1, h2, h3 {
+  color: var(--fg);
+  font-weight: 700;
+  line-height: 1.25;
+}
+h1 { font-size: 1.5rem; margin: 0 0 .8rem; }
+h2 { font-size: 1.15rem; margin: 2rem 0 .6rem; }
+h2::before { content: "## "; color: var(--yellow); }
+h1.prompt::before { content: "$ "; color: var(--yellow); }
+
+p { max-width: var(--measure); color: var(--fg); }
+p.meta, .meta { color: var(--fg-dim); font-size: .88rem; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--blue-dim);
+  margin: 1.6rem 0;
+}
+/* separador ASCII opcional usado como elemento decorativo textual */
+.rule::before {
+  content: "────────────────────────────────────────────────────";
+  color: var(--blue-dim);
+  display: block;
+  margin: 1.4rem 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+ul.postlist { list-style: none; padding: 0; margin: 0; }
+ul.postlist li {
+  padding: .9rem 0;
+  border-bottom: 1px solid var(--blue-dim);
+}
+ul.postlist li:last-child { border-bottom: none; }
+ul.postlist a { font-size: 1.02rem; font-weight: 700; }
+ul.postlist .excerpt { color: var(--fg-dim); margin: .25rem 0 0; font-size: .92rem; }
+
+.tag {
+  display: inline-block;
+  border: 1px solid var(--yellow);
+  color: var(--yellow);
+  border-radius: 3px;
+  padding: 0 .4rem;
+  font-size: .75rem;
+  margin-right: .4rem;
+}
+
+blockquote {
+  margin: 1.2rem 0;
+  padding: .2rem 1rem;
+  border-left: 3px solid var(--yellow);
+  color: var(--fg-dim);
+}
+
+code, kbd {
+  background: #050b16;
+  border: 1px solid var(--blue-dim);
+  border-radius: 3px;
+  padding: .05rem .35rem;
+  color: var(--blue);
+  font-size: .92em;
+}
+pre code {
+  display: block;
+  padding: .9rem 1rem;
+  overflow-x: auto;
+  border-left: 2px solid var(--yellow);
+  border-radius: 0 4px 4px 0;
+}
+
+footer.term-footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--blue-dim);
+  color: var(--fg-dim);
+  font-size: .82rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .5rem;
+}
+footer.term-footer .prompt-end::before { content: "$ "; color: var(--yellow); }
+
+#crt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.term { position: relative; z-index: 2; }
+
+/* ---------- abas CSS-only (sem JS) ----------
+   Em navegadores gráficos: alterna painel via :checked.
+   Em terminal (sem CSS): os radios viram controles inofensivos
+   e AMBOS os painéis aparecem inteiros, um após o outro. */
+.tabs input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 1px; height: 1px;
+  pointer-events: none;
+}
+.tab-labels {
+  display: flex;
+  gap: .4rem;
+  margin: 1.4rem 0 0;
+  border-bottom: 1px solid var(--blue-dim);
+}
+.tab-labels label {
+  cursor: pointer;
+  padding: .5rem .9rem;
+  color: var(--fg-dim);
+  border: 1px solid transparent;
+  border-bottom: none;
+  border-radius: 5px 5px 0 0;
+  font-size: .92rem;
+  user-select: none;
+}
+.tab-labels label:hover { color: var(--blue); }
+
+#tab-posts:checked ~ .tab-labels label[for="tab-posts"],
+#tab-tags:checked  ~ .tab-labels label[for="tab-tags"] {
+  color: var(--yellow);
+  border-color: var(--blue-dim);
+  background: var(--bg);
+  border-top: 2px solid var(--yellow);
+  margin-top: -1px;
+}
+
+.tab-panels { padding-top: 1.2rem; }
+.tab-panel { display: none; }
+#tab-posts:checked ~ .tab-panels .panel-posts,
+#tab-tags:checked  ~ .tab-panels .panel-tags {
+  display: block;
+}
+.tab-panel h2 { margin-top: 0; }
+
+/* lista de tags (aba "por tag") */
+ul.taglist { list-style: none; padding: 0; margin: 0; }
+ul.taglist > li {
+  padding: .8rem 0;
+  border-bottom: 1px solid var(--blue-dim);
+}
+ul.taglist > li:last-child { border-bottom: none; }
+ul.taglist-posts { list-style: none; padding: 0; margin: .5rem 0 0 1.1rem; }
+ul.taglist-posts li { padding: .15rem 0; }
+ul.taglist-posts li::before { content: "→ "; color: var(--blue-dim); }
+
+/* ---------- imagens ---------- */
+figure {
+  margin: 1.6rem 0;
+  padding: 0;
+}
+figure img,
+p img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--blue-dim);
+  border-radius: 4px;
+}
+figcaption {
+  margin-top: .5rem;
+  color: var(--fg-dim);
+  font-size: .85rem;
+  border-left: 2px solid var(--yellow);
+  padding-left: .6rem;
+}
+
+/* ---------- tabelas ---------- */
+.table-wrap {
+  overflow-x: auto;
+  margin: 1.4rem 0;
+  border: 1px solid var(--blue-dim);
+  border-top: 2px solid var(--yellow);
+  border-radius: 4px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .92rem;
+}
+th, td {
+  padding: .55rem .8rem;
+  text-align: left;
+  border-bottom: 1px solid var(--blue-dim);
+  white-space: nowrap;
+}
+thead th {
+  background: var(--bg);
+  color: var(--yellow);
+  font-weight: 700;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: rgba(46, 125, 214, 0.08); }
+
+@media (max-width: 480px) {
+  .tab-labels label { padding: .45rem .6rem; font-size: .85rem; }
+  .term { margin: 1rem auto; padding: 0 .6rem 2rem; }
+  .term-body { padding: 1.1rem 1rem 1.6rem; }
+}
+
