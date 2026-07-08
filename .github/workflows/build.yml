@@ -1,19 +1,12 @@
-name: Build and Deploy
+name: Deploy Site
 
 on:
   push:
     branches: [main]
-    paths:
-      - 'content/**'
-      - 'build.py'
-      - 'templates/**'
-      - 'style.css'
-      - 'effects.js'
 
 permissions:
   pages: write
   contents: read
-  id-token: write
 
 concurrency:
   group: "pages"
@@ -27,30 +20,35 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
-      - name: Setup Python
+      - name: Python Setup
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       
-      - name: Display structure
-        run: ls -R
+      - name: Show Input Structure
+        run: |
+          echo "=== RAIZ ==="
+          ls -la
+          echo "=== CONTENT ==="
+          ls -R content/ 2>/dev/null || echo "content/ vazia"
+          echo "=== TEMPLATES ==="
+          ls -R templates/ 2>/dev/null || echo "templates/ vazia"
       
-      - name: Build site
+      - name: Build Site
         run: |
           python build.py
-          ls -la *.html posts/ 2>/dev/null || echo "No HTML files generated!"
+          echo "=== SAÍDA DO BUILD ==="
+          ls -la
+          ls -la posts/ 2>/dev/null || echo "ERRO: pasta posts não criada"
       
-      - name: Create .nojekyll
+      - name: Ensure .nojekyll
         run: touch .nojekyll
       
-      - name: List artifacts
-        run: ls -la
-      
-      - name: Upload artifact
+      - name: Upload to Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: .
       
-      - name: Deploy to GitHub Pages
-        id: deployment
+      - name: Deploy
+        id: deploy
         uses: actions/deploy-pages@v4
