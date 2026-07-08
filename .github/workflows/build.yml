@@ -16,6 +16,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     
     steps:
       - name: Checkout
@@ -26,18 +29,23 @@ jobs:
         with:
           python-version: '3.12'
       
-      - name: Show Structure
+      - name: Show Input Files
         run: |
+          echo "=== WORKING DIR ==="
+          pwd
           echo "=== RAIZ ==="
           ls -la
           echo "=== CONTENT/POSTS ==="
-          ls -R content/posts/ 2>/dev/null || echo "Vazia"
+          find content/ -name "*.md" 2>/dev/null || echo "Nenhum .md encontrado"
+          echo "=== TEMPLATES ==="
+          ls -la templates/ 2>/dev/null || echo "templates não encontrado"
       
       - name: Build Site
         run: |
           python build.py
           echo "=== OUTPUT ==="
-          ls -la index.html sobre.html posts/ 2>&1
+          ls -la *.html 2>&1
+          ls -la posts/ 2>&1 || echo "posts/ não criada"
       
       - name: Create .nojekyll
         run: touch .nojekyll
@@ -48,4 +56,5 @@ jobs:
           path: '.'
       
       - name: Deploy to Pages
+        id: deployment
         uses: actions/deploy-pages@v4
