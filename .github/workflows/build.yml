@@ -3,10 +3,11 @@ name: Deploy Site
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   pages: write
-  contents: read
+  id-token: write
 
 concurrency:
   group: "pages"
@@ -20,35 +21,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
-      - name: Python Setup
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       
-      - name: Show Input Structure
+      - name: Show Structure
         run: |
           echo "=== RAIZ ==="
           ls -la
-          echo "=== CONTENT ==="
-          ls -R content/ 2>/dev/null || echo "content/ vazia"
-          echo "=== TEMPLATES ==="
-          ls -R templates/ 2>/dev/null || echo "templates/ vazia"
+          echo "=== CONTENT/POSTS ==="
+          ls -R content/posts/ 2>/dev/null || echo "Vazia"
       
       - name: Build Site
         run: |
           python build.py
-          echo "=== SAÍDA DO BUILD ==="
-          ls -la
-          ls -la posts/ 2>/dev/null || echo "ERRO: pasta posts não criada"
+          echo "=== OUTPUT ==="
+          ls -la index.html sobre.html posts/ 2>&1
       
-      - name: Ensure .nojekyll
+      - name: Create .nojekyll
         run: touch .nojekyll
       
-      - name: Upload to Pages
+      - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: '.'
       
-      - name: Deploy
-        id: deploy
+      - name: Deploy to Pages
         uses: actions/deploy-pages@v4
