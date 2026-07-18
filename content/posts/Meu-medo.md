@@ -9,7 +9,7 @@ Olá novamente meu diário para o mundo, eu tenho medo de ser mal compreendido p
 sinto que algumas coisas que gosto e não me refiro a ser furry são mal vistas na sociedade, umas eu gosto por que gosto e ok mas, outras são consequẽncias, são coisas que não consigo mudar por mais que eu já tenha tentado e continue tentando. tenho medo do que essas coisas podem significar para mim.
 
 não sei bem como lidar com isso, tentar ser alguém melhor e falhar pela própria natureza...
-pior ainda é saber como as pessoas reagiriam se eu dissesse e por isso não poder falar nada, não ter ninguèm com quem possa realmente desabafar ou pedir conselho sobre isso só piora, certas características são um peso para mim mesmo.
+pior ainda é saber como as pessoas reagiriam se eu dissesse e por isso não poder falar nada, não ter ninguém com quem possa realmente desabafar ou pedir conselho sobre isso só piora, certas características são um peso para mim mesmo.
 
 vai parecer estranho a alusão que vou fazer mas, você meu diário sabe como são as raposas né?
 pequenas letais, se camuflam ao ambiente e esperam sua presa.
