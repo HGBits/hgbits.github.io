@@ -1,6 +1,6 @@
 ---
 title: A Garota Contente
-date: 2026/07/17
+date: 2026-07-17
 tags: Poesia
 excerpt: Quantas vezes nós não nos pegamos pensando no sorriso de uma garota?
 ---

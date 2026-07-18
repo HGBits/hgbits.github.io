@@ -1,6 +1,6 @@
 ---
 title: Me vejo em você
-date: 2026/07/17
+date: 2026-07-17
 tags: poesia
 excerpt: eu me vejo em sua flor da pele, nos seus dias tristes..
 ---
