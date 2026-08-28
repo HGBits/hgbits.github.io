@@ -5,7 +5,7 @@ Dev e sysadmin do meu próprio notebook, Escrevo sobre Linux, meus jogos, Livros
 
 ## stack
 
-Arch Linux com kernel duplo (zen + lts), Hyprland e bspwm.
+Arch Linux com kernel Hardening, Hyprland e bspwm.
 
 ## contato
 
