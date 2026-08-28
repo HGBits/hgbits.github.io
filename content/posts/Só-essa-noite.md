@@ -2,11 +2,12 @@
 title: Só essa noite
 date: 2026-08-28
 tags: poesia, devaneios
-excerpt: 
+excerpt: Só está noite me permita que eu a machuque, que eu a faça sentir em pequenas dores o que sinto,
+um gesto doloroso de amor.
 ---
 
 Só essa noite durma comigo,
-Só essa noite me me deixe ser raposa em busca de uma presa,
+Só essa noite me deixe ser raposa em busca de uma presa,
 Só essa noite me deixe viver minhas loucuras,
 Só está noite me permita que eu a machuque, que eu a faça sentir em pequenas dores o que sinto, 
 um gesto doloroso de amor.
