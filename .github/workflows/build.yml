@@ -19,16 +19,16 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      
+        uses: actions/checkout@v5
+
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
-      
+
       - name: Show Input Files
         run: |
           echo "=== WORKING DIR ==="
@@ -39,22 +39,22 @@ jobs:
           find content/ -name "*.md" 2>/dev/null || echo "Nenhum .md encontrado"
           echo "=== TEMPLATES ==="
           ls -la templates/ 2>/dev/null || echo "templates não encontrado"
-      
+
       - name: Build Site
         run: |
           python build.py
           echo "=== OUTPUT ==="
           ls -la *.html 2>&1
           ls -la posts/ 2>&1 || echo "posts/ não criada"
-      
+
       - name: Create .nojekyll
         run: touch .nojekyll
-      
+
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
-      
+
       - name: Deploy to Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
