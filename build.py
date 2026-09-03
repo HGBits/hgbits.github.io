@@ -183,10 +183,6 @@ def markdown_to_html(md, root=""):
     return "\n".join(out)
 
 
-def slugify(name):
-    return name
-
-
 def format_date(iso):
     try:
         d = datetime.strptime(iso, "%Y-%m-%d")
@@ -213,7 +209,8 @@ def tag_pills(tags):
 
 def main():
     posts = []
-    (ROOT_DIR / "posts").mkdir(parents=True, exist_ok=True)  # ← ADICIONAR ESTA LINHA
+    (CONTENT / "posts").mkdir(parents=True, exist_ok=True)
+    (ROOT_DIR / "posts").mkdir(parents=True, exist_ok=True)
     for md_file in sorted((CONTENT / "posts").glob("*.md")):
         raw = md_file.read_text(encoding="utf-8")
         meta, body = parse_frontmatter(raw)
@@ -253,9 +250,9 @@ def main():
 
         html_out = render(
             TEMPLATE,
-            TITLE=f'{post["title"]} :: hgbits',
-            DESCRIPTION=post["excerpt"],
-            CHROME_PATH=f'hgbits@inlocus:~/blog/posts$ cat {post["slug"]}.md',
+            TITLE=html.escape(f'{post["title"]} :: hgbits', quote=True),
+            DESCRIPTION=html.escape(post["excerpt"], quote=True),
+            CHROME_PATH=html.escape(f'hgbits@inlocus:~/blog/posts$ cat {post["slug"]}.md', quote=True),
             ROOT="../",
             BODY=body,
         )
@@ -338,7 +335,7 @@ def main():
     # ---------- sobre.html ----------
     sobre_raw = (CONTENT / "sobre.md").read_text(encoding="utf-8")
     meta, body = parse_frontmatter(sobre_raw)
-    sobre_body = f'''    <h1 class="prompt">{meta.get("title", "sobre")}</h1>
+    sobre_body = f'''    <h1 class="prompt">{html.escape(meta.get("title", "sobre"))}</h1>
 
 {markdown_to_html(body)}
 
@@ -346,7 +343,7 @@ def main():
 
     <footer class="term-footer">
       <span class="prompt-end">exit 0</span>
-      <span>hgbits :: 2026</span>
+      <span>hgbits :: {datetime.now().year}</span>
     </footer>'''
     sobre_html = render(
         TEMPLATE,

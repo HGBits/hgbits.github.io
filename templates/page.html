@@ -6,9 +6,11 @@
 <title>{{TITLE}}</title>
 <meta name="description" content="{{DESCRIPTION}}">
 <meta name="color-scheme" content="dark">
+{{HEAD_EXTRA}}
 <link rel="stylesheet" href="{{ROOT}}css/style.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Pular para o conteúdo</a>
 <div class="term">
 
   <div class="term-chrome">
@@ -16,7 +18,7 @@
     <span class="path">{{CHROME_PATH}}</span>
   </div>
 
-  <main class="term-body">
+  <main class="term-body" id="main-content">
     <nav class="crumbs" aria-label="navegação principal">
       <a href="{{ROOT}}index.html">inicio</a> · <a href="{{ROOT}}sobre.html">sobre</a>
     </nav>
