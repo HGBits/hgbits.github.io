@@ -1,6 +1,6 @@
 ---
 title: Descoberta
-date: 2026-04-09
+date: 2026-09-04
 tags: Diário
 excerpt: é como eu disse a umas semanas atrás "sou como uma raposa faminta que quando sente uma presa por perto tem vontade de comer"
 ---
@@ -21,12 +21,11 @@ me desculpe por ser, tão obsceno.
 
 bem, além do sexo... eu sinto falta de ter um romance, um namoro de verdade.
 A última vez que estive em um relacionamento foi em 2023 e bem foi uma droga.
-odeio aquilo, foi muito entediante. as poucas coisas que rolaram de iniciativas foram por minhas causa.
-e ela era muito, sla sabe?, se tiver alguma garota lendo isso não vai entender.
+odeio aquilo, foi muito entediante. as poucas coisas que rolaram de iniciativas foram por minhas causa e ela era muito, sla sabe?, se tiver alguma garota lendo isso não vai entender.
 
-bem ela, bem chatinha, não tinha essa certa malícia de percepção,
-para entender que um relacionamento não pode ser só conversa euns beijos que nem eram beijos mesmos era só uma bitoca xerxelenta, muito chato, não tinha emoção, e eu queria. não precisava ser sexo, só alguma coisa de verdade.
+bem ela era bem chatinha, não tinha essa certa malícia de percepção,
+para entender que um relacionamento não pode ser só conversa e uns beijos que nem eram beijos mesmos era só uma bitoca xerxelenta, muito chato, não tinha emoção e eu queria. não precisava ser sexo, só alguma coisa de verdade.
 
 eu sempre tô disposto a buscar entender uma pessoa e as coisas que ela
-pode gostar no relacionamento, minímo eu espero que alguém faça o mesmo, mesmo sendo algo bobo.
+pode gostar no relacionamento, no minímo eu espero que alguém faça o mesmo, mesmo sendo algo bobo.
 Enfim, é isso.
