@@ -5,7 +5,8 @@ Dev e sysadmin do meu próprio notebook, Escrevo sobre Linux, meus jogos, Livros
 
 ## stack
 
-Arch Linux com kernel Hardening, Hyprland e bspwm.
+Arch Linux com kernel Hardening.
+Wayland e Xlibre, Fã de SELINUX e APPARMOR.
 
 ## contato
 
