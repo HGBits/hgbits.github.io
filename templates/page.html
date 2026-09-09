@@ -11,22 +11,25 @@
 </head>
 <body>
 <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
-<div class="term">
+<div class="page">
 
-  <div class="term-chrome">
-    <span class="dot blue"></span><span class="dot yellow"></span><span class="dot white"></span>
-    <span class="path">{{CHROME_PATH}}</span>
-  </div>
-
-  <main class="term-body" id="main-content">
-    <nav class="crumbs" aria-label="navegação principal">
-      <a href="{{ROOT}}index.html">inicio</a> · <a href="{{ROOT}}sobre.html">sobre</a>
+  <header class="site-header">
+    <p class="wordmark"><a href="{{ROOT}}index.html">hgbits</a></p>
+    <nav class="site-nav" aria-label="navegação principal">
+      <a href="{{ROOT}}index.html">início</a>
+      <a href="{{ROOT}}sobre.html">sobre</a>
+      <a href="{{ROOT}}feed.xml">rss</a>
     </nav>
+  </header>
 
+  <main id="main-content">
 {{BODY}}
-
   </main>
+
+  <footer class="site-footer">
+    <p>hgbits :: {{YEAR}} &middot; <a href="{{ROOT}}feed.xml">rss</a> &middot; <a href="{{ROOT}}sitemap.xml">sitemap</a></p>
+  </footer>
+
 </div>
-<script src="{{ROOT}}js/effects.js" defer></script>
 </body>
 </html>

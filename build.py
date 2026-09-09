@@ -10,11 +10,17 @@ Uso:
 import re
 import html
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
+from email.utils import format_datetime
 
 ROOT_DIR = Path(__file__).parent
 CONTENT = ROOT_DIR / "content"
 TEMPLATE = (ROOT_DIR / "templates" / "page.html").read_text(encoding="utf-8")
+
+# Ajuste aqui se o domínio real do blog for diferente.
+SITE_URL = "https://hgbits.github.io"
+SITE_NAME = "hgbits :: notas"
+SITE_DESCRIPTION = "Blog pessoal de hgbits — Linux User, Libertário e Gamedev."
 
 MESES = ["", "jan", "fev", "mar", "abr", "mai", "jun",
          "jul", "ago", "set", "out", "nov", "dez"]
@@ -49,6 +55,7 @@ def parse_frontmatter(text):
 
 
 # ---------- markdown -> html (subconjunto deliberadamente pequeno e auditável) ----------
+# NADA nesta seção foi alterado.
 def inline_md(text, root=""):
     text = html.escape(text, quote=False)
 
@@ -207,6 +214,69 @@ def tag_pills(tags):
     return " · ".join(f'<span class="tag">{html.escape(t.strip())}</span>' for t in tags)
 
 
+def head_extra(canonical, og_type, og_title, og_description):
+    """Bloco de <head> com canonical + Open Graph + Twitter Card.
+    Tudo escapado — mesmo tratamento que TITLE/DESCRIPTION já recebiam."""
+    c = html.escape(canonical, quote=True)
+    t = html.escape(og_title, quote=True)
+    d = html.escape(og_description, quote=True)
+    ty = html.escape(og_type, quote=True)
+    return f'''<link rel="canonical" href="{c}">
+<link rel="alternate" type="application/rss+xml" title="{html.escape(SITE_NAME, quote=True)}" href="{{{{ROOT}}}}feed.xml">
+<meta property="og:type" content="{ty}">
+<meta property="og:site_name" content="{html.escape(SITE_NAME, quote=True)}">
+<meta property="og:title" content="{t}">
+<meta property="og:description" content="{d}">
+<meta property="og:url" content="{c}">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{t}">
+<meta name="twitter:description" content="{d}">'''
+
+
+def build_rss(posts):
+    items = []
+    for p in posts:
+        try:
+            dt = datetime.strptime(p["date"], "%Y-%m-%d").replace(tzinfo=timezone.utc)
+        except Exception:
+            dt = datetime.now(timezone.utc)
+        link = f'{SITE_URL}/posts/{p["slug"]}.html'
+        items.append(f'''    <item>
+      <title>{html.escape(p["title"], quote=True)}</title>
+      <link>{link}</link>
+      <guid>{link}</guid>
+      <pubDate>{format_datetime(dt)}</pubDate>
+      <description>{html.escape(p["excerpt"], quote=True)}</description>
+    </item>''')
+    now = format_datetime(datetime.now(timezone.utc))
+    return f'''<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>{html.escape(SITE_NAME, quote=True)}</title>
+    <link>{SITE_URL}/</link>
+    <description>{html.escape(SITE_DESCRIPTION, quote=True)}</description>
+    <lastBuildDate>{now}</lastBuildDate>
+{chr(10).join(items)}
+  </channel>
+</rss>
+'''
+
+
+def build_sitemap(posts):
+    today = datetime.now().strftime("%Y-%m-%d")
+    urls = [(f"{SITE_URL}/", today), (f"{SITE_URL}/sobre.html", today)]
+    urls += [(f'{SITE_URL}/posts/{p["slug"]}.html', p["date"] or today) for p in posts]
+    entries = "\n".join(f'''  <url>
+    <loc>{u}</loc>
+    <lastmod>{lastmod}</lastmod>
+  </url>''' for u, lastmod in urls)
+    return f'''<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{entries}
+</urlset>
+'''
+
+
 def main():
     posts = []
     (CONTENT / "posts").mkdir(parents=True, exist_ok=True)
@@ -230,29 +300,33 @@ def main():
     for idx, post in enumerate(posts):
         prev_p = posts[idx + 1] if idx + 1 < len(posts) else None
         next_p = posts[idx - 1] if idx > 0 else None
-        nav_links = []
-        if prev_p:
-            nav_links.append(f'<a href="{prev_p["slug"]}.html">← anterior: {html.escape(prev_p["title"])}</a>')
-        if next_p:
-            nav_links.append(f'<a href="{next_p["slug"]}.html">próximo: {html.escape(next_p["title"])} →</a>')
+        prev_link = (f'<a href="{prev_p["slug"]}.html" rel="prev">&larr; {html.escape(prev_p["title"])}</a>'
+                     if prev_p else '<span></span>')
+        next_link = (f'<a href="{next_p["slug"]}.html" rel="next">{html.escape(next_p["title"])} &rarr;</a>'
+                     if next_p else '<span></span>')
 
-        body = f'''    <h1 class="prompt">{html.escape(post["title"])}</h1>
-    <p class="meta">{format_date(post["date"])} · {post["reading"]} min de leitura · {tag_pills(post["tags"])}</p>
+        body = f'''    <article>
+      <header class="post-header">
+        <h1>{html.escape(post["title"])}</h1>
+        <p class="byline">{format_date(post["date"])} &middot; {post["reading"]} min de leitura</p>
+        <p class="tags">{tag_pills(post["tags"])}</p>
+      </header>
 
 {post["body_html"]}
 
-    <div class="rule" aria-hidden="true"></div>
+      <nav class="post-nav" aria-label="navegação entre posts">
+        {prev_link}
+        {next_link}
+      </nav>
+    </article>'''
 
-    <footer class="term-footer">
-      <span>{" &nbsp;·&nbsp; ".join(nav_links) if nav_links else "fim da lista de posts"}</span>
-      <span class="prompt-end">exit 0</span>
-    </footer>'''
-
+        canonical = f'{SITE_URL}/posts/{post["slug"]}.html'
         html_out = render(
             TEMPLATE,
             TITLE=html.escape(f'{post["title"]} :: hgbits', quote=True),
             DESCRIPTION=html.escape(post["excerpt"], quote=True),
-            CHROME_PATH=html.escape(f'hgbits@inlocus:~/blog/posts$ cat {post["slug"]}.md', quote=True),
+            HEAD_EXTRA=head_extra(canonical, "article", post["title"], post["excerpt"]),
+            YEAR=str(datetime.now().year),
             ROOT="../",
             BODY=body,
         )
@@ -278,26 +352,17 @@ def main():
         </ul>
       </li>''' for tag, plist in tag_map.items())
 
-    index_body = f'''    <pre class="banner" aria-hidden="true">
- _           _     _ _
-| |__   __ _| |__ (_) |_ ___
-| '_ \\ / _` | '_ \\| | __/ __|
-| | | | (_| | |_) | | |_\\__ \\
-|_| |_|\\__, |_.__/|_|\\__|___/
-       |___/
-    </pre>
-
-    <h1 class="prompt">notas de hgbits</h1>
-    <p class="tagline">
-     Linux User, Libertário  e Gamedev.<span class="cursor" aria-hidden="true">_</span>
-    </p>
+    index_body = f'''    <section class="hero">
+      <h1>notas de hgbits</h1>
+      <p class="tagline">Linux User, Libertário e Gamedev.</p>
+    </section>
 
     <div class="tabs">
       <input type="radio" name="tabs" id="tab-posts" checked>
       <input type="radio" name="tabs" id="tab-tags">
       <div class="tab-labels">
-        <label for="tab-posts">$ ls posts/</label>
-        <label for="tab-tags">$ ls tags/</label>
+        <label for="tab-posts">Posts</label>
+        <label for="tab-tags">Tags</label>
       </div>
       <div class="tab-panels">
         <section class="tab-panel panel-posts">
@@ -315,18 +380,14 @@ def main():
       </div>
     </div>
 
-    <div class="rule" aria-hidden="true"></div>
-
-    <footer class="term-footer">
-      <span class="prompt-end">exit 0</span>
-      <span>{len(posts)} posts · gerado por build.py a partir de Markdown, sem JS, sem CDN</span>
-    </footer>'''
+    <p class="colophon">{len(posts)} posts &middot; gerado por build.py a partir de Markdown, sem JS, sem CDN</p>'''
 
     index_html = render(
         TEMPLATE,
-        TITLE="hgbits :: notas",
-        DESCRIPTION="Blog pessoal de hgbits — Linux User, Libertário  e Gamedev.",
-        CHROME_PATH="hgbits@inlocus:~/blog$",
+        TITLE=SITE_NAME,
+        DESCRIPTION=html.escape(SITE_DESCRIPTION, quote=True),
+        HEAD_EXTRA=head_extra(f"{SITE_URL}/", "website", SITE_NAME, SITE_DESCRIPTION),
+        YEAR=str(datetime.now().year),
         ROOT="",
         BODY=index_body,
     )
@@ -335,27 +396,28 @@ def main():
     # ---------- sobre.html ----------
     sobre_raw = (CONTENT / "sobre.md").read_text(encoding="utf-8")
     meta, body = parse_frontmatter(sobre_raw)
-    sobre_body = f'''    <h1 class="prompt">{html.escape(meta.get("title", "sobre"))}</h1>
+    sobre_title = meta.get("title", "sobre")
+    sobre_body = f'''    <article>
+      <h1>{html.escape(sobre_title)}</h1>
 
 {markdown_to_html(body)}
-
-    <div class="rule" aria-hidden="true"></div>
-
-    <footer class="term-footer">
-      <span class="prompt-end">exit 0</span>
-      <span>hgbits :: {datetime.now().year}</span>
-    </footer>'''
+    </article>'''
     sobre_html = render(
         TEMPLATE,
         TITLE="sobre :: hgbits",
         DESCRIPTION="Sobre hgbits.",
-        CHROME_PATH="hgbits@inlocus:~/blog$ cat sobre.md",
+        HEAD_EXTRA=head_extra(f"{SITE_URL}/sobre.html", "website", sobre_title, "Sobre hgbits."),
+        YEAR=str(datetime.now().year),
         ROOT="",
         BODY=sobre_body,
     )
     (ROOT_DIR / "sobre.html").write_text(sobre_html, encoding="utf-8")
 
-    print(f"OK: {len(posts)} posts, {len(tag_map)} tags, index.html e sobre.html gerados.")
+    # ---------- feed.xml + sitemap.xml ----------
+    (ROOT_DIR / "feed.xml").write_text(build_rss(posts), encoding="utf-8")
+    (ROOT_DIR / "sitemap.xml").write_text(build_sitemap(posts), encoding="utf-8")
+
+    print(f"OK: {len(posts)} posts, {len(tag_map)} tags, index.html, sobre.html, feed.xml e sitemap.xml gerados.")
 
 
 if __name__ == "__main__":

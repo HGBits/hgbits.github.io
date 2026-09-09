@@ -1,32 +1,30 @@
 /* =========================================================
    hgbits :: style.css
-   Tema: preto/azul de fundo, branco como texto, amarelo só
-   para bordas e detalhes de destaque. Fonte 100% monoespaçada
-   (system stack, zero fontes externas/CDN).
+   Página editorial real — preto/azul de fundo, branco como
+   texto, amarelo só para acentos raros. Monoespaçada por
+   identidade (não por estar fingindo ser um terminal).
    Este CSS é cosmético — o HTML sozinho já lê bem em qualquer
    navegador de texto (lynx/w3m/links), sem depender de nada aqui.
    ========================================================= */
 
 :root {
   --bg:        #05070c;   /* preto com leve tom azul */
-  --bg-panel:  #0b1930;   /* azul bem escuro, painéis */
-  --blue:      #4a90e2;   /* azul vibrante — links, títulos, acento único */
-  --blue-dim:  #163a63;   /* azul apagado — bordas internas, hr */
-  --blue-glow: rgba(74, 144, 226, 0.18);
+  --bg-raised: #0b1930;   /* azul bem escuro — só pra blocos de código/tabela */
+  --blue:      #4a90e2;   /* azul vibrante — links, título, acento único */
+  --blue-dim:  #163a63;   /* azul apagado — hairlines */
+  --blue-glow: rgba(74, 144, 226, 0.14);
   --fg:        #e7ebf2;   /* branco levemente frio — texto */
   --fg-dim:    #9aa7ba;   /* cinza-azulado — texto secundário */
-  --yellow:    #ffcf3f;   /* amarelo vibrante — SÓ para bordas/detalhes */
+  --yellow:    #ffcf3f;   /* amarelo vibrante — acento raro e proposital */
   --mono: ui-monospace, "JetBrains Mono", "Cascadia Code", "Fira Code",
           "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --measure: 68ch;
 
-  /* escala tipográfica fluida — cresce suave entre mobile e desktop,
-     sem os saltos bruscos de breakpoints fixos */
-  --fs-body: clamp(0.95rem, 0.9rem + 0.2vw, 1.05rem);
   --fs-small: clamp(0.8rem, 0.78rem + 0.1vw, 0.88rem);
-  --fs-h3: clamp(1.05rem, 1rem + 0.3vw, 1.2rem);
-  --fs-h2: clamp(1.15rem, 1.05rem + 0.4vw, 1.4rem);
-  --fs-h1: clamp(1.5rem, 1.3rem + 1vw, 2.1rem);
+  --fs-body:  clamp(0.98rem, 0.92rem + 0.25vw, 1.08rem);
+  --fs-h3:    clamp(1.05rem, 1rem + 0.3vw, 1.2rem);
+  --fs-h2:    clamp(1.2rem, 1.05rem + 0.5vw, 1.5rem);
+  --fs-h1:    clamp(1.7rem, 1.35rem + 1.6vw, 2.6rem);
 
   color-scheme: dark;
 }
@@ -38,25 +36,23 @@ html { background: var(--bg); }
 body {
   margin: 0;
   background:
-    radial-gradient(ellipse 900px 500px at 50% -10%, var(--blue-glow), transparent 60%),
+    radial-gradient(ellipse 1000px 500px at 50% -10%, var(--blue-glow), transparent 60%),
     var(--bg);
   color: var(--fg);
   font-family: var(--mono);
   font-size: var(--fs-body);
-  line-height: 1.6;
+  line-height: 1.65;
   text-rendering: optimizeLegibility;
 }
 
 ::selection { background: var(--yellow); color: #05070c; }
 
-/* scrollbar temática — degrada bem onde não suportado */
 html { scrollbar-color: var(--blue-dim) var(--bg); scrollbar-width: thin; }
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--blue-dim); border-radius: 5px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--blue); }
 
-/* skip-link: invisível até ganhar foco (teclado/leitor de tela) */
 .skip-link {
   position: absolute;
   top: 0;
@@ -70,7 +66,6 @@ html { scrollbar-color: var(--blue-dim) var(--bg); scrollbar-width: thin; }
 }
 .skip-link:focus { left: 0; }
 
-/* foco visível em qualquer elemento navegável */
 a:focus-visible, button:focus-visible {
   outline: 2px solid var(--yellow);
   outline-offset: 2px;
@@ -84,96 +79,61 @@ a {
 }
 a:hover, a:focus-visible { color: var(--yellow); text-decoration-color: var(--yellow); }
 
-/* ---------- moldura estilo "janela de terminal" ----------
-   É só casca visual: os divs abaixo não carregam conteúdo,
-   então quem lê em modo texto nunca perde nada. */
-.term {
-  max-width: min(860px, 92vw);
-  margin: 2.5rem auto;
-  padding: 0 1rem 3rem;
-}
-
-.term-chrome {
+/* ---------- página ---------- */
+.page {
+  max-width: min(720px, 90vw);
+  margin: 0 auto;
+  padding: 0 1rem;
+  min-height: 100vh;
   display: flex;
-  align-items: center;
-  gap: .5rem;
-  padding: .6rem .9rem;
-  background: var(--bg-panel);
-  border: 1px solid var(--blue-dim);
-  border-bottom: none;
-  border-radius: 6px 6px 0 0;
-}
-.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-.dot.blue   { background: var(--blue); }
-.dot.yellow { background: var(--yellow); }
-.dot.white  { background: var(--fg); }
-.term-chrome span.path {
-  margin-left: .5rem;
-  color: var(--fg-dim);
-  font-size: var(--fs-small);
+  flex-direction: column;
 }
 
-.term-body {
+/* ---------- cabeçalho do site ---------- */
+.site-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .8rem 1.5rem;
+  padding: 2rem 0 1.2rem;
   position: relative;
-  background: var(--bg-panel);
-  border: 1px solid var(--blue-dim);
-  border-top: none;
-  border-radius: 0 0 6px 6px;
-  padding: 1.6rem clamp(1rem, 4vw, 2.6rem) 2.2rem;
 }
-
-/* único momento de movimento orquestrado do redesign: uma barra fina
-   de "progresso" varrendo o topo — lê como um loader de terminal/CI,
-   não decoração solta. Some com prefers-reduced-motion. */
-.term-body::before {
+.site-header::after {
+  /* único acento de movimento do redesign — uma régua fina que varre
+     em loop lento sob o cabeçalho. Some com prefers-reduced-motion. */
   content: "";
   position: absolute;
-  top: 0; left: 0; right: 0;
+  bottom: 0; left: 0; right: 0;
   height: 2px;
   background: linear-gradient(90deg, var(--yellow), var(--blue), var(--yellow));
   background-size: 200% 100%;
-  animation: sweep 7s linear infinite;
+  animation: sweep 8s linear infinite;
 }
-@keyframes sweep {
-  to { background-position: -200% 0; }
-}
+@keyframes sweep { to { background-position: -200% 0; } }
 @media (prefers-reduced-motion: reduce) {
-  .term-body::before { animation: none; }
+  .site-header::after { animation: none; }
 }
 
-/* banner ASCII — é <pre>, então em lynx/w3m aparece igual, como texto puro */
-pre.banner {
-  color: var(--blue);
-  font-size: clamp(.5rem, 1.6vw, .78rem);
-  line-height: 1.15;
-  overflow-x: auto;
-  margin: 0 0 .3rem;
-  text-shadow: 0 0 12px var(--blue-glow);
+.wordmark { margin: 0; font-size: 1.15rem; }
+.wordmark a {
+  color: var(--fg);
+  font-weight: 700;
+  text-decoration: none;
 }
-.tagline {
-  color: var(--fg-dim);
-  margin: 0 0 1.4rem;
-}
-.tagline .cursor {
-  display: inline-block;
-  color: var(--yellow);
-  animation: blink 1.1s step-end infinite;
-}
-@media (prefers-reduced-motion: reduce) {
-  .tagline .cursor { animation: none; }
-}
-@keyframes blink { 50% { opacity: 0; } }
+.wordmark a:hover, .wordmark a:focus-visible { color: var(--yellow); }
+.wordmark a::before { content: "~/"; color: var(--blue); }
 
-nav.crumbs {
-  border-top: 1px dashed var(--blue-dim);
-  border-bottom: 1px dashed var(--blue-dim);
-  padding: .6rem 0;
-  margin: 0 0 1.6rem;
-  font-size: var(--fs-small);
-}
-nav.crumbs a { margin: 0 .3rem; }
-nav.crumbs { color: var(--yellow); } /* colore os separadores "·" que já estão no HTML */
-nav.crumbs a { color: var(--blue); }
+.site-nav { display: flex; gap: 1.1rem; font-size: var(--fs-small); }
+.site-nav a { color: var(--fg-dim); text-decoration: none; }
+.site-nav a:hover, .site-nav a:focus-visible { color: var(--blue); }
+
+/* ---------- conteúdo principal ---------- */
+main { flex: 1; padding: 2.2rem 0 3rem; }
+
+.hero { margin-bottom: 2rem; }
+.hero h1 { margin: 0 0 .4rem; }
+.hero .tagline { color: var(--fg-dim); margin: 0; max-width: var(--measure); }
 
 h1, h2, h3 {
   color: var(--fg);
@@ -181,33 +141,27 @@ h1, h2, h3 {
   line-height: 1.25;
   text-wrap: balance;
 }
-h1 { font-size: var(--fs-h1); margin: 0 0 .8rem; }
-h2 { font-size: var(--fs-h2); margin: 2rem 0 .6rem; }
+h1 { font-size: var(--fs-h1); margin: 0 0 .6rem; }
+h2 { font-size: var(--fs-h2); margin: 2.2rem 0 .7rem; }
 h3 { font-size: var(--fs-h3); margin: 1.6rem 0 .5rem; }
-h2::before { content: "## "; color: var(--yellow); }
-h1.prompt::before { content: "$ "; color: var(--yellow); }
 
-p { max-width: var(--measure); color: var(--fg); text-wrap: pretty; }
-p.meta, .meta { color: var(--fg-dim); font-size: var(--fs-small); }
+p { max-width: var(--measure); color: var(--fg); text-wrap: pretty; margin: 0 0 1.1rem; }
+
+.post-header { margin-bottom: 1.8rem; }
+.post-header h1 { margin-bottom: .5rem; }
+.post-header .byline { color: var(--fg-dim); font-size: var(--fs-small); margin: 0 0 .5rem; }
+.post-header .tags:empty { display: none; }
 
 hr {
   border: none;
   border-top: 1px solid var(--blue-dim);
   margin: 1.6rem 0;
 }
-/* separador ASCII opcional usado como elemento decorativo textual */
-.rule::before {
-  content: "────────────────────────────────────────────────────";
-  color: var(--blue-dim);
-  display: block;
-  margin: 1.4rem 0;
-  overflow: hidden;
-  white-space: nowrap;
-}
 
+/* ---------- lista de posts ---------- */
 ul.postlist { list-style: none; padding: 0; margin: 0; }
 ul.postlist li {
-  padding: .9rem .6rem;
+  padding: 1.1rem .6rem;
   margin: 0 -.6rem;
   border-bottom: 1px solid var(--blue-dim);
   border-radius: 4px;
@@ -215,8 +169,10 @@ ul.postlist li {
 }
 ul.postlist li:hover { background: var(--blue-glow); }
 ul.postlist li:last-child { border-bottom: none; }
-ul.postlist a { font-size: 1.02rem; font-weight: 700; }
-ul.postlist .excerpt { color: var(--fg-dim); margin: .25rem 0 0; font-size: var(--fs-small); }
+ul.postlist a { font-size: 1.08rem; font-weight: 700; text-decoration: none; }
+ul.postlist a:hover, ul.postlist a:focus-visible { color: var(--yellow); }
+ul.postlist .excerpt { color: var(--fg-dim); margin: .3rem 0 0; font-size: var(--fs-small); max-width: var(--measure); }
+ul.postlist .meta { color: var(--fg-dim); font-size: var(--fs-small); margin: .4rem 0 0; }
 
 .tag {
   display: inline-block;
@@ -225,10 +181,24 @@ ul.postlist .excerpt { color: var(--fg-dim); margin: .25rem 0 0; font-size: var(
   border-radius: 3px;
   padding: 0 .4rem;
   font-size: .75rem;
-  margin-right: .4rem;
+  margin: 0 .4rem .4rem 0;
   transition: background-color .15s ease, color .15s ease;
 }
 .tag:hover { background: var(--yellow); color: var(--bg); }
+
+/* ---------- navegação entre posts ---------- */
+.post-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.4rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--blue-dim);
+  font-size: var(--fs-small);
+}
+.post-nav a { text-decoration: none; }
+
+.colophon { color: var(--fg-dim); font-size: var(--fs-small); margin-top: 1rem; }
 
 blockquote {
   margin: 1.2rem 0;
@@ -238,7 +208,7 @@ blockquote {
 }
 
 code, kbd {
-  background: #050b16;
+  background: var(--bg-raised);
   border: 1px solid var(--blue-dim);
   border-radius: 3px;
   padding: .05rem .35rem;
@@ -253,26 +223,16 @@ pre code {
   border-radius: 0 4px 4px 0;
 }
 
-footer.term-footer {
-  margin-top: 2rem;
-  padding-top: 1rem;
+/* ---------- rodapé do site ---------- */
+.site-footer {
   border-top: 1px solid var(--blue-dim);
+  padding: 1.2rem 0 2rem;
   color: var(--fg-dim);
   font-size: var(--fs-small);
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: .5rem;
 }
-footer.term-footer .prompt-end::before { content: "$ "; color: var(--yellow); }
-
-#crt-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-}
-.term { position: relative; z-index: 2; }
+.site-footer p { margin: 0; }
+.site-footer a { color: var(--fg-dim); }
+.site-footer a:hover, .site-footer a:focus-visible { color: var(--blue); }
 
 /* ---------- abas CSS-only (sem JS) ----------
    Em navegadores gráficos: alterna painel via :checked.
@@ -286,13 +246,13 @@ footer.term-footer .prompt-end::before { content: "$ "; color: var(--yellow); }
 }
 .tab-labels {
   display: flex;
-  gap: .4rem;
-  margin: 1.4rem 0 0;
+  gap: .3rem;
+  margin: 0 0 1.4rem;
   border-bottom: 1px solid var(--blue-dim);
 }
 .tab-labels label {
   cursor: pointer;
-  padding: .5rem .9rem;
+  padding: .5rem 1rem;
   color: var(--fg-dim);
   border: 1px solid transparent;
   border-bottom: none;
@@ -312,13 +272,12 @@ footer.term-footer .prompt-end::before { content: "$ "; color: var(--yellow); }
   margin-top: -1px;
 }
 
-.tab-panels { padding-top: 1.2rem; }
+.tab-panels h2 { margin-top: 0; }
 .tab-panel { display: none; }
 #tab-posts:checked ~ .tab-panels .panel-posts,
 #tab-tags:checked  ~ .tab-panels .panel-tags {
   display: block;
 }
-.tab-panel h2 { margin-top: 0; }
 
 /* lista de tags (aba "por tag") */
 ul.taglist { list-style: none; padding: 0; margin: 0; }
@@ -328,16 +287,12 @@ ul.taglist > li {
 }
 ul.taglist > li:last-child { border-bottom: none; }
 ul.taglist-posts { list-style: none; padding: 0; margin: .5rem 0 0 1.1rem; }
-ul.taglist-posts li { padding: .15rem 0; }
+ul.taglist-posts li { padding: .15rem 0; border: none; }
 ul.taglist-posts li::before { content: "→ "; color: var(--blue-dim); }
 
 /* ---------- imagens ---------- */
-figure {
-  margin: 1.6rem 0;
-  padding: 0;
-}
-figure img,
-p img {
+figure { margin: 1.6rem 0; padding: 0; }
+figure img, p img {
   max-width: 100%;
   height: auto;
   display: block;
@@ -362,34 +317,25 @@ figcaption {
   border-top: 2px solid var(--yellow);
   border-radius: 4px;
 }
-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--fs-small);
-}
+table { width: 100%; border-collapse: collapse; font-size: var(--fs-small); }
 th, td {
   padding: .55rem .8rem;
   text-align: left;
   border-bottom: 1px solid var(--blue-dim);
   white-space: nowrap;
 }
-thead th {
-  background: var(--bg);
-  color: var(--yellow);
-  font-weight: 700;
-}
+thead th { background: var(--bg-raised); color: var(--yellow); font-weight: 700; }
 tbody tr:last-child td { border-bottom: none; }
 tbody tr { transition: background-color .15s ease; }
 tbody tr:hover td { background: var(--blue-glow); }
 
-/* contraste reforçado para quem pede mais contraste no SO */
 @media (prefers-contrast: more) {
   :root { --blue-dim: #2c5c93; --fg-dim: #c3cad9; }
-  .term-chrome, .term-body { border-width: 2px; }
+  .site-header, .site-footer, ul.postlist li, .post-nav { border-width: 2px; }
 }
 
 @media (max-width: 480px) {
-  .tab-labels label { padding: .45rem .6rem; font-size: var(--fs-small); }
-  .term { margin: 1rem auto; padding: 0 .6rem 2rem; }
-  .term-body { padding: 1.1rem 1rem 1.6rem; }
+  .tab-labels label { padding: .45rem .7rem; }
+  .site-header { padding: 1.4rem 0 1rem; }
+  main { padding: 1.6rem 0 2.4rem; }
 }
