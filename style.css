@@ -8,22 +8,23 @@
    ========================================================= */
 
 :root {
-  --bg:        #05070c;   /* preto com leve tom azul */
-  --bg-raised: #0b1930;   /* azul bem escuro — só pra blocos de código/tabela */
+  --bg:        #05070c;   /* preto com leve tom azul — fundo da página */
+  --bg-card:   #0b1930;   /* azul bem escuro — cards, sidebar, blocos de código */
+  --bg-header: #0a1a33;   /* faixa do header, levemente mais rica */
   --blue:      #4a90e2;   /* azul vibrante — links, título, acento único */
-  --blue-dim:  #163a63;   /* azul apagado — hairlines */
+  --blue-dim:  #163a63;   /* azul apagado — hairlines/bordas de card */
   --blue-glow: rgba(74, 144, 226, 0.14);
   --fg:        #e7ebf2;   /* branco levemente frio — texto */
   --fg-dim:    #9aa7ba;   /* cinza-azulado — texto secundário */
   --yellow:    #ffcf3f;   /* amarelo vibrante — acento raro e proposital */
   --mono: ui-monospace, "JetBrains Mono", "Cascadia Code", "Fira Code",
           "SFMono-Regular", Consolas, "Liberation Mono", monospace;
-  --measure: 68ch;
+  --measure: 66ch;
 
   --fs-small: clamp(0.8rem, 0.78rem + 0.1vw, 0.88rem);
   --fs-body:  clamp(0.98rem, 0.92rem + 0.25vw, 1.08rem);
   --fs-h3:    clamp(1.05rem, 1rem + 0.3vw, 1.2rem);
-  --fs-h2:    clamp(1.2rem, 1.05rem + 0.5vw, 1.5rem);
+  --fs-h2:    clamp(1.1rem, 1rem + 0.4vw, 1.3rem);
   --fs-h1:    clamp(1.7rem, 1.35rem + 1.6vw, 2.6rem);
 
   color-scheme: dark;
@@ -35,9 +36,10 @@ html { background: var(--bg); }
 
 body {
   margin: 0;
-  background:
-    radial-gradient(ellipse 1000px 500px at 50% -10%, var(--blue-glow), transparent 60%),
-    var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
   color: var(--fg);
   font-family: var(--mono);
   font-size: var(--fs-body);
@@ -79,29 +81,22 @@ a {
 }
 a:hover, a:focus-visible { color: var(--yellow); text-decoration-color: var(--yellow); }
 
-/* ---------- página ---------- */
-.page {
-  max-width: min(720px, 90vw);
+/* largura compartilhada por header, main e footer */
+.wrap {
+  max-width: 1100px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 1rem;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
-/* ---------- cabeçalho do site ---------- */
+/* ---------- header em faixa cheia ---------- */
 .site-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: .8rem 1.5rem;
-  padding: 2rem 0 1.2rem;
   position: relative;
+  background: linear-gradient(180deg, var(--bg-header), #071224);
 }
 .site-header::after {
-  /* único acento de movimento do redesign — uma régua fina que varre
-     em loop lento sob o cabeçalho. Some com prefers-reduced-motion. */
+  /* único acento de movimento do redesign — régua fina varrendo em
+     loop lento na base do header. Vira estática com prefers-reduced-motion. */
   content: "";
   position: absolute;
   bottom: 0; left: 0; right: 0;
@@ -115,25 +110,35 @@ a:hover, a:focus-visible { color: var(--yellow); text-decoration-color: var(--ye
   .site-header::after { animation: none; }
 }
 
-.wordmark { margin: 0; font-size: 1.15rem; }
-.wordmark a {
-  color: var(--fg);
-  font-weight: 700;
-  text-decoration: none;
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: .8rem 1.5rem;
+  padding: 1.3rem 1rem;
 }
+
+.wordmark { margin: 0; font-size: 1.2rem; }
+.wordmark a { color: var(--fg); font-weight: 700; text-decoration: none; }
 .wordmark a:hover, .wordmark a:focus-visible { color: var(--yellow); }
 .wordmark a::before { content: "~/"; color: var(--blue); }
 
-.site-nav { display: flex; gap: 1.1rem; font-size: var(--fs-small); }
+.site-nav { display: flex; gap: 1.3rem; font-size: var(--fs-small); }
 .site-nav a { color: var(--fg-dim); text-decoration: none; }
 .site-nav a:hover, .site-nav a:focus-visible { color: var(--blue); }
 
-/* ---------- conteúdo principal ---------- */
+/* ---------- corpo da página ---------- */
+.site-shell { flex: 1; display: flex; flex-direction: column; }
 main { flex: 1; padding: 2.2rem 0 3rem; }
 
-.hero { margin-bottom: 2rem; }
+.article-wrap { max-width: 720px;
+  width: 100%;
+  margin: 0 auto; }
+
+.hero { margin-bottom: 1.8rem; }
 .hero h1 { margin: 0 0 .4rem; }
-.hero .tagline { color: var(--fg-dim); margin: 0; max-width: var(--measure); }
+.hero .tagline { color: var(--fg-dim); margin: 0; }
 
 h1, h2, h3 {
   color: var(--fg);
@@ -142,37 +147,67 @@ h1, h2, h3 {
   text-wrap: balance;
 }
 h1 { font-size: var(--fs-h1); margin: 0 0 .6rem; }
-h2 { font-size: var(--fs-h2); margin: 2.2rem 0 .7rem; }
+h2 { font-size: var(--fs-h2); margin: 2rem 0 .7rem; }
 h3 { font-size: var(--fs-h3); margin: 1.6rem 0 .5rem; }
 
-p { max-width: var(--measure); color: var(--fg); text-wrap: pretty; margin: 0 0 1.1rem; }
+p { color: var(--fg); text-wrap: pretty; margin: 0 0 1.1rem; }
+.article-wrap p { max-width: var(--measure); }
 
 .post-header { margin-bottom: 1.8rem; }
 .post-header h1 { margin-bottom: .5rem; }
 .post-header .byline { color: var(--fg-dim); font-size: var(--fs-small); margin: 0 0 .5rem; }
 .post-header .tags:empty { display: none; }
 
-hr {
-  border: none;
-  border-top: 1px solid var(--blue-dim);
-  margin: 1.6rem 0;
+hr { border: none; border-top: 1px solid var(--blue-dim); margin: 1.6rem 0; }
+
+/* ---------- layout de duas colunas (index) ---------- */
+.layout-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+@media (min-width: 860px) {
+  .layout-grid { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 2.5rem; }
+}
+.sidebar { display: flex; flex-direction: column; gap: 1.3rem; }
+@media (min-width: 860px) {
+  .sidebar { position: sticky; top: 1.5rem; }
 }
 
-/* ---------- lista de posts ---------- */
-ul.postlist { list-style: none; padding: 0; margin: 0; }
-ul.postlist li {
-  padding: 1.1rem .6rem;
-  margin: 0 -.6rem;
-  border-bottom: 1px solid var(--blue-dim);
-  border-radius: 4px;
-  transition: background-color .15s ease;
+.sidebar-card {
+  background: var(--bg-card);
+  border: 1px solid var(--blue-dim);
+  border-radius: 8px;
+  padding: 1.2rem 1.3rem;
 }
-ul.postlist li:hover { background: var(--blue-glow); }
-ul.postlist li:last-child { border-bottom: none; }
+.sidebar-card h2 { margin: 0 0 .7rem; font-size: var(--fs-h3); }
+.sidebar-card p { font-size: var(--fs-small); color: var(--fg-dim); margin: 0 0 .8rem; }
+.sidebar-mark {
+  font-weight: 700;
+  color: var(--fg);
+  font-size: 1rem;
+  margin: 0 0 .5rem;
+}
+.sidebar-mark::before { content: "~/"; color: var(--blue); }
+.sidebar-card a { font-size: var(--fs-small); }
+.tag-cloud { display: flex; flex-wrap: wrap; gap: .4rem; }
+.tag-cloud .tag { margin: 0; }
+
+/* ---------- lista de posts em cards ---------- */
+ul.postlist { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 1rem; }
+ul.postlist li {
+  background: var(--bg-card);
+  border: 1px solid var(--blue-dim);
+  border-radius: 8px;
+  padding: 1.3rem 1.4rem;
+  transition: border-color .15s ease, transform .15s ease;
+}
+ul.postlist li:hover { border-color: var(--blue); transform: translateY(-2px); }
 ul.postlist a { font-size: 1.08rem; font-weight: 700; text-decoration: none; }
 ul.postlist a:hover, ul.postlist a:focus-visible { color: var(--yellow); }
-ul.postlist .excerpt { color: var(--fg-dim); margin: .3rem 0 0; font-size: var(--fs-small); max-width: var(--measure); }
-ul.postlist .meta { color: var(--fg-dim); font-size: var(--fs-small); margin: .4rem 0 0; }
+ul.postlist .excerpt { color: var(--fg-dim); margin: .4rem 0 0; font-size: var(--fs-small); max-width: var(--measure); }
+ul.postlist .meta { color: var(--fg-dim); font-size: var(--fs-small); margin: .5rem 0 0; }
 
 .tag {
   display: inline-block;
@@ -198,7 +233,7 @@ ul.postlist .meta { color: var(--fg-dim); font-size: var(--fs-small); margin: .4
 }
 .post-nav a { text-decoration: none; }
 
-.colophon { color: var(--fg-dim); font-size: var(--fs-small); margin-top: 1rem; }
+.colophon { color: var(--fg-dim); font-size: var(--fs-small); margin-top: 1.4rem; }
 
 blockquote {
   margin: 1.2rem 0;
@@ -208,7 +243,7 @@ blockquote {
 }
 
 code, kbd {
-  background: var(--bg-raised);
+  background: var(--bg-card);
   border: 1px solid var(--blue-dim);
   border-radius: 3px;
   padding: .05rem .35rem;
@@ -223,7 +258,7 @@ pre code {
   border-radius: 0 4px 4px 0;
 }
 
-/* ---------- rodapé do site ---------- */
+/* ---------- rodapé ---------- */
 .site-footer {
   border-top: 1px solid var(--blue-dim);
   padding: 1.2rem 0 2rem;
@@ -281,10 +316,7 @@ pre code {
 
 /* lista de tags (aba "por tag") */
 ul.taglist { list-style: none; padding: 0; margin: 0; }
-ul.taglist > li {
-  padding: .8rem 0;
-  border-bottom: 1px solid var(--blue-dim);
-}
+ul.taglist > li { padding: .8rem 0; border-bottom: 1px solid var(--blue-dim); }
 ul.taglist > li:last-child { border-bottom: none; }
 ul.taglist-posts { list-style: none; padding: 0; margin: .5rem 0 0 1.1rem; }
 ul.taglist-posts li { padding: .15rem 0; border: none; }
@@ -324,18 +356,18 @@ th, td {
   border-bottom: 1px solid var(--blue-dim);
   white-space: nowrap;
 }
-thead th { background: var(--bg-raised); color: var(--yellow); font-weight: 700; }
+thead th { background: var(--bg-card); color: var(--yellow); font-weight: 700; }
 tbody tr:last-child td { border-bottom: none; }
 tbody tr { transition: background-color .15s ease; }
 tbody tr:hover td { background: var(--blue-glow); }
 
 @media (prefers-contrast: more) {
   :root { --blue-dim: #2c5c93; --fg-dim: #c3cad9; }
-  .site-header, .site-footer, ul.postlist li, .post-nav { border-width: 2px; }
+  .sidebar-card, ul.postlist li, .post-nav, .site-footer { border-width: 2px; }
 }
 
 @media (max-width: 480px) {
   .tab-labels label { padding: .45rem .7rem; }
-  .site-header { padding: 1.4rem 0 1rem; }
+  .header-inner { padding: 1rem; }
   main { padding: 1.6rem 0 2.4rem; }
 }

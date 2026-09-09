@@ -11,25 +11,27 @@
 </head>
 <body>
 <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
-<div class="page">
 
-  <header class="site-header">
+<header class="site-header">
+  <div class="wrap header-inner">
     <p class="wordmark"><a href="{{ROOT}}index.html">hgbits</a></p>
     <nav class="site-nav" aria-label="navegação principal">
       <a href="{{ROOT}}index.html">início</a>
       <a href="{{ROOT}}sobre.html">sobre</a>
       <a href="{{ROOT}}feed.xml">rss</a>
     </nav>
-  </header>
+  </div>
+</header>
 
-  <main id="main-content">
+<div class="site-shell">
+  <main id="main-content" class="wrap">
 {{BODY}}
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer wrap">
     <p>hgbits :: {{YEAR}} &middot; <a href="{{ROOT}}feed.xml">rss</a> &middot; <a href="{{ROOT}}sitemap.xml">sitemap</a></p>
   </footer>
-
 </div>
+
 </body>
 </html>

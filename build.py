@@ -305,7 +305,7 @@ def main():
         next_link = (f'<a href="{next_p["slug"]}.html" rel="next">{html.escape(next_p["title"])} &rarr;</a>'
                      if next_p else '<span></span>')
 
-        body = f'''    <article>
+        body = f'''    <article class="article-wrap">
       <header class="post-header">
         <h1>{html.escape(post["title"])}</h1>
         <p class="byline">{format_date(post["date"])} &middot; {post["reading"]} min de leitura</p>
@@ -352,35 +352,51 @@ def main():
         </ul>
       </li>''' for tag, plist in tag_map.items())
 
-    index_body = f'''    <section class="hero">
-      <h1>notas de hgbits</h1>
-      <p class="tagline">Linux User, Libertário e Gamedev.</p>
-    </section>
+    tag_cloud = " ".join(f'<span class="tag">{html.escape(t)}</span>' for t in sorted(tag_map.keys()))
 
-    <div class="tabs">
-      <input type="radio" name="tabs" id="tab-posts" checked>
-      <input type="radio" name="tabs" id="tab-tags">
-      <div class="tab-labels">
-        <label for="tab-posts">Posts</label>
-        <label for="tab-tags">Tags</label>
-      </div>
-      <div class="tab-panels">
-        <section class="tab-panel panel-posts">
-          <h2>posts</h2>
-          <ul class="postlist">
+    index_body = f'''    <div class="layout-grid">
+      <div class="layout-main">
+        <section class="hero">
+          <h1>notas de hgbits</h1>
+          <p class="tagline">Linux User, Libertário e Gamedev.</p>
+        </section>
+
+        <div class="tabs">
+          <input type="radio" name="tabs" id="tab-posts" checked>
+          <input type="radio" name="tabs" id="tab-tags">
+          <div class="tab-labels">
+            <label for="tab-posts">Posts</label>
+            <label for="tab-tags">Tags</label>
+          </div>
+          <div class="tab-panels">
+            <section class="tab-panel panel-posts">
+              <ul class="postlist">
 {posts_items}
-          </ul>
-        </section>
-        <section class="tab-panel panel-tags">
-          <h2>por tag</h2>
-          <ul class="taglist">
+              </ul>
+            </section>
+            <section class="tab-panel panel-tags">
+              <ul class="taglist">
 {tags_items}
-          </ul>
-        </section>
-      </div>
-    </div>
+              </ul>
+            </section>
+          </div>
+        </div>
 
-    <p class="colophon">{len(posts)} posts &middot; gerado por build.py a partir de Markdown, sem JS, sem CDN</p>'''
+        <p class="colophon">{len(posts)} posts &middot; gerado por build.py a partir de Markdown, sem JS, sem CDN</p>
+      </div>
+
+      <aside class="sidebar">
+        <div class="sidebar-card">
+          <p class="sidebar-mark">hgbits</p>
+          <p>{html.escape(SITE_DESCRIPTION)}</p>
+          <a href="sobre.html">saiba mais &rarr;</a>
+        </div>
+        <div class="sidebar-card">
+          <h2>tags</h2>
+          <div class="tag-cloud">{tag_cloud}</div>
+        </div>
+      </aside>
+    </div>'''
 
     index_html = render(
         TEMPLATE,
@@ -397,7 +413,7 @@ def main():
     sobre_raw = (CONTENT / "sobre.md").read_text(encoding="utf-8")
     meta, body = parse_frontmatter(sobre_raw)
     sobre_title = meta.get("title", "sobre")
-    sobre_body = f'''    <article>
+    sobre_body = f'''    <article class="article-wrap">
       <h1>{html.escape(sobre_title)}</h1>
 
 {markdown_to_html(body)}
