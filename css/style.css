@@ -140,6 +140,23 @@ main { flex: 1; padding: 2.2rem 0 3rem; }
 .hero h1 { margin: 0 0 .4rem; }
 .hero .tagline { color: var(--fg-dim); margin: 0; }
 
+/* busca — injetada via JS (search.js); sem JS, esta regra não tem efeito
+   porque o elemento nunca existe */
+.search-wrap { margin: 0 0 1.4rem; }
+.search-input {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--blue-dim);
+  border-radius: 6px;
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: var(--fs-small);
+  padding: .6rem .9rem;
+}
+.search-input::placeholder { color: var(--fg-dim); }
+.search-input:focus-visible { outline: 2px solid var(--yellow); outline-offset: 1px; border-color: var(--blue); }
+.search-empty { color: var(--fg-dim); font-size: var(--fs-small); }
+
 h1, h2, h3 {
   color: var(--fg);
   font-weight: 700;
@@ -183,6 +200,20 @@ hr { border: none; border-top: 1px solid var(--blue-dim); margin: 1.6rem 0; }
 }
 .sidebar-card h2 { margin: 0 0 .7rem; font-size: var(--fs-h3); }
 .sidebar-card p { font-size: var(--fs-small); color: var(--fg-dim); margin: 0 0 .8rem; }
+.sidebar-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--yellow);
+  overflow: hidden;
+  margin-bottom: .8rem;
+}
+.sidebar-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 .sidebar-mark {
   font-weight: 700;
   color: var(--fg);
@@ -207,14 +238,23 @@ ul.postlist li:hover { border-color: var(--blue); transform: translateY(-2px); }
 ul.postlist a { font-size: 1.08rem; font-weight: 700; text-decoration: none; }
 ul.postlist a:hover, ul.postlist a:focus-visible { color: var(--yellow); }
 ul.postlist .excerpt { color: var(--fg-dim); margin: .4rem 0 0; font-size: var(--fs-small); max-width: var(--measure); }
-ul.postlist .meta { color: var(--fg-dim); font-size: var(--fs-small); margin: .5rem 0 0; }
+ul.postlist .meta {
+  color: var(--fg-dim);
+  font-size: var(--fs-small);
+  margin: .5rem 0 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .3rem .5rem;
+}
 
 .tag {
   display: inline-block;
+  background: rgba(255, 207, 63, 0.14);
   border: 1px solid var(--yellow);
   color: var(--yellow);
   border-radius: 3px;
-  padding: 0 .4rem;
+  padding: .05rem .45rem;
   font-size: .75rem;
   margin: 0 .4rem .4rem 0;
   transition: background-color .15s ease, color .15s ease;

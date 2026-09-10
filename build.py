@@ -338,11 +338,10 @@ def main():
         for t in post["tags"]:
             tag_map.setdefault(t, []).append(post)
 
-    posts_items = "\n".join(f'''      <li>
-        {tag_pills(p["tags"])}
+    posts_items = "\n".join(f'''      <li data-search="{html.escape((p["title"] + " " + p["excerpt"] + " " + " ".join(p["tags"])).lower(), quote=True)}">
         <div><a href="posts/{p["slug"]}.html">{html.escape(p["title"])}</a></div>
+        <p class="meta">{format_date(p["date"])} &middot; {p["reading"]} min de leitura {tag_pills(p["tags"])}</p>
         <p class="excerpt">{html.escape(p["excerpt"])}</p>
-        <p class="meta">{format_date(p["date"])} · {p["reading"]} min de leitura</p>
       </li>''' for p in posts)
 
     tags_items = "\n".join(f'''      <li>
@@ -382,11 +381,14 @@ def main():
           </div>
         </div>
 
-        <p class="colophon">{len(posts)} posts &middot; gerado por build.py a partir de Markdown, sem JS, sem CDN</p>
+        <p class="colophon">{len(posts)} posts &middot; gerado por build.py a partir de Markdown, sem CDN</p>
       </div>
 
       <aside class="sidebar">
         <div class="sidebar-card">
+          <div class="sidebar-avatar">
+            <img src="assets/avatar.jpg" alt="Foto de hgbits" width="44" height="44" loading="lazy">
+          </div>
           <p class="sidebar-mark">hgbits</p>
           <p>{html.escape(SITE_DESCRIPTION)}</p>
           <a href="sobre.html">saiba mais &rarr;</a>
