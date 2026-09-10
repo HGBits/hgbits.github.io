@@ -32,7 +32,7 @@
 
     function drawScanlines() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "rgba(0, 0, 0, 0.12)";
+      ctx.fillStyle = "rgba(0, 0, 0, 0.18)";
       for (var y = 0; y < canvas.height; y += 3) {
         ctx.fillRect(0, y, canvas.width, 1);
       }
@@ -42,11 +42,11 @@
     function drawSweep() {
       var grad = ctx.createLinearGradient(0, sweepY - 50, 0, sweepY + 50);
       grad.addColorStop(0, "rgba(46, 125, 214, 0)");
-      grad.addColorStop(0.5, "rgba(46, 125, 214, 0.05)");
+      grad.addColorStop(0.5, "rgba(46, 125, 214, 0.08)");
       grad.addColorStop(1, "rgba(46, 125, 214, 0)");
       ctx.fillStyle = grad;
       ctx.fillRect(0, sweepY - 50, canvas.width, 100);
-      sweepY += 1.2;
+      sweepY += 1.5;
       if (sweepY > canvas.height + 50) sweepY = -50;
     }
 

@@ -39,6 +39,16 @@ def resolve_src(src, root):
     return root + src
 
 
+def extract_images(md):
+    """Extrai todas as imagens referenciadas no corpo do post (alt/src/legenda)
+    para a galeria de artes. NÃO toca no parser de markdown — usa os mesmos
+    regexes já compilados só pra coleta de metadado, sem alterar renderização."""
+    out = []
+    for m in IMG_INLINE_RE.finditer(md):
+        alt, src, caption = m.group(1), m.group(2), m.group(3)
+        out.append({"alt": alt, "src": src, "caption": caption or ""})
+    return out
+
 # ---------- front matter ----------
 def parse_frontmatter(text):
     """Front matter simples 'chave: valor' entre linhas '---'. Sem libs de YAML."""
@@ -264,7 +274,7 @@ def build_rss(posts):
 
 def build_sitemap(posts):
     today = datetime.now().strftime("%Y-%m-%d")
-    urls = [(f"{SITE_URL}/", today), (f"{SITE_URL}/sobre.html", today)]
+    urls = [(f"{SITE_URL}/", today), (f"{SITE_URL}/sobre.html", today), (f"{SITE_URL}/artes.html", today)]
     urls += [(f'{SITE_URL}/posts/{p["slug"]}.html', p["date"] or today) for p in posts]
     entries = "\n".join(f'''  <url>
     <loc>{u}</loc>
@@ -291,6 +301,7 @@ def main():
             "date": meta.get("date", ""),
             "excerpt": meta.get("excerpt", ""),
             "tags": tags,
+            "images": extract_images(body),
             "body_html": markdown_to_html(body, root="../"),
             "reading": reading_time(body),
         })
@@ -313,6 +324,15 @@ def main():
       </header>
 
 {post["body_html"]}
+
+      <footer class="post-reply">
+        <p>Quer comentar? Me manda um e-mail ou responde no Mastodon:</p>
+        <p>
+          <a href="mailto:HG_Bits@protonmail.com">HG_Bits@protonmail.com</a>
+          &middot;
+          <a href="https://mastodon.social/@HG_Bits">@HG_Bits@mastodon.social</a>
+        </p>
+      </footer>
 
       <nav class="post-nav" aria-label="navegação entre posts">
         {prev_link}
@@ -337,6 +357,20 @@ def main():
     for post in posts:
         for t in post["tags"]:
             tag_map.setdefault(t, []).append(post)
+
+    # ---------- ano ----------
+    year_map = {}
+    for post in posts:
+        y = post["date"][:4]
+        year = y if y.isdigit() else "sem data"
+        year_map.setdefault(year, []).append(post)
+
+    anos_items = "\n".join(f'''      <li>
+        <span class="tag">{html.escape(year)}</span>
+        <ul class="taglist-posts">
+{chr(10).join(f'          <li><a href="posts/{p["slug"]}.html">{html.escape(p["title"])}</a></li>' for p in plist)}
+        </ul>
+      </li>''' for year, plist in sorted(year_map.items(), reverse=True))
 
     posts_items = "\n".join(f'''      <li data-search="{html.escape((p["title"] + " " + p["excerpt"] + " " + " ".join(p["tags"])).lower(), quote=True)}">
         <div><a href="posts/{p["slug"]}.html">{html.escape(p["title"])}</a></div>
@@ -363,9 +397,11 @@ def main():
         <div class="tabs">
           <input type="radio" name="tabs" id="tab-posts" checked>
           <input type="radio" name="tabs" id="tab-tags">
+          <input type="radio" name="tabs" id="tab-anos">
           <div class="tab-labels">
             <label for="tab-posts">Posts</label>
             <label for="tab-tags">Tags</label>
+            <label for="tab-anos">Anos</label>
           </div>
           <div class="tab-panels">
             <section class="tab-panel panel-posts">
@@ -376,6 +412,11 @@ def main():
             <section class="tab-panel panel-tags">
               <ul class="taglist">
 {tags_items}
+              </ul>
+            </section>
+            <section class="tab-panel panel-anos">
+              <ul class="taglist">
+{anos_items}
               </ul>
             </section>
           </div>
@@ -430,6 +471,42 @@ def main():
         BODY=sobre_body,
     )
     (ROOT_DIR / "sobre.html").write_text(sobre_html, encoding="utf-8")
+
+    # ---------- galeria de artes ----------
+    arte_items = []
+    for post in posts:
+        for img in post["images"]:
+            src_r = resolve_src(img["src"], "").replace('"', "&quot;")
+            alt_safe = html.escape(img["alt"] or "", quote=True)
+            cap = img["caption"] or img["alt"] or ""
+            arte_items.append(f'''      <figure class="art-card">
+        <a href="posts/{post["slug"]}.html">
+          <img src="{src_r}" alt="{alt_safe}" loading="lazy">
+        </a>
+        <figcaption>
+          {html.escape(cap)}<br>
+          <a href="posts/{post["slug"]}.html">{html.escape(post["title"])}</a>
+        </figcaption>
+      </figure>''')
+
+    artes_body = f'''    <article class="article-wrap">
+      <h1>artes</h1>
+      <p class="tagline">Todas as imagens usadas nos posts, num só lugar.</p>
+      <div class="art-grid">
+{chr(10).join(arte_items) if arte_items else "        <p>Nenhuma imagem publicada ainda.</p>"}
+      </div>
+    </article>'''
+
+    artes_html = render(
+        TEMPLATE,
+        TITLE="artes :: hgbits",
+        DESCRIPTION="Galeria de imagens usadas nos posts de hgbits.",
+        HEAD_EXTRA=head_extra(f"{SITE_URL}/artes.html", "website", "artes", "Galeria de imagens dos posts."),
+        YEAR=str(datetime.now().year),
+        ROOT="",
+        BODY=artes_body,
+    )
+    (ROOT_DIR / "artes.html").write_text(artes_html, encoding="utf-8")
 
     # ---------- feed.xml + sitemap.xml ----------
     (ROOT_DIR / "feed.xml").write_text(build_rss(posts), encoding="utf-8")

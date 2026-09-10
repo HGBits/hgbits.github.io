@@ -339,7 +339,8 @@ pre code {
 .tab-labels label:hover { color: var(--blue); }
 
 #tab-posts:checked ~ .tab-labels label[for="tab-posts"],
-#tab-tags:checked  ~ .tab-labels label[for="tab-tags"] {
+#tab-tags:checked  ~ .tab-labels label[for="tab-tags"], 
+#tab-anos:checked  ~ .tab-labels label[for="tab-anos"] {
   color: var(--yellow);
   border-color: var(--blue-dim);
   background: var(--bg);
@@ -350,7 +351,8 @@ pre code {
 .tab-panels h2 { margin-top: 0; }
 .tab-panel { display: none; }
 #tab-posts:checked ~ .tab-panels .panel-posts,
-#tab-tags:checked  ~ .tab-panels .panel-tags {
+#tab-tags:checked  ~ .tab-panels .panel-tags, 
+#tab-anos:checked  ~ .tab-panels .panel-anos {
   display: block;
 }
 
@@ -411,3 +413,42 @@ tbody tr:hover td { background: var(--blue-glow); }
   .header-inner { padding: 1rem; }
   main { padding: 1.6rem 0 2.4rem; }
 }
+
+#crt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+}
+
+.post-reply {
+  margin: 2rem 0 1.4rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--blue-dim);
+  color: var(--fg-dim);
+  font-size: var(--fs-small);
+}
+.post-reply a { color: var(--blue); }
+.post-reply a:hover, .post-reply a:focus-visible { color: var(--yellow); }
+
+.art-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1.4rem;
+}
+.art-card {
+  margin: 0;
+  border: 1px solid var(--blue-dim);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--bg-card);
+}
+.art-card img { width: 100%; height: auto; display: block; }
+.art-card figcaption {
+  padding: .6rem .8rem;
+  font-size: var(--fs-small);
+  color: var(--fg-dim);
+  border-left: none;
+}
+.art-card figcaption a { color: var(--blue); }
