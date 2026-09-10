@@ -12,6 +12,7 @@ import html
 from pathlib import Path
 from datetime import datetime, timezone
 from email.utils import format_datetime
+from urllib.parse import quote
 
 ROOT_DIR = Path(__file__).parent
 CONTENT = ROOT_DIR / "content"
@@ -240,7 +241,7 @@ def build_rss(posts):
             dt = datetime.strptime(p["date"], "%Y-%m-%d").replace(tzinfo=timezone.utc)
         except Exception:
             dt = datetime.now(timezone.utc)
-        link = f'{SITE_URL}/posts/{p["slug"]}.html'
+        link = f'{SITE_URL}/posts/{quote(p["slug"])}.html'
         items.append(f'''    <item>
       <title>{html.escape(p["title"], quote=True)}</title>
       <link>{link}</link>
@@ -265,7 +266,7 @@ def build_rss(posts):
 def build_sitemap(posts):
     today = datetime.now().strftime("%Y-%m-%d")
     urls = [(f"{SITE_URL}/", today), (f"{SITE_URL}/sobre.html", today)]
-    urls += [(f'{SITE_URL}/posts/{p["slug"]}.html', p["date"] or today) for p in posts]
+    urls += [(f'{SITE_URL}/posts/{quote(p["slug"])}.html', p["date"] or today) for p in posts]
     entries = "\n".join(f'''  <url>
     <loc>{u}</loc>
     <lastmod>{lastmod}</lastmod>
@@ -320,7 +321,7 @@ def main():
       </nav>
     </article>'''
 
-        canonical = f'{SITE_URL}/posts/{post["slug"]}.html'
+        canonical = f'{SITE_URL}/posts/{quote(post["slug"])}.html'
         html_out = render(
             TEMPLATE,
             TITLE=html.escape(f'{post["title"]} :: hgbits', quote=True),
