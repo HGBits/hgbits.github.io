@@ -243,7 +243,6 @@ hr { border: none; border-top: 1px solid var(--blue-dim); margin: 1.6rem 0; }
   margin: 0 0 .5rem;
 }
 .sidebar-mark::before { content: "~/"; color: var(--blue); }
-.sidebar-card a { font-size: var(--fs-small); }
 .tag-cloud { display: flex; flex-wrap: wrap; gap: .4rem; }
 .tag-cloud .tag { margin: 0; }
 
@@ -257,8 +256,6 @@ ul.postlist li {
   transition: border-color .15s ease, transform .15s ease;
 }
 ul.postlist li:hover { border-color: var(--blue); transform: translateY(-2px); }
-ul.postlist a { font-size: 1.08rem; font-weight: 700; text-decoration: none; }
-ul.postlist a:hover, ul.postlist a:focus-visible { color: var(--yellow); }
 ul.postlist .excerpt { color: var(--fg-dim); margin: .4rem 0 0; font-size: var(--fs-small); max-width: var(--measure); }
 ul.postlist .meta {
   color: var(--fg-dim);
