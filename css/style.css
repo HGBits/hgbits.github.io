@@ -119,10 +119,32 @@ a:hover, a:focus-visible { color: var(--yellow); text-decoration-color: var(--ye
   padding: 1.3rem 1rem;
 }
 
-.wordmark { margin: 0; font-size: 1.2rem; }
-.wordmark a { color: var(--fg); font-weight: 700; text-decoration: none; }
-.wordmark a:hover, .wordmark a:focus-visible { color: var(--yellow); }
-.wordmark a::before { content: "~/"; color: var(--blue); }
+.wordmark { margin: 0; font-size: 1.6rem; }
+.wordmark a {
+  font-weight: 700;
+  text-decoration: none;
+  background: linear-gradient(90deg, var(--fg) 0%, var(--yellow) 45%, var(--blue) 55%, var(--fg) 100%);
+  background-size: 220% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: wordmark-shine 7s linear infinite;
+}
+.wordmark a:hover, .wordmark a:focus-visible {
+  animation-duration: 2.2s;
+}
+.wordmark a::before {
+  content: "~/";
+  color: var(--blue);
+  -webkit-text-fill-color: var(--blue);
+}
+@keyframes wordmark-shine {
+  to { background-position: -220% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wordmark a { animation: none; background-position: 0 0; }
+}
 
 .site-nav { display: flex; gap: 1.3rem; font-size: var(--fs-small); }
 .site-nav a { color: var(--fg-dim); text-decoration: none; }
@@ -312,7 +334,7 @@ pre code {
 /* ---------- abas CSS-only (sem JS) ----------
    Em navegadores gráficos: alterna painel via :checked.
    Em terminal (sem CSS): os radios viram controles inofensivos
-   e AMBOS os painéis aparecem inteiros, um após o outro. */
+   e todos os painéis aparecem inteiros, um após o outro. */
 .tabs input[type="radio"] {
   position: absolute;
   opacity: 0;

@@ -9,6 +9,7 @@ Uso:
 """
 import re
 import html
+import unicodedata
 from pathlib import Path
 from datetime import datetime, timezone
 from email.utils import format_datetime
@@ -29,7 +30,6 @@ IMG_INLINE_RE = re.compile(r'!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)')
 IMG_BLOCK_RE = re.compile(r'^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)\s*$')
 TABLE_SEP_RE = re.compile(r'^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\s*$')
 
-
 def resolve_src(src, root):
     """Caminhos absolutos (http, //, /, #) ficam intactos; relativos ganham o
     prefixo ROOT (\"\" na raiz, \"../\" dentro de posts/) para resolver certo
@@ -38,13 +38,20 @@ def resolve_src(src, root):
         return src
     return root + src
 
+def slugify(text):
+    text = unicodedata.normalize("NFD", text)
+    text = text.encode("ascii", "ignore").decode("ascii")
+    text = text.lower()
+    text = re.sub(r'[^a-z0-9]+', '-', text).strip('-')
+    return text or "tag"
 
 def extract_images(md):
     """Extrai todas as imagens referenciadas no corpo do post (alt/src/legenda)
     para a galeria de artes. NÃO toca no parser de markdown — usa os mesmos
     regexes já compilados só pra coleta de metadado, sem alterar renderização."""
+    md_no_code = re.sub(r'```.*?```', '', md, flags=re.DOTALL)
     out = []
-    for m in IMG_INLINE_RE.finditer(md):
+    for m in IMG_INLINE_RE.finditer(md_no_code):
         alt, src, caption = m.group(1), m.group(2), m.group(3)
         out.append({"alt": alt, "src": src, "caption": caption or ""})
     return out
@@ -62,7 +69,6 @@ def parse_frontmatter(text):
             key, val = line.split(":", 1)
             meta[key.strip()] = val.strip()
     return meta, body
-
 
 # ---------- markdown -> html (subconjunto deliberadamente pequeno e auditável) ----------
 # NADA nesta seção foi alterado.
@@ -219,10 +225,19 @@ def render(template, **kwargs):
         out = out.replace("{{" + key + "}}", val)
     return out
 
+def tag_link(tag, root=""):
+    slug = slugify(tag)
+    return f'<a class="tag" href="{root}tags/{slug}.html">{html.escape(tag.strip())}</a>'
 
-def tag_pills(tags):
-    return " · ".join(f'<span class="tag">{html.escape(t.strip())}</span>' for t in tags)
+def tag_pills(tags, root=""):
+    return " · ".join(tag_link(t, root) for t in tags)
 
+def render_post_list(posts_list, root=""):
+    return "\n".join(f'''      <li data-search="{html.escape((p["title"] + " " + p["excerpt"] + " " + " ".join(p["tags"])).lower(), quote=True)}">
+        <div><a href="{root}posts/{p["slug"]}.html">{html.escape(p["title"])}</a></div>
+        <p class="meta">{format_date(p["date"])} &middot; {p["reading"]} min de leitura {tag_pills(p["tags"], root)}</p>
+        <p class="excerpt">{html.escape(p["excerpt"])}</p>
+      </li>''' for p in posts_list)
 
 def head_extra(canonical, og_type, og_title, og_description):
     """Bloco de <head> com canonical + Open Graph + Twitter Card.
@@ -271,11 +286,11 @@ def build_rss(posts):
 </rss>
 '''
 
-
-def build_sitemap(posts):
+def build_sitemap(posts, tag_map):
     today = datetime.now().strftime("%Y-%m-%d")
     urls = [(f"{SITE_URL}/", today), (f"{SITE_URL}/sobre.html", today), (f"{SITE_URL}/artes.html", today)]
     urls += [(f'{SITE_URL}/posts/{p["slug"]}.html', p["date"] or today) for p in posts]
+    urls += [(f'{SITE_URL}/tags/{slugify(t)}.html', today) for t in tag_map]
     entries = "\n".join(f'''  <url>
     <loc>{u}</loc>
     <lastmod>{lastmod}</lastmod>
@@ -285,7 +300,6 @@ def build_sitemap(posts):
 {entries}
 </urlset>
 '''
-
 
 def main():
     posts = []
@@ -320,7 +334,7 @@ def main():
       <header class="post-header">
         <h1>{html.escape(post["title"])}</h1>
         <p class="byline">{format_date(post["date"])} &middot; {post["reading"]} min de leitura</p>
-        <p class="tags">{tag_pills(post["tags"])}</p>
+        <p class="tags">{tag_pills(post["tags"], root="../")}</p>
       </header>
 
 {post["body_html"]}
@@ -365,27 +379,27 @@ def main():
         year = y if y.isdigit() else "sem data"
         year_map.setdefault(year, []).append(post)
 
-    anos_items = "\n".join(f'''      <li>
-        <span class="tag">{html.escape(year)}</span>
-        <ul class="taglist-posts">
-{chr(10).join(f'          <li><a href="posts/{p["slug"]}.html">{html.escape(p["title"])}</a></li>' for p in plist)}
-        </ul>
-      </li>''' for year, plist in sorted(year_map.items(), reverse=True))
-
-    posts_items = "\n".join(f'''      <li data-search="{html.escape((p["title"] + " " + p["excerpt"] + " " + " ".join(p["tags"])).lower(), quote=True)}">
-        <div><a href="posts/{p["slug"]}.html">{html.escape(p["title"])}</a></div>
-        <p class="meta">{format_date(p["date"])} &middot; {p["reading"]} min de leitura {tag_pills(p["tags"])}</p>
-        <p class="excerpt">{html.escape(p["excerpt"])}</p>
-      </li>''' for p in posts)
+    posts_items = render_post_list(posts, root="")
 
     tags_items = "\n".join(f'''      <li>
-        <span class="tag">{html.escape(tag)}</span>
+        {tag_link(tag)}
         <ul class="taglist-posts">
 {chr(10).join(f'          <li><a href="posts/{p["slug"]}.html">{html.escape(p["title"])}</a></li>' for p in plist)}
         </ul>
       </li>''' for tag, plist in tag_map.items())
 
-    tag_cloud = " ".join(f'<span class="tag">{html.escape(t)}</span>' for t in sorted(tag_map.keys()))
+    tag_cloud = " ".join(tag_link(t) for t in sorted(tag_map.keys()))
+
+    years_sorted = sorted((y for y in year_map if y != "sem data"), reverse=True)
+    if "sem data" in year_map:
+        years_sorted.append("sem data")
+
+    anos_items = "\n".join(f'''      <li>
+        <span class="tag">{html.escape(year)}</span>
+        <ul class="taglist-posts">
+{chr(10).join(f'          <li><a href="posts/{p["slug"]}.html">{html.escape(p["title"])}</a></li>' for p in year_map[year])}
+        </ul>
+      </li>''' for year in years_sorted)
 
     index_body = f'''    <div class="layout-grid">
       <div class="layout-main">
@@ -508,12 +522,36 @@ def main():
     )
     (ROOT_DIR / "artes.html").write_text(artes_html, encoding="utf-8")
 
+    # ---------- páginas por tag ----------
+    (ROOT_DIR / "tags").mkdir(parents=True, exist_ok=True)
+    for tag, plist in tag_map.items():
+        slug = slugify(tag)
+        n = len(plist)
+        tag_body = f'''    <article class="article-wrap">
+      <h1>tag: {html.escape(tag)}</h1>
+      <p class="tagline">{n} post{"s" if n != 1 else ""} com essa tag.</p>
+      <ul class="postlist">
+{render_post_list(plist, root="../")}
+      </ul>
+      <p class="colophon"><a href="../index.html">&larr; voltar pra todos os posts</a></p>
+    </article>'''
+        tag_html_out = render(
+            TEMPLATE,
+            TITLE=html.escape(f'tag: {tag} :: hgbits', quote=True),
+            DESCRIPTION=html.escape(f'Posts marcados com a tag {tag}.', quote=True),
+            HEAD_EXTRA=head_extra(f"{SITE_URL}/tags/{slug}.html", "website", f"tag: {tag}", f"Posts marcados com a tag {tag}."),
+            YEAR=str(datetime.now().year),
+            ROOT="../",
+            BODY=tag_body,
+        )
+        (ROOT_DIR / "tags" / f"{slug}.html").write_text(tag_html_out, encoding="utf-8")
+
     # ---------- feed.xml + sitemap.xml ----------
     (ROOT_DIR / "feed.xml").write_text(build_rss(posts), encoding="utf-8")
-    (ROOT_DIR / "sitemap.xml").write_text(build_sitemap(posts), encoding="utf-8")
+    (ROOT_DIR / "sitemap.xml").write_text(build_sitemap(posts, tag_map), encoding="utf-8")
 
-    print(f"OK: {len(posts)} posts, {len(tag_map)} tags, index.html, sobre.html, feed.xml e sitemap.xml gerados.")
-
+    print(f"OK: {len(posts)} posts, {len(tag_map)} tags, index.html, sobre.html, "
+          f"artes.html, {len(tag_map)} páginas de tag, feed.xml e sitemap.xml gerados.")
 
 if __name__ == "__main__":
     main()
