@@ -1,7 +1,7 @@
 ---
 title: O Amor não vivido
 date: 2025-07-28
-tags: poesia
+tags: Poesia
 excerpt: pequena poesia sobre relações amorosas, indecifribilidade e admirar à distância
 ---
 

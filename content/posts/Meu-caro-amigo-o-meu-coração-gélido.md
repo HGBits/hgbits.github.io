@@ -1,7 +1,7 @@
 ---
 title: Meu caro amigo, o meu coração gélido.
 date: 2025-08-05
-tags: poesia
+tags: Poesia
 excerpt: uma ilusão de amor
 ---
 
