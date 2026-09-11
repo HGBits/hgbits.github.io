@@ -474,3 +474,7 @@ tbody tr:hover td { background: var(--blue-glow); }
   border-left: none;
 }
 .art-card figcaption a { color: var(--blue); }
+
+ul.postlist a:not(.tag) { font-size: 1.08rem; font-weight: 700; text-decoration: none; }
+ul.postlist a:not(.tag):hover, ul.postlist a:not(.tag):focus-visible { color: var(--yellow); }
+.sidebar-card a:not(.tag) { font-size: var(--fs-small); }
