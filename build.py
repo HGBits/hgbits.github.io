@@ -56,6 +56,29 @@ def extract_images(md):
         out.append({"alt": alt, "src": src, "caption": caption or ""})
     return out
 
+HEADING_RE = re.compile(r'<(h2|h3)>(.*?)</\1>', re.DOTALL)
+
+def add_heading_ids(body_html):
+    """Pós-processa o HTML já renderizado: dá id a cada h2/h3 e monta o
+    sumário (TOC). NÃO mexe no parser de markdown — só decora a saída
+    depois de pronta, igual extract_images faz para a galeria de artes."""
+    toc = []
+    used_slugs = set()
+
+    def repl(m):
+        level, inner = m.group(1), m.group(2)
+        plain = html.unescape(re.sub(r'<[^>]+>', '', inner)).strip()
+        slug = slugify(plain) or "secao"
+        base, n = slug, 2
+        while slug in used_slugs:
+            slug = f"{base}-{n}"
+            n += 1
+        used_slugs.add(slug)
+        toc.append((level, inner, slug))
+        return f'<{level} id="{slug}">{inner}</{level}>'
+
+    return HEADING_RE.sub(repl, body_html), toc
+
 # ---------- front matter ----------
 def parse_frontmatter(text):
     """Front matter simples 'chave: valor' entre linhas '---'. Sem libs de YAML."""
@@ -309,6 +332,8 @@ def main():
         raw = md_file.read_text(encoding="utf-8")
         meta, body = parse_frontmatter(raw)
         tags = [t.strip() for t in meta.get("tags", "").split(",") if t.strip()]
+        raw_body_html = markdown_to_html(body, root="../")
+        body_html, toc = add_heading_ids(raw_body_html)
         posts.append({
             "slug": md_file.stem,
             "title": meta.get("title", md_file.stem),
@@ -316,7 +341,8 @@ def main():
             "excerpt": meta.get("excerpt", ""),
             "tags": tags,
             "images": extract_images(body),
-            "body_html": markdown_to_html(body, root="../"),
+            "body_html": body_html,
+            "toc": toc,
             "reading": reading_time(body),
         })
     posts.sort(key=lambda p: p["date"], reverse=True)
@@ -330,13 +356,30 @@ def main():
         next_link = (f'<a href="{next_p["slug"]}.html" rel="next">{html.escape(next_p["title"])} &rarr;</a>'
                      if next_p else '<span></span>')
 
+        toc_html = ""
+        if len(post["toc"]) >= 2:
+            toc_items = "\n".join(
+                f'          <li class="toc-{level}"><a href="#{slug}">{text}</a></li>'
+                for level, text, slug in post["toc"]
+            )
+            toc_html = f'''
+      <div class="toc">
+        <input type="checkbox" id="toc-toggle" class="toc-checkbox">
+        <label for="toc-toggle" class="toc-button">Sumário</label>
+        <nav class="toc-panel" aria-label="sumário do post">
+          <ul>
+{toc_items}
+          </ul>
+        </nav>
+      </div>'''
+
         body = f'''    <article class="article-wrap">
       <header class="post-header">
         <h1>{html.escape(post["title"])}</h1>
         <p class="byline">{format_date(post["date"])} &middot; {post["reading"]} min de leitura</p>
         <p class="tags">{tag_pills(post["tags"], root="../")}</p>
       </header>
-
+{toc_html}
 {post["body_html"]}
 
       <footer class="post-reply">
