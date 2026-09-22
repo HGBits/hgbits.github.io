@@ -508,3 +508,21 @@ ul.postlist a:not(.tag):hover, ul.postlist a:not(.tag):focus-visible { color: va
 .toc-panel .toc-h3 { padding-left: 1.1rem; }
 .toc-panel a { font-size: var(--fs-small); color: var(--fg-dim); text-decoration: none; }
 .toc-panel a:hover, .toc-panel a:focus-visible { color: var(--blue); }
+
+.tts-wrap { margin: 0 0 1.4rem; }
+.tts-button {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  background: var(--bg-card);
+  border: 1px solid var(--blue-dim);
+  border-radius: 6px;
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: var(--fs-small);
+  padding: .5rem .9rem;
+  cursor: pointer;
+  transition: border-color .15s ease, color .15s ease;
+}
+.tts-button:hover, .tts-button:focus-visible { border-color: var(--blue); color: var(--blue); }
+.tts-button.tts-active { border-color: var(--yellow); color: var(--yellow); }

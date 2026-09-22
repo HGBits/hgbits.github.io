@@ -380,7 +380,9 @@ def main():
         <p class="tags">{tag_pills(post["tags"], root="../")}</p>
       </header>
 {toc_html}
+      <div id="post-content">
 {post["body_html"]}
+      </div>
 
       <footer class="post-reply">
         <p>Quer comentar? Me manda um e-mail ou responde no Mastodon:</p>
