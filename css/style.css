@@ -526,3 +526,5 @@ ul.postlist a:not(.tag):hover, ul.postlist a:not(.tag):focus-visible { color: va
 }
 .tts-button:hover, .tts-button:focus-visible { border-color: var(--blue); color: var(--blue); }
 .tts-button.tts-active { border-color: var(--yellow); color: var(--yellow); }
+
+.giscus-wrap { margin: 2.2rem 0 0; }
