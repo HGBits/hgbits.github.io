@@ -1,7 +1,7 @@
 ---
 title: O Conto da Raposa
 date: 2026-10-09
-tags: Diário-de-mentira, poesia
+tags: Diário-de-mentira, Poesia
 excerpt: carne e sangue, estou satisfeito.
 ---
 
