@@ -2,7 +2,7 @@
 title: O Âmago
 date: 2026-10-13
 tags: Diário-de-mentira, Poesia
-excerpt: 
+excerpt: a raposa me adotou sem perceber...
 ---
 
 Eu nasci do nada para o nada, eu sou o âmago de um ser,

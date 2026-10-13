@@ -2,7 +2,7 @@
 title: A Intensidade da Raposa
 date: 2026-10-13
 tags: Diário-de-mentira, Poesia
-excerpt: 
+excerpt: o instante em que o medo as faz estremecer...
 ---
 
 Quero estar perto delas,
