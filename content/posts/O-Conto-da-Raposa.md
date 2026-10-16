@@ -1,7 +1,7 @@
 ---
-title: O Conto da Raposa
+title: Entre as folhas
 date: 2026-10-09
-tags: Diário-de-mentira, Poesia
+tags: O-Conto-da-Raposa, Poesia
 excerpt: carne e sangue, estou satisfeito.
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: A Intensidade da Raposa
 date: 2026-10-13
-tags: Diário-de-mentira, Poesia
+tags: O-Conto-da-Raposa, Poesia
 excerpt: o instante em que o medo as faz estremecer...
 ---
 

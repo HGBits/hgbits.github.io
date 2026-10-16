@@ -1,7 +1,7 @@
 ---
 title: O Âmago
 date: 2026-10-13
-tags: Diário-de-mentira, Poesia
+tags: O-Conto-da-Raposa, Poesia
 excerpt: a raposa me adotou sem perceber...
 ---
 
