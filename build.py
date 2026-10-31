@@ -256,11 +256,18 @@ def tag_pills(tags, root=""):
     return " · ".join(tag_link(t, root) for t in tags)
 
 def render_post_list(posts_list, root=""):
-    return "\n".join(f'''      <li data-search="{html.escape((p["title"] + " " + p["excerpt"] + " " + " ".join(p["tags"])).lower(), quote=True)}">
-        <div><a href="{root}posts/{p["slug"]}.html">{html.escape(p["title"])}</a></div>
-        <p class="meta">{format_date(p["date"])} &middot; {p["reading"]} min de leitura {tag_pills(p["tags"], root)}</p>
-        <p class="excerpt">{html.escape(p["excerpt"])}</p>
-      </li>''' for p in posts_list)
+    items = []
+    for post in posts_list:
+        adult_badge = (
+            '<span class="adult-badge" aria-label="Conteúdo para maiores de 18 anos">+18</span>'
+            if post["classification"] in {"18+", "adult", "adulto"} else ""
+        )
+        items.append(f'''      <li data-search="{html.escape((post["title"] + " " + post["excerpt"] + " " + " ".join(post["tags"])).lower(), quote=True)}">
+        <div><a href="{root}posts/{post["slug"]}.html">{html.escape(post["title"])}</a> {adult_badge}</div>
+        <p class="meta">{format_date(post["date"])} &middot; {post["reading"]} min de leitura {tag_pills(post["tags"], root)}</p>
+        <p class="excerpt">{html.escape(post["excerpt"])}</p>
+      </li>''')
+    return "\n".join(items)
 
 def head_extra(canonical, og_type, og_title, og_description):
     """Bloco de <head> com canonical + Open Graph + Twitter Card.
@@ -384,15 +391,6 @@ def main():
       <div id="post-content">
 {post["body_html"]}
       </div>
-
-      <footer class="post-reply">
-        <p>Quer comentar? Me manda um e-mail ou responde no Mastodon:</p>
-        <p>
-          <a href="mailto:HG_Bits@protonmail.com">HG_Bits@protonmail.com</a>
-          &middot;
-          <a href="https://mastodon.social/@HG_Bits">@HG_Bits@mastodon.social</a>
-        </p>
-      </footer>
 
       <section class="giscus-wrap" aria-label="comentários">
         <script src="https://giscus.app/client.js"
