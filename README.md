@@ -79,9 +79,10 @@ O campo `classification` é opcional. Os valores abaixo, sem distinção entre m
 
 - `18+`
 - `adult`
-- `adulto`
 
-Qualquer outro valor, inclusive `public` ou a ausência do campo, não ativa o Age Gate.
+O valor `14+` é uma classificação exclusivamente visual: não ativa o Age Gate nem bloqueia a leitura.
+
+Qualquer outro valor, inclusive `14+`, `public` ou a ausência do campo, não ativa o Age Gate. O selo `+14` aparece apenas na listagem inicial.
 
 Quando ativado:
 
