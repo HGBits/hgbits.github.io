@@ -455,16 +455,20 @@ ${body}
         for t in post["tags"]:
             tag_map.setdefault(t, []).append(post)
 
-    # ---------- ano ----------
+    # ---------- arquivo por ano e mês ----------
     year_map = {}
     for post in posts:
-        y = post["date"][:4]
-        year = y if y.isdigit() else "sem data"
-        year_map.setdefault(year, []).append(post)
+        date = post["date"]
+        year = date[:4] if date[:4].isdigit() else "sem data"
+        try:
+            month = datetime.strptime(date, "%Y-%m-%d").month
+        except ValueError:
+            month = 0
+        year_map.setdefault(year, {}).setdefault(month, []).append(post)
 
     posts_items = render_post_list(posts, root="")
 
-    tags_items = "\n".join(f'''      <li>
+    tags_items = "\\n".join(f'''      <li>
         {tag_link(tag)}
         <ul class="taglist-posts">
 {chr(10).join(f'          <li><a href="posts/{p["slug"]}.html">{html.escape(p["title"])}</a></li>' for p in plist)}
@@ -473,16 +477,39 @@ ${body}
 
     tag_cloud = " ".join(tag_link(t) for t in sorted(tag_map.keys()))
 
+    month_names = {
+        1: "janeiro", 2: "fevereiro", 3: "março", 4: "abril",
+        5: "maio", 6: "junho", 7: "julho", 8: "agosto",
+        9: "setembro", 10: "outubro", 11: "novembro", 12: "dezembro",
+        0: "sem mês",
+    }
     years_sorted = sorted((y for y in year_map if y != "sem data"), reverse=True)
     if "sem data" in year_map:
         years_sorted.append("sem data")
 
-    anos_items = "\n".join(f'''      <li>
+    archive_years = []
+    for year in years_sorted:
+        month_groups = []
+        for month in sorted(year_map[year], reverse=True):
+            month_posts = year_map[year][month]
+            links = "\\n".join(
+                f'              <li><a href="posts/{post["slug"]}.html">{html.escape(post["title"])}</a></li>'
+                for post in month_posts
+            )
+            month_groups.append(f'''          <section class="archive-month">
+            <h3 class="archive-month-title">{month_names[month]}</h3>
+            <ul class="taglist-posts">
+{links}
+            </ul>
+          </section>''')
+        archive_years.append(f'''      <li class="archive-year">
         <span class="tag">{html.escape(year)}</span>
-        <ul class="taglist-posts">
-{chr(10).join(f'          <li><a href="posts/{p["slug"]}.html">{html.escape(p["title"])}</a></li>' for p in year_map[year])}
-        </ul>
-      </li>''' for year in years_sorted)
+        <div class="archive-months">
+{chr(10).join(month_groups)}
+        </div>
+      </li>''')
+
+    anos_items = "\\n".join(archive_years)
 
     index_body = f'''    <div class="layout-grid">
       <div class="layout-main">
