@@ -612,14 +612,38 @@ ${body}
     # ---------- galeria de artes ----------
     arte_items = []
     for post in posts:
+        is_adult = post["classification"] in {"18+", "adult"}
         for img in post["images"]:
             src_r = resolve_src(img["src"], "").replace('"', "&quot;")
             alt_safe = html.escape(img["alt"] or "", quote=True)
             cap = img["caption"] or img["alt"] or ""
-            arte_items.append(f'''      <figure class="art-card">
-        <a href="posts/{post["slug"]}.html">
+            if is_adult:
+                image_html = f'''        <div class="art-image-wrap" data-age-gallery>
+          <a href="posts/{post["slug"]}.html">
+            <img class="art-card-image" src="{src_r}" alt="{alt_safe}" loading="lazy">
+          </a>
+          <div class="art-age-overlay" data-art-prompt>
+            <span class="adult-badge">+18</span>
+            <p>Imagem com conteúdo restrito.</p>
+            <p>Você é maior de 18 anos?</p>
+            <div class="art-age-actions">
+              <button class="age-gate-button age-gate-yes" type="button" data-art-yes>Sim</button>
+              <button class="age-gate-button age-gate-no" type="button" data-art-no>Não</button>
+            </div>
+          </div>
+          <div class="art-age-overlay" data-art-denied hidden>
+            <span class="adult-badge">+18</span>
+            <p>Acesso não autorizado.</p>
+          </div>
+        </div>'''
+                card_class = "art-card art-card-restricted"
+            else:
+                image_html = f'''        <a href="posts/{post["slug"]}.html">
           <img src="{src_r}" alt="{alt_safe}" loading="lazy">
-        </a>
+        </a>'''
+                card_class = "art-card"
+            arte_items.append(f'''      <figure class="{card_class}">
+{image_html}
         <figcaption>
           {html.escape(cap)}<br>
           <a href="posts/{post["slug"]}.html">{html.escape(post["title"])}</a>
