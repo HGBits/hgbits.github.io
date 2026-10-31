@@ -5,6 +5,8 @@ tags: Artigos
 excerpt: essa é uma pergunta importante e a resposta dela deve levar várias coisas em consideração seja a Liberdade de customização, o Sideload de apps, ou a possibilidade de trocar de sistema, etc
 ---
 
+![Capa do Post](assets/Seu-Celular-Realmente-Te-Pertence.png)
+
 Para todos nós usuários de smartphones essa é uma pergunta importante e a resposta dela deve levar várias coisas em consideração seja a Liberdade de customização, o Sideload de apps, ou a possibilidade de trocar de sistema, etc 
  
 De cara por esses tês pontos é óbvio que no iphone você tem menos autonomia, você não controla o dispositivo mas, essa é também a preferência do usuário, quem compra iphone cede liberdade em troca de segurança, embora que essa segurança não seja total. na prática o usuário de iphone está apenas optando por deixar essa responsabilidade para terceiros ao invés de ele próprio gerenciar isto mas, não é muito diferente no android, a google te deixa fazer algumas coisas, desde que não saia para muito longe do cercadinho dela.. 

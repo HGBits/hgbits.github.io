@@ -6,6 +6,8 @@ excerpt: carne e sangue, estou satisfeito.
 classification: 18+
 ---
 
+![Capa do post](assets/Entre-Folhas.png "Raposa preta com partes brancas sorrindo de forma maliciosa enquanto está deitada sobre folhas de outono.")
+
 Era o meu dia, o dia de morder, o dia em que os olhos da lebre se encheram de lágrimas
 eu pude sentir seu sangue escorrendo entre os meus dentes.
 
