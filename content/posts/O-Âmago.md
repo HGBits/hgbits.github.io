@@ -3,6 +3,7 @@ title: O Âmago
 date: 2026-10-13
 tags: O-Conto-da-Raposa, Poesia
 excerpt: a raposa me adotou sem perceber...
+classification: 18+
 ---
 
 Eu nasci do nada para o nada, eu sou o âmago de um ser,

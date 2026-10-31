@@ -3,6 +3,7 @@ title: A Intensidade da Raposa
 date: 2026-10-13
 tags: O-Conto-da-Raposa, Poesia
 excerpt: o instante em que o medo as faz estremecer...
+classification: 18+
 ---
 
 Quero estar perto delas,

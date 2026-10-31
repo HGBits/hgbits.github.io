@@ -3,6 +3,7 @@ title: Descoberta
 date: 2026-09-04
 tags: Diário
 excerpt: é como eu disse a umas semanas atrás "sou como uma raposa faminta que quando sente uma presa por perto tem vontade de comer"
+classification: 18+
 ---
 
 Em algum momento da vida todos nós vamos chegar inevitávlemente a conclusões sobre nós mesmos, eu cheguei na conclusão de que a natureza pessoal de alguém é imutável quanto a aspectos singulares e extremamente flexíveis em outros, falo isso por conta própria. Eu mudei muito nos últimos anos, tenho opiniões hoje diferentes das do passado mas, igualmente imutáveis em certos sentidos.

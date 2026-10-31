@@ -3,6 +3,7 @@ title: Meu Medo
 date: 2026-07-14
 tags: Diário
 excerpt: eu tenho medo de ser mal compreendido pelo que vou falar aqui...
+classification: 18+
 ---
 
 Olá novamente meu diário para o mundo, eu tenho medo de ser mal compreendido pelo que vou falar aqui.

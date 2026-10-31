@@ -3,6 +3,7 @@ title: Entre as folhas
 date: 2026-10-09
 tags: O-Conto-da-Raposa, Poesia
 excerpt: carne e sangue, estou satisfeito.
+classification: 18+
 ---
 
 Era o meu dia, o dia de morder, o dia em que os olhos da lebre se encheram de lágrimas

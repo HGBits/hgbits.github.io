@@ -3,6 +3,7 @@ title: Algo Novo
 date: 2026-10-29
 tags: Diário
 excerpt: Caro diário, eu venho aqui contá-lo algo novo.
+classification: 18+
 ---
 
 Caro diário, eu venho aqui contá-lo algo novo.
