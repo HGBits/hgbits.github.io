@@ -528,3 +528,61 @@ ul.postlist a:not(.tag):hover, ul.postlist a:not(.tag):focus-visible { color: va
 .tts-button.tts-active { border-color: var(--yellow); color: var(--yellow); }
 
 .giscus-wrap { margin: 2.2rem 0 0; }
+
+
+/* ---------- age gate ---------- */
+.age-gate {
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+}
+.age-gate-prompt,
+.age-gate-denied {
+  padding: clamp(1.4rem, 4vw, 2.2rem);
+  border: 1px solid var(--blue-dim);
+  border-top: 2px solid var(--yellow);
+  border-radius: 8px;
+  background: var(--bg-card);
+}
+.age-gate-label {
+  color: var(--yellow);
+  font-size: var(--fs-small);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: .7rem;
+}
+.age-gate-prompt h1,
+.age-gate-denied h1 {
+  font-size: clamp(1.45rem, 1.2rem + 1vw, 2rem);
+}
+.age-gate-prompt > p:not(.age-gate-label),
+.age-gate-denied p {
+  color: var(--fg-dim);
+}
+.age-gate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .7rem;
+  margin-top: 1.4rem;
+}
+.age-gate-button {
+  border: 1px solid var(--blue-dim);
+  border-radius: 5px;
+  padding: .7rem 1rem;
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  font-size: var(--fs-small);
+  cursor: pointer;
+}
+.age-gate-button:hover { border-color: var(--blue); color: var(--blue); }
+.age-gate-yes { border-color: var(--yellow); color: var(--yellow); }
+.age-gate-yes:hover { background: var(--yellow); color: var(--bg); }
+.age-gate-denied a { display: inline-block; margin-top: .3rem; }
+.age-gate-content[hidden],
+.age-gate-prompt[hidden],
+.age-gate-denied[hidden] { display: none !important; }
+@media (max-width: 480px) {
+  .age-gate-actions { flex-direction: column; }
+  .age-gate-button { width: 100%; }
+}

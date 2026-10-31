@@ -339,6 +339,7 @@ def main():
             "title": meta.get("title", md_file.stem),
             "date": meta.get("date", ""),
             "excerpt": meta.get("excerpt", ""),
+            "classification": meta.get("classification", "").strip().strip('"\'').lower(),
             "tags": tags,
             "images": extract_images(body),
             "body_html": body_html,
@@ -416,6 +417,27 @@ def main():
         {next_link}
       </nav>
     </article>'''
+
+        if post["classification"] in {"18+", "adult", "adulto"}:
+            body = f'''<section class="age-gate" data-age-gate>
+      <div class="age-gate-prompt" data-age-prompt role="region" aria-labelledby="age-gate-title">
+        <p class="age-gate-label">conteúdo restrito</p>
+        <h1 id="age-gate-title">Você é maior de 18 anos?</h1>
+        <p>Esta publicação contém conteúdo destinado a adultos. Confirme sua idade para continuar.</p>
+        <div class="age-gate-actions">
+          <button class="age-gate-button age-gate-yes" type="button" data-age-yes>Sim, sou maior de 18 anos</button>
+          <button class="age-gate-button age-gate-no" type="button" data-age-no>Não</button>
+        </div>
+      </div>
+      <div class="age-gate-denied" data-age-denied role="status" hidden>
+        <h1>Acesso não autorizado</h1>
+        <p>O conteúdo permanece oculto porque você informou que não é maior de 18 anos.</p>
+        <a href="../index.html">Voltar ao início</a>
+      </div>
+      <div class="age-gate-content" data-age-content hidden>
+${body}
+      </div>
+    </section>'''
 
         canonical = f'{SITE_URL}/posts/{post["slug"]}.html'
         html_out = render(
