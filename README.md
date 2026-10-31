@@ -80,7 +80,7 @@ O campo `classification` é opcional. Os valores abaixo, sem distinção entre m
 - `18+`
 - `adult`
 
-Os valores `14+` e `teens` são classificações exclusivamente visuais e equivalentes: exibem o selo `+14` na listagem inicial, sem confirmação de idade ou bloqueio de leitura.
+Os valores `14+` e `teen` são classificações exclusivamente visuais e equivalentes: exibem o selo `+14` na listagem inicial, sem confirmação de idade ou bloqueio de leitura.
 
 Qualquer outro valor, inclusive `public` ou a ausência do campo, não ativa o Age Gate nem exibe selo.
 
