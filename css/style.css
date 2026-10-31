@@ -651,3 +651,49 @@ ul.postlist a:not(.tag):hover, ul.postlist a:not(.tag):focus-visible { color: va
 .classification-entry p {
   margin: .4rem 0 0;
 }
+
+
+/* ---------- imagens adultas na galeria Artes ---------- */
+.art-image-wrap {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+.art-card-restricted .art-card-image {
+  filter: blur(16px);
+  transform: scale(1.06);
+  transition: filter .2s ease, transform .2s ease;
+}
+.art-card-restricted.is-unlocked .art-card-image {
+  filter: none;
+  transform: none;
+}
+.art-age-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  padding: 1rem;
+  text-align: center;
+  background: rgba(5, 7, 12, .72);
+  backdrop-filter: blur(2px);
+}
+.art-age-overlay[hidden] { display: none !important; }
+.art-age-overlay p {
+  margin: 0;
+  color: var(--fg);
+  font-size: var(--fs-small);
+}
+.art-age-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .45rem;
+}
+.art-age-actions .age-gate-button {
+  padding: .4rem .65rem;
+}
