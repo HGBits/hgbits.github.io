@@ -28,7 +28,7 @@ O front matter é um bloco opcional no início de cada arquivo Markdown, delimit
 | `date` | Não | Data da publicação no formato `AAAA-MM-DD`. É exibida no post e nas listagens, ordena as publicações e alimenta o arquivo por ano/mês e o RSS. |
 | `excerpt` | Não | Resumo curto exibido na listagem inicial e usado nas descrições de metadados/compartilhamento. Se omitido, fica vazio. |
 | `tags` | Não | Lista de tags separadas por vírgulas. Cada tag gera links e uma página própria. |
-| `classification` | Não | Classificação de conteúdo. Os valores `18+`, `adult` e `adulto` ativam a confirmação de maioridade (Age Gate) e o selo `+18` nas listagens. |
+| `classification` | Não | Classificação de conteúdo. `18+` e `adult` ativam o Age Gate e o selo `+18`; `14+` exibe somente o selo `+14`, sem bloqueio. |
 
 Todos os campos são opcionais para o parser. Na prática, recomenda-se informar pelo menos `title`, `date` e `excerpt` para que a publicação apareça corretamente identificada e contextualizada.
 
@@ -80,9 +80,9 @@ O campo `classification` é opcional. Os valores abaixo, sem distinção entre m
 - `18+`
 - `adult`
 
-O valor `14+` é uma classificação exclusivamente visual: não ativa o Age Gate nem bloqueia a leitura.
+O valor `14+` é uma classificação exclusivamente visual: exibe o selo `+14` na listagem inicial, sem confirmação de idade ou bloqueio de leitura.
 
-Qualquer outro valor, inclusive `14+`, `public` ou a ausência do campo, não ativa o Age Gate. O selo `+14` aparece apenas na listagem inicial.
+Qualquer outro valor, inclusive `public` ou a ausência do campo, não ativa o Age Gate nem exibe selo.
 
 Quando ativado:
 
