@@ -468,7 +468,7 @@ ${body}
 
     posts_items = render_post_list(posts, root="")
 
-    tags_items = "\\n".join(f'''      <li>
+    tags_items = "\n".join(f'''      <li>
         {tag_link(tag)}
         <ul class="taglist-posts">
 {chr(10).join(f'          <li><a href="posts/{p["slug"]}.html">{html.escape(p["title"])}</a></li>' for p in plist)}
@@ -492,7 +492,7 @@ ${body}
         month_groups = []
         for month in sorted(year_map[year], reverse=True):
             month_posts = year_map[year][month]
-            links = "\\n".join(
+            links = "\n".join(
                 f'              <li><a href="posts/{post["slug"]}.html">{html.escape(post["title"])}</a></li>'
                 for post in month_posts
             )
@@ -509,7 +509,7 @@ ${body}
         </div>
       </li>''')
 
-    anos_items = "\\n".join(archive_years)
+    anos_items = "\n".join(archive_years)
 
     index_body = f'''    <div class="layout-grid">
       <div class="layout-main">
