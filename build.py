@@ -339,7 +339,7 @@ def main():
             "title": meta.get("title", md_file.stem),
             "date": meta.get("date", ""),
             "excerpt": meta.get("excerpt", ""),
-            "classification": meta.get("classification", "").strip().lower(),
+            "classification": meta.get("classification", "").strip().strip('"\'').lower(),
             "tags": tags,
             "images": extract_images(body),
             "body_html": body_html,
