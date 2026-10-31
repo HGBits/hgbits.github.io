@@ -151,6 +151,8 @@ Trechos de código cercados por crases triplas são ignorados pela coleta da gal
 
 A galeria não é um repositório separado: ela é montada automaticamente a partir das referências encontradas nos arquivos Markdown durante cada execução de `build.py`.
 
+Imagens pertencentes a publicações classificadas como `18+` ou `adult` aparecem borradas na galeria Artes, com uma confirmação de maioridade sobre a miniatura. A confirmação usa a mesma escolha armazenada pelo Age Gate das publicações (`localStorage`); ao aceitar, todas as miniaturas adultas da galeria são liberadas. Ao recusar, elas permanecem ocultas.
+
 ## Outros recursos gerados
 
 Além das páginas individuais e da página inicial, o gerador cria:
