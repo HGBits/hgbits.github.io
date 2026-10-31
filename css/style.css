@@ -623,3 +623,31 @@ ul.postlist a:not(.tag):hover, ul.postlist a:not(.tag):focus-visible { color: va
   .age-gate-actions { flex-direction: column; }
   .age-gate-button { width: 100%; }
 }
+
+
+/* classificação indicativa +14: selo apenas visual, sem bloqueio de acesso */
+.teen-badge {
+  display: inline-block;
+  vertical-align: .12em;
+  margin-left: .45rem;
+  padding: .08rem .4rem;
+  border: 1px solid #d6a84b;
+  border-radius: 3px;
+  background: rgba(214, 168, 75, .12);
+  color: #f0c66e;
+  font-size: .72rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: .04em;
+}
+.classification-card {
+  position: relative;
+}
+.classification-entry + .classification-entry {
+  margin-top: .9rem;
+  padding-top: .85rem;
+  border-top: 1px solid var(--blue-dim);
+}
+.classification-entry p {
+  margin: .4rem 0 0;
+}

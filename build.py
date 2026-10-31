@@ -258,12 +258,14 @@ def tag_pills(tags, root=""):
 def render_post_list(posts_list, root=""):
     items = []
     for post in posts_list:
-        adult_badge = (
-            '<span class="adult-badge" aria-label="Conteúdo para maiores de 18 anos">+18</span>'
-            if post["classification"] in {"18+", "adult", "adulto"} else ""
-        )
+        if post["classification"] in {"18+", "adult"}:
+            classification_badge = '<span class="adult-badge" aria-label="Classificação indicativa: 18 anos ou mais">+18</span>'
+        elif post["classification"] == "14+":
+            classification_badge = '<span class="teen-badge" aria-label="Classificação indicativa: 14 anos ou mais">+14</span>'
+        else:
+            classification_badge = ""
         items.append(f'''      <li data-search="{html.escape((post["title"] + " " + post["excerpt"] + " " + " ".join(post["tags"])).lower(), quote=True)}">
-        <div><a href="{root}posts/{post["slug"]}.html">{html.escape(post["title"])}</a> {adult_badge}</div>
+        <div><a href="{root}posts/{post["slug"]}.html">{html.escape(post["title"])}</a> {classification_badge}</div>
         <p class="meta">{format_date(post["date"])} &middot; {post["reading"]} min de leitura {tag_pills(post["tags"], root)}</p>
         <p class="excerpt">{html.escape(post["excerpt"])}</p>
       </li>''')
@@ -416,7 +418,7 @@ def main():
       </nav>
     </article>'''
 
-        if post["classification"] in {"18+", "adult", "adulto"}:
+        if post["classification"] in {"18+", "adult"}:
             body = f'''<section class="age-gate" data-age-gate>
       <div class="age-gate-prompt" data-age-prompt role="region" aria-labelledby="age-gate-title">
         <p class="age-gate-label">conteúdo restrito</p>
@@ -562,6 +564,17 @@ ${body}
           <h2>tags</h2>
           <div class="tag-cloud">{tag_cloud}</div>
         </div>
+        <section class="sidebar-card classification-card" aria-labelledby="classification-title">
+          <h2 id="classification-title">classificação indicativa</h2>
+          <div class="classification-entry">
+            <span class="adult-badge">+18</span>
+            <p>Publicações com conteúdo mais pesado, que pode abordar sexo, drogas ou violência.</p>
+          </div>
+          <div class="classification-entry">
+            <span class="teen-badge">+14</span>
+            <p>Publicações que podem conter xingamentos e insinuações sexuais leves, sem conteúdo explícito.</p>
+          </div>
+        </section>
       </aside>
     </div>'''
 
