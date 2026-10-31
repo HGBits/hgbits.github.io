@@ -257,6 +257,22 @@ ul.postlist li {
 }
 ul.postlist li:hover { border-color: var(--blue); transform: translateY(-2px); }
 ul.postlist .excerpt { color: var(--fg-dim); margin: .4rem 0 0; font-size: var(--fs-small); max-width: var(--measure); }
+
+/* classificação etária exibida na listagem de publicações */
+.adult-badge {
+  display: inline-block;
+  vertical-align: .12em;
+  margin-left: .45rem;
+  padding: .08rem .4rem;
+  border: 1px solid #e05b5b;
+  border-radius: 3px;
+  background: rgba(224, 91, 91, .12);
+  color: #ff8585;
+  font-size: .72rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: .04em;
+}
 ul.postlist .meta {
   color: var(--fg-dim);
   font-size: var(--fs-small);
