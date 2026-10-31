@@ -260,7 +260,7 @@ def render_post_list(posts_list, root=""):
     for post in posts_list:
         if post["classification"] in {"18+", "adult"}:
             classification_badge = '<span class="adult-badge" aria-label="Classificação indicativa: 18 anos ou mais">+18</span>'
-        elif post["classification"] == "14+":
+        elif post["classification"] in {"14+", "teens"}:
             classification_badge = '<span class="teen-badge" aria-label="Classificação indicativa: 14 anos ou mais">+14</span>'
         else:
             classification_badge = ""
