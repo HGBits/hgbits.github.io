@@ -5,6 +5,8 @@ tags: Poesia
 excerpt: Vi meus sentimentos tolhidos pelo tempo..
 ---
 
+![Capa do Post](assets/O-Tempo-Passa.png) 
+
 O Tempo passa e eu passo a ver a vida com outros olhos,
 Eu sei que as coisas jamais serão como antes,
 O tempo me ensinou que nada permamece no mesmo lugar,

@@ -6,6 +6,8 @@ tags: Poesia, Devaneios
 excerpt: ela empolgada me puxava de um lado ao outro para explorar a noite, fazia-me de brinquedo... 
 ---
 
+![Capa do Post](assets/Sabor-Amargo.png)
+
 O sabor amargo que ela deixou em mim jamais irei esquecer, ela sentada observando as estrelas e eu ao seu lado
 ela cruzava as mãos com as minhas e eu fechava os olhos.. a amando sem pensar muito sobre.
 

@@ -5,6 +5,8 @@ tags: Poesia
 excerpt: Vôo para longe e levou meu amor junto.
 ---
 
+![Capa do Post](assets/A-Folha-que-caia.png)
+
 A folha que caia e era carregada pela noite ventosa, vôo para longe e levou meu amor junto.
 A folha que me fez sentir leve e solto já não está mais aqui,
 a folha que soprou levou meu sol, minha alegria.

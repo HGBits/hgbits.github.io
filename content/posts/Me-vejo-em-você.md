@@ -5,6 +5,8 @@ tags: Poesia
 excerpt: eu me vejo em sua flor da pele, nos seus dias tristes..
 ---
 
+![Capa do Post](assets/Me-vejo-em.png)
+
 Eu me vejo em você nas suas loucuras, seus devaneios sinceros e nada meticulosos,
 eu me vejo em sua flor da pele, nos seus dias tristes.
 eu me vejo em você nos meus pensamentos, pensamentos que nem sei se um dia serão realidade.
