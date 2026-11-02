@@ -648,7 +648,9 @@ ${body}
             src_r = resolve_src(img["src"], "").replace('"', "&quot;")
             alt_safe = html.escape(img["alt"] or "", quote=True)
             cap = img["caption"] or img["alt"] or ""
-            if is_adult:
+            # A capa identificada pelo alt exato "Capa do Post" é uma prévia pública.
+            # As demais imagens de posts +18 continuam protegidas na galeria.
+            if is_adult and img["alt"] != "Capa do Post":
                 image_html = f'''        <div class="art-image-wrap" data-age-gallery>
           <a href="posts/{post["slug"]}.html">
             <img class="art-card-image" src="{src_r}" alt="{alt_safe}" loading="lazy">
