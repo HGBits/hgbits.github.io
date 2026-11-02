@@ -56,6 +56,9 @@ def extract_images(md):
     out = []
     for m in IMG_INLINE_RE.finditer(md_no_code):
         alt, src, caption = m.group(1), m.group(2), m.group(3)
+        # Uma pasta (ex.: "assets/") é um marcador de posição, não uma imagem.
+        if not src.strip() or src.rstrip().endswith("/"):
+            continue
         out.append({"alt": alt, "src": src, "caption": caption or ""})
     return out
 
@@ -64,7 +67,11 @@ def extract_cover(md):
     Ignora blocos de código e só considera a primeira ocorrência."""
     md_no_code = re.sub(r'```.*?```', '', md, flags=re.DOTALL)
     m = COVER_RE.search(md_no_code)
-    return m.group(1) if m else ""
+    if not m:
+        return ""
+    src = m.group(1).strip()
+    # Permite manter a marcação preparada sem criar uma imagem quebrada.
+    return "" if not src or src.endswith("/") else src
 
 def is_adult_post(post):
     return post["classification"] in {"18+", "adult"}
@@ -148,6 +155,10 @@ def markdown_to_html(md, root=""):
         img_m = IMG_BLOCK_RE.match(line.strip())
         if img_m:
             alt, src, caption = img_m.groups()
+            # Ignora marcadores de capa ainda sem arquivo associado.
+            if not src.strip() or src.rstrip().endswith("/"):
+                i += 1
+                continue
             src_r = resolve_src(src, root).replace('"', "&quot;")
             alt_safe = html.escape(alt or "", quote=True)
             fig = f'<figure><img src="{src_r}" alt="{alt_safe}" loading="lazy">'
