@@ -5,6 +5,8 @@ tags: Artigos
 excerpt: É Importante que separemos para compreensão o que os termos "Propriedade Privada", "Propriedade Interlectual" e "Emissor Primário" significam...
 ---
 
+![Capa do Post](assets/)
+
 # Preview introdutória
 
 ## Terminologias

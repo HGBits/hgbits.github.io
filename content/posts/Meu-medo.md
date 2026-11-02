@@ -6,6 +6,8 @@ excerpt: eu tenho medo de ser mal compreendido pelo que vou falar aqui...
 classification: 18+
 ---
 
+![Capa do Post](assets/)
+
 Olá novamente meu diário para o mundo, eu tenho medo de ser mal compreendido pelo que vou falar aqui.
 sinto que algumas coisas que gosto e não me refiro a ser furry são mal vistas na sociedade, umas eu gosto por que gosto e ok mas, outras são consequẽncias, são coisas que não consigo mudar por mais que eu já tenha tentado e continue tentando. tenho medo do que essas coisas podem significar para mim.
 

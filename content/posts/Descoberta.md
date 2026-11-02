@@ -6,6 +6,8 @@ excerpt: é como eu disse a umas semanas atrás "sou como uma raposa faminta que
 classification: 18+
 ---
 
+![Capa do Post](assets/)
+
 Em algum momento da vida todos nós vamos chegar inevitávlemente a conclusões sobre nós mesmos, eu cheguei na conclusão de que a natureza pessoal de alguém é imutável quanto a aspectos singulares e extremamente flexíveis em outros, falo isso por conta própria. Eu mudei muito nos últimos anos, tenho opiniões hoje diferentes das do passado mas, igualmente imutáveis em certos sentidos.
 
 saindo das questões profundas da personalidade e do próprio sentido do meu ser, eu gostaria de tocar em um aspecto específico ou a falta dele, O Sexo... Eu tenho muita curiosidade mas, não é como se me fizesse falta não emocionalmente ou psicologicamente pelo menos mas, fisícamente.  fisícamente eu sinto, não é vício eu sei a diferença tá mais para instinto as vezes.. é como eu disse a umas semanas atrás "sou como uma raposa faminta que quando sente uma presa por perto tem vontade de comer" não é um sentimento frequente, eu controlo bastante ele, eu tenho um nível de tesão muito alto. é muito intenso quando emerge esse sentimento, eu passo dias com ele.
