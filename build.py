@@ -584,10 +584,12 @@ ${body}
 
       <aside class="sidebar">
         <div class="sidebar-card">
-          <div class="sidebar-avatar">
-            <img src="assets/avatar.jpg" alt="Foto de hgbits" width="44" height="44" loading="lazy">
+          <div class="sidebar-profile">
+            <div class="sidebar-avatar">
+              <img src="assets/avatar.jpg" alt="Foto de hgbits" width="44" height="44" loading="lazy">
+            </div>
+            <p class="sidebar-mark">hgbits</p>
           </div>
-          <p class="sidebar-mark">hgbits</p>
           <p>{html.escape(SITE_DESCRIPTION)}</p>
           <a href="sobre.html">saiba mais &rarr;</a>
         </div>
