@@ -568,11 +568,11 @@ ${body}
           <h2 id="classification-title">classificação indicativa</h2>
           <div class="classification-entry">
             <span class="adult-badge">+18</span>
-            <p>Publicações com conteúdo mais pesado, que pode abordar sexo, drogas ou violência.</p>
+            <p>Publicações com conteúdo mais pesado, que pode abordar sexo, ansiedade, coação sexual, prostituição, depressão ou violência.</p>
           </div>
           <div class="classification-entry">
             <span class="teen-badge">+14</span>
-            <p>Publicações que podem conter xingamentos e insinuações sexuais leves, sem conteúdo explícito.</p>
+            <p>Publicações que podem conter xingamentos, bullying, medo, preconceito e insinuações sexuais leves, sem conteúdo explícito.</p>
           </div>
         </section>
       </aside>
