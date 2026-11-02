@@ -277,9 +277,9 @@ def render_post_list(posts_list, root=""):
             classification_badge = '<span class="teen-badge" aria-label="Classificação indicativa: 14 anos ou mais">+14</span>'
         else:
             classification_badge = ""
-        # capa só na listagem de posts liberados; 18+ fica atrás do age-gate
+        # Capas são prévias visuais independentes da classificação do conteúdo.
         cover_html = ""
-        if post["cover"] and not is_adult_post(post):
+        if post["cover"]:
             cover_src = html.escape(resolve_src(post["cover"], root), quote=True)
             cover_alt = html.escape(f'Capa de {post["title"]}', quote=True)
             cover_html = (f'<a class="post-cover" href="{root}posts/{post["slug"]}.html" tabindex="-1" aria-hidden="true">'
@@ -474,7 +474,7 @@ ${body}
             DESCRIPTION=html.escape(post["excerpt"], quote=True),
             HEAD_EXTRA=head_extra(
                 canonical, "article", post["title"], post["excerpt"],
-                og_image=(f'{SITE_URL}/{post["cover"]}' if post["cover"] and not is_adult_post(post)
+                og_image=(f'{SITE_URL}/{post["cover"]}' if post["cover"]
                           and not post["cover"].startswith(("http", "/")) else "")),
             YEAR=str(datetime.now().year),
             ROOT="../",
