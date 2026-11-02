@@ -5,6 +5,8 @@ tags: Poesia
 excerpt: Por que me nartirizo tanto?
 ---
 
+![Capa do Post](assets/Oque-é-amar-alguém.jpg)
+
 - O que é o amar alguém?
 O verdadeiro amor é aquele que deseja o melhor para outro mesmo que não seja consigo.
 Mas, por que me nartirizo tanto?
