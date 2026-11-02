@@ -25,6 +25,7 @@
 
     var encodedUrl = encodeURIComponent(url);
     var encodedTitle = encodeURIComponent(title);
+    setLink("[data-share-mastodon]", "https://share.joinmastodon.org/#text=" + encodeURIComponent(title + " " + url));
     setLink("[data-share-telegram]", "https://t.me/share/url?url=" + encodedUrl + "&text=" + encodedTitle);
     setLink("[data-share-x]", "https://twitter.com/intent/tweet?url=" + encodedUrl + "&text=" + encodedTitle);
     setLink("[data-share-email]", "mailto:?subject=" + encodedTitle + "&body=" + encodedUrl);
