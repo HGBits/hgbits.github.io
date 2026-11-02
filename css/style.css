@@ -222,13 +222,19 @@ hr { border: none; border-top: 1px solid var(--blue-dim); margin: 1.6rem 0; }
 }
 .sidebar-card h2 { margin: 0 0 .7rem; font-size: var(--fs-h3); }
 .sidebar-card p { font-size: var(--fs-small); color: var(--fg-dim); margin: 0 0 .8rem; }
+.sidebar-profile {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: .8rem;
+}
 .sidebar-avatar {
   width: 44px;
   height: 44px;
+  flex: 0 0 44px;
   border-radius: 50%;
   border: 2px solid var(--yellow);
   overflow: hidden;
-  margin-bottom: .8rem;
 }
 .sidebar-avatar img {
   width: 100%;
