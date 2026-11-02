@@ -436,7 +436,7 @@ def main():
 
         # [[TOC]] posiciona o sumário no ponto escolhido pelo autor.
         # Sem marcador, mantém o comportamento atual: sumário após o cabeçalho.
-        toc_marker = re.compile(r'<p>\\s*\\[\\[TOC\\]\\]\\s*</p>')
+        toc_marker = re.compile(r'<p>\s*\[\[TOC\]\]\s*</p>')
         if toc_html and toc_marker.search(post["body_html"]):
             post["body_html"] = toc_marker.sub(toc_html, post["body_html"], count=1)
             toc_html = ""
