@@ -460,11 +460,8 @@ def main():
         </button>
         <div class="share-options" id="share-options" hidden>
           <button type="button" data-share-native hidden>Compartilhar...</button>
-          <button type="button" data-share-copy>Copiar link</button>
-          <a data-share-whatsapp target="_blank" rel="noopener noreferrer">WhatsApp</a>
           <a data-share-telegram target="_blank" rel="noopener noreferrer">Telegram</a>
           <a data-share-x target="_blank" rel="noopener noreferrer">X</a>
-          <a data-share-facebook target="_blank" rel="noopener noreferrer">Facebook</a>
           <a data-share-email>E-mail</a>
         </div>
         <p class="share-status" data-share-status role="status" aria-live="polite"></p>
