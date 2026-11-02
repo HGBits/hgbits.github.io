@@ -28,6 +28,9 @@ MESES = ["", "jan", "fev", "mar", "abr", "mai", "jun",
 
 IMG_INLINE_RE = re.compile(r'!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)')
 IMG_BLOCK_RE = re.compile(r'^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)\s*$')
+# Capa de post: SOMENTE a imagem com alt exatamente "Capa do Post", sozinha na linha.
+# Qualquer outra imagem do corpo não é capa.
+COVER_RE = re.compile(r'^!\[Capa do Post\]\(([^)\s]+)(?:\s+"[^"]*")?\)\s*$', re.MULTILINE)
 TABLE_SEP_RE = re.compile(r'^\s*\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?\s*$')
 
 def resolve_src(src, root):
@@ -55,6 +58,16 @@ def extract_images(md):
         alt, src, caption = m.group(1), m.group(2), m.group(3)
         out.append({"alt": alt, "src": src, "caption": caption or ""})
     return out
+
+def extract_cover(md):
+    """Retorna o src da capa do post (![Capa do Post](...)) ou \"\" se não houver.
+    Ignora blocos de código e só considera a primeira ocorrência."""
+    md_no_code = re.sub(r'```.*?```', '', md, flags=re.DOTALL)
+    m = COVER_RE.search(md_no_code)
+    return m.group(1) if m else ""
+
+def is_adult_post(post):
+    return post["classification"] in {"18+", "adult"}
 
 HEADING_RE = re.compile(r'<(h2|h3)>(.*?)</\1>', re.DOTALL)
 
@@ -264,28 +277,42 @@ def render_post_list(posts_list, root=""):
             classification_badge = '<span class="teen-badge" aria-label="Classificação indicativa: 14 anos ou mais">+14</span>'
         else:
             classification_badge = ""
+        # capa só na listagem de posts liberados; 18+ fica atrás do age-gate
+        cover_html = ""
+        if post["cover"] and not is_adult_post(post):
+            cover_src = html.escape(resolve_src(post["cover"], root), quote=True)
+            cover_alt = html.escape(f'Capa de {post["title"]}', quote=True)
+            cover_html = (f'<a class="post-cover" href="{root}posts/{post["slug"]}.html" tabindex="-1" aria-hidden="true">'
+                          f'<img src="{cover_src}" alt="{cover_alt}" loading="lazy"></a>\n        ')
         items.append(f'''      <li data-search="{html.escape((post["title"] + " " + post["excerpt"] + " " + " ".join(post["tags"])).lower(), quote=True)}">
-        <div><a href="{root}posts/{post["slug"]}.html">{html.escape(post["title"])}</a> {classification_badge}</div>
+        {cover_html}<div><a href="{root}posts/{post["slug"]}.html">{html.escape(post["title"])}</a> {classification_badge}</div>
         <p class="meta">{format_date(post["date"])} &middot; {post["reading"]} min de leitura {tag_pills(post["tags"], root)}</p>
         <p class="excerpt">{html.escape(post["excerpt"])}</p>
       </li>''')
     return "\n".join(items)
 
-def head_extra(canonical, og_type, og_title, og_description):
+def head_extra(canonical, og_type, og_title, og_description, og_image=""):
     """Bloco de <head> com canonical + Open Graph + Twitter Card.
     Tudo escapado — mesmo tratamento que TITLE/DESCRIPTION já recebiam."""
     c = html.escape(canonical, quote=True)
     t = html.escape(og_title, quote=True)
     d = html.escape(og_description, quote=True)
     ty = html.escape(og_type, quote=True)
+    img_meta = ""
+    card = "summary"
+    if og_image:
+        img = html.escape(og_image, quote=True)
+        img_meta = (f'\n<meta property="og:image" content="{img}">'
+                    f'\n<meta name="twitter:image" content="{img}">')
+        card = "summary_large_image"
     return f'''<link rel="canonical" href="{c}">
 <link rel="alternate" type="application/rss+xml" title="{html.escape(SITE_NAME, quote=True)}" href="{{{{ROOT}}}}feed.xml">
 <meta property="og:type" content="{ty}">
 <meta property="og:site_name" content="{html.escape(SITE_NAME, quote=True)}">
 <meta property="og:title" content="{t}">
 <meta property="og:description" content="{d}">
-<meta property="og:url" content="{c}">
-<meta name="twitter:card" content="summary">
+<meta property="og:url" content="{c}">{img_meta}
+<meta name="twitter:card" content="{card}">
 <meta name="twitter:title" content="{t}">
 <meta name="twitter:description" content="{d}">'''
 
@@ -351,6 +378,7 @@ def main():
             "classification": meta.get("classification", "").strip().strip('"\'').lower(),
             "tags": tags,
             "images": extract_images(body),
+            "cover": extract_cover(body),
             "body_html": body_html,
             "toc": toc,
             "reading": reading_time(body),
@@ -444,7 +472,10 @@ ${body}
             TEMPLATE,
             TITLE=html.escape(f'{post["title"]} :: hgbits', quote=True),
             DESCRIPTION=html.escape(post["excerpt"], quote=True),
-            HEAD_EXTRA=head_extra(canonical, "article", post["title"], post["excerpt"]),
+            HEAD_EXTRA=head_extra(
+                canonical, "article", post["title"], post["excerpt"],
+                og_image=(f'{SITE_URL}/{post["cover"]}' if post["cover"] and not is_adult_post(post)
+                          and not post["cover"].startswith(("http", "/")) else "")),
             YEAR=str(datetime.now().year),
             ROOT="../",
             BODY=body,
