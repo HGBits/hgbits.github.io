@@ -6,6 +6,8 @@ excerpt: o instante em que o medo as faz estremecer...
 classification: 18+
 ---
 
+![Capa do Post](assets/)
+
 Quero estar perto delas,
 perto o bastante para que meus olhos
 sejam a última luz que encontrem;

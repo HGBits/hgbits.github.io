@@ -6,6 +6,8 @@ excerpt: carne e sangue, estou satisfeito.
 classification: 18+
 ---
 
+![Capa do Post](assets/Entre-as-folhas.jpg)
+
 Era o meu dia, o dia de morder, o dia em que os olhos da lebre se encheram de lágrimas
 eu pude sentir seu sangue escorrendo entre os meus dentes.
 

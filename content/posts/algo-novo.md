@@ -6,6 +6,8 @@ excerpt: Caro diário, eu venho aqui contá-lo algo novo.
 classification: 18+
 ---
 
+![Capa do Post](assets/algo-novo.jpg)
+
 Caro diário, eu venho aqui contá-lo algo novo.
 estou animado com meus esforços, cada um dos meus projetos de software está seguindo seu próprio ritmo.
 eu não sei, como irei resolver algumas questões. vou expandir para um TUI e uma versão mobile sendo ela a primeiro momento para android e talvez linux mobile se eu encontrar alguém para testar.

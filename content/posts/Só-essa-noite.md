@@ -7,6 +7,8 @@ um gesto doloroso de amor.
 classification: 18+
 ---
 
+![Capa do Post](assets/Só-essa-noite.jpg)
+
 Só essa noite durma comigo,
 Só essa noite me deixe ser raposa em busca de uma presa,
 Só essa noite me deixe viver minhas loucuras,

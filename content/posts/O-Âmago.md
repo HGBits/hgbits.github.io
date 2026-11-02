@@ -6,6 +6,8 @@ excerpt: a raposa me adotou sem perceber...
 classification: 18+
 ---
 
+![Capa do Post](assets/O-Âmago.jpg)
+
 Eu nasci do nada para o nada, eu sou o âmago de um ser,
 sou parte da essência da morte, já fui chamada por muitos nomes.
 a raposa me adotou sem perceber, eu fui a perdição em sua mente.

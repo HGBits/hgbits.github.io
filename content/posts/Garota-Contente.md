@@ -5,6 +5,8 @@ tags: Poesia, Devaneios
 excerpt: Quantas vezes nós não nos pegamos pensando no sorriso de uma garota?
 ---
 
+![Capa do Post](assets/Garota-Contente.jpg)
+
 Ah a garota e seu sorriso de encher o coração,
 no qual eu verdadeiramente creio em sua inocência ante a um mundo corrompido.
 Quantas vezes nós não nos pegamos pensando no sorriso de uma garota?
