@@ -5,7 +5,7 @@ tags: Diário
 excerpt: não faz tanto tempo que eu descobrir algo sobre um amigo que fez com que eu me afastasse dele, eu sinto por isso por que sou um cara de poucos amigos...
 ---
 
-![Capa do Post](assets/)
+![Capa do Post](assets/Revelação-e-Preconceito.jpg)
 
 Querido diário para o mundo há alguns dias atrás não faz tanto tempo que eu descobrir algo sobre um amigo que fez com que eu me afastasse dele, eu sinto por isso por que sou um cara de poucos amigos então ter que me afastar de alguém por qualquer motivo que seja implica em uma trgédia pessoal mas, foi por um bom motivo que não posso mencionar públicamente pois é algo que diz respeito a outras pessoas que foram afetadas por isso.
 
