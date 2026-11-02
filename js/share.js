@@ -27,10 +27,9 @@
     }
   }
 
-  var telegramUrl = new URL("https://t.me/share/url");
-  telegramUrl.searchParams.set("url", pageUrl);
-  telegramUrl.searchParams.set("text", title);
-  setLink("[data-share-telegram]", telegramUrl.toString());
+  var encodedUrl = encodeURIComponent(pageUrl);
+  var encodedTitle = encodeURIComponent(title);
+  setLink("[data-share-telegram]", "https://t.me/share/url?url=" + encodedUrl + "&text=" + encodedTitle);
 
   var mastodonText = encodeURIComponent(title + " " + pageUrl);
   setLink("[data-share-mastodon]", "https://share.joinmastodon.org/#text=" + mastodonText);
