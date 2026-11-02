@@ -460,6 +460,7 @@ def main():
         </button>
         <div class="share-options" id="share-options" hidden>
           <button type="button" data-share-native hidden>Compartilhar...</button>
+          <a data-share-mastodon target="_blank" rel="noopener noreferrer">Mastodon</a>
           <a data-share-telegram target="_blank" rel="noopener noreferrer">Telegram</a>
           <a data-share-x target="_blank" rel="noopener noreferrer">X</a>
           <a data-share-email>E-mail</a>
