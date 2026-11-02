@@ -389,10 +389,22 @@ def main():
     for idx, post in enumerate(posts):
         prev_p = posts[idx + 1] if idx + 1 < len(posts) else None
         next_p = posts[idx - 1] if idx > 0 else None
-        prev_link = (f'<a href="{prev_p["slug"]}.html" rel="prev">&larr; {html.escape(prev_p["title"])}</a>'
-                     if prev_p else '<span></span>')
-        next_link = (f'<a href="{next_p["slug"]}.html" rel="next">{html.escape(next_p["title"])} &rarr;</a>'
-                     if next_p else '<span></span>')
+        def nav_card(target, direction):
+            if not target:
+                return '<span class="post-nav-empty" aria-hidden="true"></span>'
+            cover_html = ""
+            if target["cover"]:
+                cover_src = html.escape(resolve_src(target["cover"], "../"), quote=True)
+                cover_alt = html.escape(f'Capa de {target["title"]}', quote=True)
+                cover_html = f'<img src="{cover_src}" alt="{cover_alt}" loading="lazy">'
+            label = "Post anterior" if direction == "prev" else "Próximo post"
+            arrow = "&larr;" if direction == "prev" else "&rarr;"
+            return (f'<a class="post-nav-card post-nav-{direction}" href="{target["slug"]}.html" rel="{direction}">'
+                    f'{cover_html}<span class="post-nav-label">{label} {arrow}</span>'
+                    f'<span class="post-nav-title">{html.escape(target["title"])}</span></a>')
+
+        prev_link = nav_card(prev_p, "prev")
+        next_link = nav_card(next_p, "next")
 
         toc_html = ""
         if len(post["toc"]) >= 2:
