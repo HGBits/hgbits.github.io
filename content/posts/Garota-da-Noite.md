@@ -5,6 +5,8 @@ tags: Poesia, Devaneios
 excerpt: garota da noite você me fala coisas tão bonitas.. 
 ---
 
+![Capa do Post](assets/Garota-da-Noite.png)
+
 Linda é a noite nesta cidade, ela me lembra a você.
 imagino como seria eu e você nesta praia juntos sobre a luz do luar.. eu te vejo em minha mente andando sobre a areia enquanto sorrir.
 
