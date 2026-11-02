@@ -9,7 +9,6 @@
 
     var toggle = root.querySelector(".share-toggle");
     var options = root.querySelector(".share-options");
-    var copy = root.querySelector("[data-share-copy]");
     var nativeButton = root.querySelector("[data-share-native]");
     var status = root.querySelector("[data-share-status]");
     var url = window.location.href.split("#")[0];
@@ -26,10 +25,8 @@
 
     var encodedUrl = encodeURIComponent(url);
     var encodedTitle = encodeURIComponent(title);
-    setLink("[data-share-whatsapp]", "https://wa.me/?text=" + encodedTitle + "%20" + encodedUrl);
     setLink("[data-share-telegram]", "https://t.me/share/url?url=" + encodedUrl + "&text=" + encodedTitle);
     setLink("[data-share-x]", "https://twitter.com/intent/tweet?url=" + encodedUrl + "&text=" + encodedTitle);
-    setLink("[data-share-facebook]", "https://www.facebook.com/sharer/sharer.php?u=" + encodedUrl);
     setLink("[data-share-email]", "mailto:?subject=" + encodedTitle + "&body=" + encodedUrl);
 
     toggle.addEventListener("click", function () {
@@ -48,17 +45,7 @@
       });
     }
 
-    copy.addEventListener("click", function () {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url).then(function () {
-          setStatus("Link copiado.");
-        }).catch(function () {
-          setStatus("Não foi possível copiar automaticamente. Copie o endereço do navegador.");
-        });
-      } else {
-        setStatus("Seu navegador não permite cópia automática. Copie o endereço do navegador.");
-      }
-    });
+;
   } catch (error) {
     // Compartilhamento é opcional e não deve afetar a leitura.
   }
