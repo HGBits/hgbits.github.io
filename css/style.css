@@ -310,15 +310,50 @@ ul.postlist .meta {
 
 /* ---------- navegação entre posts ---------- */
 .post-nav {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
   margin-top: 2.4rem;
   padding-top: 1.2rem;
   border-top: 1px solid var(--blue-dim);
   font-size: var(--fs-small);
 }
-.post-nav a { text-decoration: none; }
+.post-nav-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: .45rem;
+  padding: .7rem;
+  border: 1px solid var(--blue-dim);
+  border-radius: 6px;
+  background: var(--bg-card);
+  text-decoration: none;
+  transition: border-color .15s ease, transform .15s ease;
+}
+.post-nav-card:hover { border-color: var(--blue); transform: translateY(-2px); }
+.post-nav-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid var(--blue-dim);
+  border-radius: 3px;
+}
+.post-nav-label {
+  color: var(--fg-dim);
+  font-size: .75rem;
+}
+.post-nav-title {
+  color: var(--fg);
+  font-weight: 700;
+  line-height: 1.35;
+}
+.post-nav-card:hover .post-nav-title { color: var(--yellow); }
+.post-nav-empty { min-width: 0; }
+@media (max-width: 480px) {
+  .post-nav { gap: .55rem; }
+  .post-nav-card { padding: .45rem; }
+}
 
 .colophon { color: var(--fg-dim); font-size: var(--fs-small); margin-top: 1.4rem; }
 
