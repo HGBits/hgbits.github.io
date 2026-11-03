@@ -6,7 +6,7 @@ excerpt: o instante em que o medo as faz estremecer...
 classification: 18+
 ---
 
-![Capa do Post](assets/)
+![Capa do Post](assets/A-Intensidade-da-Raposa.png)
 
 Quero estar perto delas,
 perto o bastante para que meus olhos
