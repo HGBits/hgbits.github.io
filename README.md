@@ -96,6 +96,34 @@ Quando ativado:
 
 **Limitação de segurança:** o Age Gate é uma confirmação por autodeclaração, não controle de acesso. O site é estático e o HTML continua publicado; portanto, alguém ainda pode acessar diretamente o arquivo ou inspecionar seu conteúdo. Não use esse mecanismo para proteger informações privadas.
 
+## Revisão de publicações
+
+O blog permite registrar a revisão de uma publicação sem substituir sua data original. Para isso, use o campo opcional `updated` no front matter do arquivo Markdown em `content/posts/`.
+
+### Como registrar uma revisão
+
+1. Abra o arquivo Markdown da publicação que foi revisada.
+2. Adicione ou atualize o campo `updated` com a data da revisão, no formato `AAAA-MM-DD`.
+3. Salve o arquivo e execute `python build.py` para regenerar o site.
+
+Exemplo:
+
+```yaml
+---
+title: Minha publicação
+date: 2026-10-31
+updated: 2026-11-03
+excerpt: Resumo da publicação.
+tags: Linux, Desenvolvimento
+---
+```
+
+Quando `updated` estiver preenchido, a página da publicação exibirá **“Atualizado em: 03 nov 2026”** ao lado da data original de publicação. Se o campo estiver vazio ou ausente, a indicação de atualização não será exibida.
+
+A revisão é apenas um registro da última atualização editorial: ela não altera a data de publicação, a ordem dos posts, o agrupamento no arquivo cronológico nem a data `pubDate` do RSS. O gerador não mantém um histórico de versões ou de revisões anteriores; o campo armazena somente a data mais recente informada pelo autor.
+
+---
+
 ## Sumário automático (TOC)
 
 Cada publicação pode receber um sumário automático com links para suas seções. O gerador monta esse sumário a partir dos títulos Markdown de nível 2 e 3 (`##` e `###`).
