@@ -385,6 +385,7 @@ def main():
             "slug": md_file.stem,
             "title": meta.get("title", md_file.stem),
             "date": meta.get("date", ""),
+            "updated": meta.get("updated", "").strip().strip('"\\''),
             "excerpt": meta.get("excerpt", ""),
             "classification": meta.get("classification", "").strip().strip('"\'').lower(),
             "tags": tags,
@@ -446,7 +447,7 @@ def main():
         body = f'''    <article class="article-wrap">
       <header class="post-header">
         <h1>{html.escape(post["title"])}</h1>
-        <p class="byline">{format_date(post["date"])} &middot; {post["reading"]} min de leitura</p>
+        <p class="byline">Publicado em: {format_date(post["date"])}{f' &middot; Atualizado em: {format_date(post["updated"])}' if post["updated"] else ''} &middot; {post["reading"]} min de leitura</p>
         <p class="tags">{tag_pills(post["tags"], root="../")}</p>
       </header>
 {toc_html}
