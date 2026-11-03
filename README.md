@@ -25,7 +25,8 @@ O front matter é um bloco opcional no início de cada arquivo Markdown, delimit
 | Campo | Obrigatório | Descrição |
 | --- | --- | --- |
 | `title` | Não | Título da publicação. Se omitido, o nome do arquivo (sem `.md`) é usado. |
-| `date` | Não | Data da publicação no formato `AAAA-MM-DD`. É exibida no post e nas listagens, ordena as publicações e alimenta o arquivo por ano/mês e o RSS. |
+| `date` | Não | Data original da publicação no formato `AAAA-MM-DD`. É exibida no post e nas listagens, ordena as publicações e alimenta o arquivo por ano/mês e o RSS. |
+| `updated` | Não | Data da última revisão no formato `AAAA-MM-DD`. Quando preenchida, é exibida no cabeçalho do post como “Atualizado em”; não altera a ordenação nem a data original do RSS. |
 | `excerpt` | Não | Resumo curto exibido na listagem inicial e usado nas descrições de metadados/compartilhamento. Se omitido, fica vazio. |
 | `tags` | Não | Lista de tags separadas por vírgulas. Cada tag gera links e uma página própria. |
 | `classification` | Não | Classificação de conteúdo. `18+` e `adult` ativam o Age Gate e o selo `+18`; `14+` e `teen` exibem somente o selo `+14`, sem bloqueio. |
@@ -38,6 +39,7 @@ Todos os campos são opcionais para o parser. Na prática, recomenda-se informar
 ---
 title: Uma publicação de exemplo
 date: 2026-10-31
+updated: 2026-11-03
 excerpt: Um resumo curto que aparece na página inicial.
 tags: Linux, Segurança, Desenvolvimento
 classification: public
@@ -52,6 +54,7 @@ Para uma publicação destinada a adultos:
 ---
 title: Uma publicação adulta
 date: 2026-10-31
+updated: 2026-11-03
 excerpt: Resumo da publicação.
 tags: Pessoal, Reflexões
 classification: 18+
@@ -71,7 +74,7 @@ O bloco é inspirado na sintaxe YAML, mas **não é um parser YAML completo**. O
 - Valores de texto são mantidos como texto. Em `classification`, espaços externos e aspas simples ou duplas são removidos e o valor é convertido para minúsculas.
 - Se não houver front matter delimitado corretamente no início do arquivo, o arquivo inteiro será tratado como corpo Markdown e os metadados ficarão vazios.
 
-A data deve ser escrita como `AAAA-MM-DD`. Datas válidas são organizadas cronologicamente. Uma publicação sem data aparece no grupo **sem data**; uma data que não possa ser interpretada pode aparecer como texto literal e ser agrupada em **sem mês**.
+Os campos `date` e `updated`, quando informados, devem usar o formato `AAAA-MM-DD`. `date` representa a publicação original; `updated` registra a última revisão e só aparece no cabeçalho quando preenchido. A revisão não altera a ordem cronológica das publicações nem a data original do RSS. Datas válidas em `date` são organizadas cronologicamente. Uma publicação sem data aparece no grupo **sem data**; uma data que não possa ser interpretada pode aparecer como texto literal e ser agrupada em **sem mês**.
 
 ### Classificação e Age Gate
 
