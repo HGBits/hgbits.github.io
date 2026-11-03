@@ -93,6 +93,44 @@ Quando ativado:
 
 **Limitação de segurança:** o Age Gate é uma confirmação por autodeclaração, não controle de acesso. O site é estático e o HTML continua publicado; portanto, alguém ainda pode acessar diretamente o arquivo ou inspecionar seu conteúdo. Não use esse mecanismo para proteger informações privadas.
 
+## Sumário automático (TOC)
+
+Cada publicação pode receber um sumário automático com links para suas seções. O gerador monta esse sumário a partir dos títulos Markdown de nível 2 e 3 (`##` e `###`).
+
+### Como funciona
+
+1. O `build.py` converte o corpo Markdown para HTML e, em seguida, identifica os elementos `<h2>` e `<h3>`.
+2. Cada título recebe um identificador (`id`) derivado do texto: letras são convertidas para minúsculas, acentos são removidos e sequências de caracteres não alfanuméricos viram hífens.
+3. Se dois títulos gerarem o mesmo identificador, o gerador acrescenta um sufixo numérico (`-2`, `-3` etc.) para manter os links únicos.
+4. Quando a publicação tem pelo menos **dois títulos** entre `##` e `###`, o sumário é criado automaticamente. Títulos `#` e `####` ou níveis mais profundos não entram nele.
+
+Por padrão, o sumário aparece logo depois do cabeçalho da publicação, antes do corpo do texto.
+
+### Escolher a posição do sumário
+
+Para posicionar o sumário em outro ponto, insira `[[TOC]]` em uma linha isolada no corpo Markdown:
+
+```markdown
+## Introdução
+
+Texto introdutório.
+
+[[TOC]]
+
+## Instalação
+
+Conteúdo da seção.
+```
+
+O marcador é substituído pelo sumário no local indicado. Apenas a primeira ocorrência é usada. Se a publicação não tiver títulos suficientes para gerar o sumário, o marcador é removido e nenhum sumário é exibido.
+
+### Hierarquia visual
+
+- Seções `##` aparecem no nível principal.
+- Subseções `###` aparecem recuadas em relação às seções principais.
+
+O sumário é HTML estático gerado durante a execução de `build.py`. Não depende de JavaScript, bibliotecas externas ou requisições em tempo de leitura. Sua apresentação e o controle de abrir/fechar são definidos pelo CSS do site.
+
 ## Imagens
 
 As imagens dos posts ficam, por convenção, no diretório `assets/` na raiz do projeto. Por exemplo:
