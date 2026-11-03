@@ -385,7 +385,7 @@ def main():
             "slug": md_file.stem,
             "title": meta.get("title", md_file.stem),
             "date": meta.get("date", ""),
-            "updated": meta.get("updated", "").strip().strip('"\\''),
+            "updated": meta.get("updated", "").strip().strip('"\''),
             "excerpt": meta.get("excerpt", ""),
             "classification": meta.get("classification", "").strip().strip('"\'').lower(),
             "tags": tags,
