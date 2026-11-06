@@ -45,4 +45,4 @@ As redes 2G e 3G também possuem limitações e vulnerabilidades conhecidas há 
 
 Mesmo quando utilizamos tecnologias modernas, a proteção dos nossos dados depende de diversas camadas de segurança, desde o dispositivo até a infraestrutura das operadoras.
 
-**Fonte:** https://caveiratech.com/post/pesquisadores-identificam-84-falhas-nos-nucleos-4g-e-5g-incluindo-brecha-de-session-hijacking-2201038
+[Fonte](https://caveiratech.com/post/pesquisadores-identificam-84-falhas-nos-nucleos-4g-e-5g-incluindo-brecha-de-session-hijacking-2201038)

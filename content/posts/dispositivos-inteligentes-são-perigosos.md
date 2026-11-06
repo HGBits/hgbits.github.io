@@ -35,6 +35,6 @@ A ideia é simples: seus dispositivos devem funcionar sem depender constantement
 
 Quero trazer mais alternativas de software e soluções desse tipo futuramente. Aos poucos, vou apresentar exemplos e possibilidades para quem deseja recuperar o controle da própria tecnologia.
 
-**Fonte:** https://nypost.com/2023/06/15/amazon-shuts-down-customers-smart-home-devices-over-false-racist-claim/
+[Fonte](https://nypost.com/2023/06/15/amazon-shuts-down-customers-smart-home-devices-over-false-racist-claim/)
 
-**Referência:** https://ubuntu.com/internet-of-things/smart-home
+[Referência](https://ubuntu.com/internet-of-things/smart-home)
