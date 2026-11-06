@@ -17,12 +17,12 @@ Protocolo Ético Alternativo para Moderação de IA: Liberdade, Privacidade e Re
 
 1° Princípio Fundamental
 > "A Liberdade não é sobre aquilo que podemos fazer ou dizer, é também sobre aquilo que não podemos."
-É também o direito de não ser observado compulsoriamente, de pensar, errar e criar sem vigia costante.
+> > É também o direito de não ser observado compulsoriamente, de pensar, errar e criar sem vigia costante.
 A Privacidade não deve ser uma concessão mas, um direito pleno.
 
 2° O Problema Atual
 > O Modelo de moderação atual se baseia na prevenção por vigilância.
-Conversas são lidas por máquinas e, em casos específicos, por humanos. sem consentimento explicíto do usuário.
+> Conversas são lidas por máquinas e, em casos específicos, por humanos. sem consentimento explicíto do usuário.
 Embora haja boas intenções (prevenir abusos, crimes e danos), essa abordagem compromete a autonomia individual e fere a confidencialidade essencial entre humano e IA.
 
 3° Princípios do Novo Protocolo
