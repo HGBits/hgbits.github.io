@@ -6,6 +6,8 @@ updated: 2026-11-06
 excerpt: A liberdade é o único ponto de partida legítimo. ela não é concessão do Estado, nem privilégio de maioria.
 ---
 
+![Capa do Post](assets/A-Necessidade-do-Avanço.png)
+
 Nós não estamos aqui para repetir formulas antigas. Estamos aqui porque entendemos uma verdade simples e brutal: O que não é necessário morre.
 ideias, sistemas, governos, crenças -- tudo que não responde à necessidade real das pessoas é apenas ruído, papel desperdiçado, código inútil.
 
