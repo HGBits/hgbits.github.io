@@ -9,8 +9,10 @@ Uso:
 """
 import re
 import html
+import posixpath
 import shutil
 import unicodedata
+from urllib.parse import unquote
 from pathlib import Path
 from datetime import datetime, timezone
 from email.utils import format_datetime
@@ -378,7 +380,28 @@ def build_sitemap(posts, tag_map):
 </urlset>
 '''
 
-def copy_public_files():
+def asset_key(src):
+    """Caminho relativo normalizado de uma imagem local; None se for URL/absoluto."""
+    src = unquote(src.strip())
+    if not src or src.startswith(("/", "#")) or re.match(r"^[a-zA-Z][a-zA-Z0-9+.\-]*:", src):
+        return None
+    return posixpath.normpath(src)
+
+def find_restricted_assets(posts):
+    """Imagens usadas SOMENTE no corpo de posts 18+ (não-capa). Não são publicadas."""
+    restricted, public = set(), set()
+    for post in posts:
+        for img in post["images"]:
+            key = asset_key(img["src"])
+            if key is None:
+                continue
+            if is_adult_post(post) and img["alt"] != "Capa do Post":
+                restricted.add(key)
+            else:
+                public.add(key)
+    return restricted - public
+
+def copy_public_files(restricted=()):
     """Copia para OUT_DIR somente a lista explícita PUBLIC_COPY."""
     for name in PUBLIC_COPY:
         src = ROOT_DIR / name
@@ -389,6 +412,10 @@ def copy_public_files():
             shutil.copy2(src, dst)
         else:
             print(f"AVISO: {name} está em PUBLIC_COPY mas não existe.")
+    for key in restricted:
+        target = (OUT_DIR / key).resolve()
+        if OUT_DIR.resolve() in target.parents and target.is_file():
+            target.unlink()
     (OUT_DIR / ".nojekyll").touch()
 
 def main():
@@ -402,15 +429,22 @@ def main():
         raw = md_file.read_text(encoding="utf-8")
         meta, body = parse_frontmatter(raw)
         tags = [t.strip() for t in meta.get("tags", "").split(",") if t.strip()]
-        raw_body_html = markdown_to_html(body, root="../")
-        body_html, toc = add_heading_ids(raw_body_html)
+        classification = meta.get("classification", "").strip().strip('"\'').lower()
+        adult = classification in {"18+", "adult"}
+        if adult:
+            # Posts 18+ NUNCA têm o corpo renderizado: o texto não pode chegar ao HTML,
+            # ao feed, à busca nem a metadados. O resumo público é opt-in (public_excerpt).
+            body_html, toc = "", []
+        else:
+            raw_body_html = markdown_to_html(body, root="../")
+            body_html, toc = add_heading_ids(raw_body_html)
         posts.append({
             "slug": md_file.stem,
             "title": meta.get("title", md_file.stem),
             "date": meta.get("date", ""),
             "updated": meta.get("updated", "").strip().strip('"\''),
-            "excerpt": meta.get("excerpt", ""),
-            "classification": meta.get("classification", "").strip().strip('"\'').lower(),
+            "excerpt": meta.get("public_excerpt", "") if adult else meta.get("excerpt", ""),
+            "classification": classification,
             "tags": tags,
             "images": extract_images(body),
             "cover": extract_cover(body),
@@ -516,26 +550,27 @@ def main():
       </nav>
     </article>'''
 
-        if post["classification"] in {"18+", "adult"}:
-            body = f'''<section class="age-gate" data-age-gate>
-      <div class="age-gate-prompt" data-age-prompt role="region" aria-labelledby="age-gate-title">
-        <p class="age-gate-label">conteúdo restrito</p>
-        <h1 id="age-gate-title">Você é maior de 18 anos?</h1>
-        <p>Esta publicação contém conteúdo destinado a adultos. Confirme sua idade para continuar.</p>
-        <div class="age-gate-actions">
-          <button class="age-gate-button age-gate-yes" type="button" data-age-yes>Sim, sou maior de 18 anos</button>
-          <button class="age-gate-button age-gate-no" type="button" data-age-no>Não</button>
+        if is_adult_post(post):
+            body = f'''    <article class="article-wrap">
+      <header class="post-header">
+        <h1>{html.escape(post["title"])} <span class="adult-badge" aria-label="Classificação indicativa: 18 anos ou mais">+18</span></h1>
+        <p class="byline">Publicado em: {format_date(post["date"])}</p>
+        <p class="tags">{tag_pills(post["tags"], root="../")}</p>
+      </header>
+      <section class="age-gate" id="post-content">
+        <div class="age-gate-denied">
+          <p class="age-gate-label">conteúdo restrito</p>
+          <h2>Publicação disponível apenas para leitores autorizados</h2>
+          <p>Esta publicação é destinada a adultos e o texto não é distribuído nesta página.</p>
+          <a href="../index.html">Voltar ao início</a>
         </div>
-      </div>
-      <div class="age-gate-denied" data-age-denied role="status" hidden>
-        <h1>Acesso não autorizado</h1>
-        <p>O conteúdo permanece oculto porque você informou que não é maior de 18 anos.</p>
-        <a href="../index.html">Voltar ao início</a>
-      </div>
-      <div class="age-gate-content" data-age-content hidden>
-${body}
-      </div>
-    </section>'''
+      </section>
+
+      <nav class="post-nav" aria-label="navegação entre posts">
+        {prev_link}
+        {next_link}
+      </nav>
+    </article>'''
 
         canonical = f'{SITE_URL}/posts/{post["slug"]}.html'
         html_out = render(
@@ -721,32 +756,13 @@ ${body}
             alt_safe = html.escape(img["alt"] or "", quote=True)
             cap = img["caption"] or img["alt"] or ""
             # A capa identificada pelo alt exato "Capa do Post" é uma prévia pública.
-            # As demais imagens de posts +18 continuam protegidas na galeria.
+            # As demais imagens de posts +18 não são publicadas (ver restricted_assets).
             if is_adult and img["alt"] != "Capa do Post":
-                image_html = f'''        <div class="art-image-wrap" data-age-gallery>
-          <a href="posts/{post["slug"]}.html">
-            <img class="art-card-image" src="{src_r}" alt="{alt_safe}" loading="lazy">
-          </a>
-          <div class="art-age-overlay" data-art-prompt>
-            <span class="adult-badge">+18</span>
-            <p>Imagem com conteúdo restrito.</p>
-            <p>Você é maior de 18 anos?</p>
-            <div class="art-age-actions">
-              <button class="age-gate-button age-gate-yes" type="button" data-art-yes>Sim</button>
-              <button class="age-gate-button age-gate-no" type="button" data-art-no>Não</button>
-            </div>
-          </div>
-          <div class="art-age-overlay" data-art-denied hidden>
-            <span class="adult-badge">+18</span>
-            <p>Acesso não autorizado.</p>
-          </div>
-        </div>'''
-                card_class = "art-card art-card-restricted"
-            else:
-                image_html = f'''        <a href="posts/{post["slug"]}.html">
+                continue
+            image_html = f'''        <a href="posts/{post["slug"]}.html">
           <img src="{src_r}" alt="{alt_safe}" loading="lazy">
         </a>'''
-                card_class = "art-card"
+            card_class = "art-card"
             arte_items.append(f'''      <figure class="{card_class}">
 {image_html}
         <figcaption>
@@ -802,7 +818,7 @@ ${body}
     (OUT_DIR / "feed.xml").write_text(build_rss(posts), encoding="utf-8")
     (OUT_DIR / "sitemap.xml").write_text(build_sitemap(posts, tag_map), encoding="utf-8")
 
-    copy_public_files()
+    copy_public_files(find_restricted_assets(posts))
 
     print(f"OK: {len(posts)} posts, {len(tag_map)} tags, index.html, sobre.html, "
           f"artes.html, {len(tag_map)} páginas de tag, feed.xml e sitemap.xml gerados.")

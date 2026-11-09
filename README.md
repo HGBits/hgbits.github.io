@@ -36,7 +36,8 @@ O front matter é um bloco opcional no início de cada arquivo Markdown, delimit
 | `updated` | Não | Data da última revisão no formato `AAAA-MM-DD`. Quando preenchida, é exibida no cabeçalho do post como “Atualizado em”; não altera a ordenação nem a data original do RSS. |
 | `excerpt` | Não | Resumo curto exibido na listagem inicial e usado nas descrições de metadados/compartilhamento. Se omitido, fica vazio. |
 | `tags` | Não | Lista de tags separadas por vírgulas. Cada tag gera links e uma página própria. |
-| `classification` | Não | Classificação de conteúdo. `18+` e `adult` ativam o Age Gate e o selo `+18`; `14+` e `teen` exibem somente o selo `+14`, sem bloqueio. |
+| `classification` | Não | Classificação de conteúdo. `18+` e `adult` restringem a publicação (corpo não é publicado) e exibem o selo `+18`; `14+` e `teen` exibem somente o selo `+14`, sem bloqueio. |
+| `public_excerpt` | Não | Resumo público de um post `18+`/`adult`. Para esses posts o `excerpt` é ignorado. |
 
 Todos os campos são opcionais para o parser. Na prática, recomenda-se informar pelo menos `title`, `date` e `excerpt` para que a publicação apareça corretamente identificada e contextualizada.
 
@@ -83,25 +84,25 @@ O bloco é inspirado na sintaxe YAML, mas **não é um parser YAML completo**. O
 
 Os campos `date` e `updated`, quando informados, devem usar o formato `AAAA-MM-DD`. `date` representa a publicação original; `updated` registra a última revisão e só aparece no cabeçalho quando preenchido. A revisão não altera a ordem cronológica das publicações nem a data original do RSS. Datas válidas em `date` são organizadas cronologicamente. Uma publicação sem data aparece no grupo **sem data**; uma data que não possa ser interpretada pode aparecer como texto literal e ser agrupada em **sem mês**.
 
-### Classificação e Age Gate
+### Classificação e posts 18+
 
-O campo `classification` é opcional. Os valores abaixo, sem distinção entre maiúsculas e minúsculas, ativam a tela de confirmação:
+O campo `classification` é opcional. Os valores abaixo, sem distinção entre maiúsculas e minúsculas, marcam a publicação como restrita:
 
 - `18+`
 - `adult`
 
-Os valores `14+` e `teen` são classificações exclusivamente visuais e equivalentes: exibem o selo `+14` na listagem inicial, sem confirmação de idade ou bloqueio de leitura.
+Os valores `14+` e `teen` são classificações exclusivamente visuais e equivalentes: exibem o selo `+14` na listagem inicial, sem bloqueio de leitura.
 
-Qualquer outro valor, inclusive `public` ou a ausência do campo, não ativa o Age Gate nem exibe selo.
+Qualquer outro valor, inclusive `public` ou a ausência do campo, não restringe nada nem exibe selo.
 
-Quando ativado:
+Para posts restritos (`18+`/`adult`), o build:
 
-1. A página apresenta a pergunta **“Você é maior de 18 anos?”**.
-2. A opção **Sim** libera o conteúdo e registra a escolha no `localStorage` do navegador.
-3. A opção **Não** mantém o conteúdo oculto naquela página.
-4. Na listagem de publicações, o post recebe o selo `+18`.
+1. **Não renderiza o corpo.** A página publicada contém só título, data, tags, selo `+18` e um aviso. O texto não aparece no HTML, no feed, na busca nem em metadados.
+2. **Ignora o `excerpt`.** O resumo público é opt-in: use `public_excerpt` no front matter se quiser exibir algum.
+3. **Não publica imagens do corpo** usadas somente nesse post (a capa, `![Capa do Post](...)`, continua pública) e não as lista na galeria de artes.
+4. Remove os comentários (Giscus) e o compartilhamento da página.
 
-**Limitação de segurança:** o Age Gate é uma confirmação por autodeclaração, não controle de acesso. O site é estático e o HTML continua publicado; portanto, alguém ainda pode acessar diretamente o arquivo ou inspecionar seu conteúdo. Não use esse mecanismo para proteger informações privadas.
+O Markdown original nunca é publicado: apenas `_site/` vai ao servidor. **Atenção:** isso vale daqui para frente. O que já esteve publicado antes (site, histórico do Git, caches) deve ser considerado exposto. Ainda não há distribuição do texto restrito a leitores autorizados; a página é um marcador até que essa etapa exista.
 
 ## Revisão de publicações
 
