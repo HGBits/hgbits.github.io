@@ -2,13 +2,14 @@
 """
 build.py — gerador estático do blog de hgbits.
 Zero dependências externas (só stdlib). Lê Markdown em content/,
-escreve HTML final na raiz do blog usando templates/page.html.
+escreve o site final em _site/ usando templates/page.html.
 
 Uso:
     python build.py
 """
 import re
 import html
+import shutil
 import unicodedata
 from pathlib import Path
 from datetime import datetime, timezone
@@ -16,6 +17,12 @@ from email.utils import format_datetime
 
 ROOT_DIR = Path(__file__).parent
 CONTENT = ROOT_DIR / "content"
+
+# Tudo que o build gera vai para OUT_DIR, e SÓ OUT_DIR é publicado (ver
+# .github/workflows/build.yml). Arquivos do repositório que não estiverem em
+# PUBLIC_COPY nunca chegam ao servidor (content/, build.py, templates/, etc.).
+OUT_DIR = ROOT_DIR / "_site"
+PUBLIC_COPY = ["css", "js", "assets", ".well-known", "favicon.svg"]
 TEMPLATE = (ROOT_DIR / "templates" / "page.html").read_text(encoding="utf-8")
 
 # Ajuste aqui se o domínio real do blog for diferente.
@@ -371,10 +378,26 @@ def build_sitemap(posts, tag_map):
 </urlset>
 '''
 
+def copy_public_files():
+    """Copia para OUT_DIR somente a lista explícita PUBLIC_COPY."""
+    for name in PUBLIC_COPY:
+        src = ROOT_DIR / name
+        dst = OUT_DIR / name
+        if src.is_dir():
+            shutil.copytree(src, dst)
+        elif src.is_file():
+            shutil.copy2(src, dst)
+        else:
+            print(f"AVISO: {name} está em PUBLIC_COPY mas não existe.")
+    (OUT_DIR / ".nojekyll").touch()
+
 def main():
     posts = []
     (CONTENT / "posts").mkdir(parents=True, exist_ok=True)
-    (ROOT_DIR / "posts").mkdir(parents=True, exist_ok=True)
+    if OUT_DIR.exists():
+        shutil.rmtree(OUT_DIR)
+    OUT_DIR.mkdir()
+    (OUT_DIR / "posts").mkdir()
     for md_file in sorted((CONTENT / "posts").glob("*.md")):
         raw = md_file.read_text(encoding="utf-8")
         meta, body = parse_frontmatter(raw)
@@ -527,7 +550,7 @@ ${body}
             ROOT="../",
             BODY=body,
         )
-        (ROOT_DIR / "posts" / f'{post["slug"]}.html').write_text(html_out, encoding="utf-8")
+        (OUT_DIR / "posts" / f'{post["slug"]}.html').write_text(html_out, encoding="utf-8")
 
     # ---------- gera lista de tags ----------
     tag_map = {}
@@ -667,7 +690,7 @@ ${body}
         ROOT="",
         BODY=index_body,
     )
-    (ROOT_DIR / "index.html").write_text(index_html, encoding="utf-8")
+    (OUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
 
     # ---------- sobre.html ----------
     sobre_raw = (CONTENT / "sobre.md").read_text(encoding="utf-8")
@@ -687,7 +710,7 @@ ${body}
         ROOT="",
         BODY=sobre_body,
     )
-    (ROOT_DIR / "sobre.html").write_text(sobre_html, encoding="utf-8")
+    (OUT_DIR / "sobre.html").write_text(sobre_html, encoding="utf-8")
 
     # ---------- galeria de artes ----------
     arte_items = []
@@ -749,10 +772,10 @@ ${body}
         ROOT="",
         BODY=artes_body,
     )
-    (ROOT_DIR / "artes.html").write_text(artes_html, encoding="utf-8")
+    (OUT_DIR / "artes.html").write_text(artes_html, encoding="utf-8")
 
     # ---------- páginas por tag ----------
-    (ROOT_DIR / "tags").mkdir(parents=True, exist_ok=True)
+    (OUT_DIR / "tags").mkdir(parents=True, exist_ok=True)
     for tag, plist in tag_map.items():
         slug = slugify(tag)
         n = len(plist)
@@ -773,11 +796,13 @@ ${body}
             ROOT="../",
             BODY=tag_body,
         )
-        (ROOT_DIR / "tags" / f"{slug}.html").write_text(tag_html_out, encoding="utf-8")
+        (OUT_DIR / "tags" / f"{slug}.html").write_text(tag_html_out, encoding="utf-8")
 
     # ---------- feed.xml + sitemap.xml ----------
-    (ROOT_DIR / "feed.xml").write_text(build_rss(posts), encoding="utf-8")
-    (ROOT_DIR / "sitemap.xml").write_text(build_sitemap(posts, tag_map), encoding="utf-8")
+    (OUT_DIR / "feed.xml").write_text(build_rss(posts), encoding="utf-8")
+    (OUT_DIR / "sitemap.xml").write_text(build_sitemap(posts, tag_map), encoding="utf-8")
+
+    copy_public_files()
 
     print(f"OK: {len(posts)} posts, {len(tag_map)} tags, index.html, sobre.html, "
           f"artes.html, {len(tag_map)} páginas de tag, feed.xml e sitemap.xml gerados.")

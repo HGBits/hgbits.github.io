@@ -1,4 +1,5 @@
-# Gerados pelo build
+# Gerados pelo build (somente _site/ é publicado)
+_site/
 *.html
 
 # Python

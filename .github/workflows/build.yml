@@ -29,31 +29,16 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Show Input Files
-        run: |
-          echo "=== WORKING DIR ==="
-          pwd
-          echo "=== RAIZ ==="
-          ls -la
-          echo "=== CONTENT/POSTS ==="
-          find content/ -name "*.md" 2>/dev/null || echo "Nenhum .md encontrado"
-          echo "=== TEMPLATES ==="
-          ls -la templates/ 2>/dev/null || echo "templates não encontrado"
-
       - name: Build Site
         run: |
           python build.py
-          echo "=== OUTPUT ==="
-          ls -la *.html 2>&1
-          ls -la posts/ 2>&1 || echo "posts/ não criada"
-
-      - name: Create .nojekyll
-        run: touch .nojekyll
+          echo "=== PUBLICADO (_site) ==="
+          find _site -maxdepth 2 | sort
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: '_site'
 
       - name: Deploy to Pages
         id: deployment

@@ -14,7 +14,14 @@ Para gerar o site localmente:
 python build.py
 ```
 
-O gerador usa apenas a biblioteca padrão do Python. Os arquivos HTML e auxiliares são escritos na raiz do projeto.
+O gerador usa apenas a biblioteca padrão do Python. Todo o site é escrito em `_site/` (ignorada pelo Git) e **somente essa pasta é publicada**. O build copia para lá apenas os itens listados em `PUBLIC_COPY` no `build.py` (`css/`, `js/`, `assets/`, `.well-known/`, `favicon.svg`); `content/`, `templates/`, `build.py` e o restante do repositório nunca chegam ao servidor.
+
+Para testar localmente:
+
+```bash
+python build.py
+python -m http.server -d _site 8000   # http://localhost:8000
+```
 
 ## Front matter
 
