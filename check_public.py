@@ -68,8 +68,11 @@ def main():
         if not is_adult(meta):
             continue
         adult_posts += 1
+        # O excerpt é público de propósito; linhas do corpo contidas nele não contam.
+        excerpt = meta.get("excerpt", "").strip()
         lines = {l.strip() for l in body.splitlines()
-                 if len(l.strip()) >= MIN_LINE and not l.strip().startswith("![")}
+                 if len(l.strip()) >= MIN_LINE and not l.strip().startswith("![")
+                 and l.strip() not in excerpt}
         for rel, text in corpus.items():
             for line in lines:
                 if line in text or html.escape(line, quote=False) in text \

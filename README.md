@@ -37,7 +37,6 @@ O front matter é um bloco opcional no início de cada arquivo Markdown, delimit
 | `excerpt` | Não | Resumo curto exibido na listagem inicial e usado nas descrições de metadados/compartilhamento. Se omitido, fica vazio. |
 | `tags` | Não | Lista de tags separadas por vírgulas. Cada tag gera links e uma página própria. |
 | `classification` | Não | Classificação de conteúdo. `18+` e `adult` restringem a publicação (corpo não é publicado) e exibem o selo `+18`; `14+` e `teen` exibem somente o selo `+14`, sem bloqueio. |
-| `public_excerpt` | Não | Resumo público de um post `18+`/`adult`. Para esses posts o `excerpt` é ignorado. |
 
 Todos os campos são opcionais para o parser. Na prática, recomenda-se informar pelo menos `title`, `date` e `excerpt` para que a publicação apareça corretamente identificada e contextualizada.
 
@@ -98,7 +97,7 @@ Qualquer outro valor, inclusive `public` ou a ausência do campo, não restringe
 Para posts restritos (`18+`/`adult`), o build:
 
 1. **Não renderiza o corpo.** A página publicada contém só título, data, tags, selo `+18` e um aviso. O texto não aparece no HTML, no feed, na busca nem em metadados.
-2. **Ignora o `excerpt`.** O resumo público é opt-in: use `public_excerpt` no front matter se quiser exibir algum.
+2. **Mantém o `excerpt` público** (listagem, metadados, feed e busca): é ele que permite ao leitor decidir se quer ler o post.
 3. **Não publica imagens do corpo** usadas somente nesse post (a capa, `![Capa do Post](...)`, continua pública) e não as lista na galeria de artes.
 4. Remove os comentários (Giscus) e o compartilhamento da página.
 

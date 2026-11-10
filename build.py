@@ -433,7 +433,8 @@ def main():
         adult = classification in {"18+", "adult"}
         if adult:
             # Posts 18+ NUNCA têm o corpo renderizado: o texto não pode chegar ao HTML,
-            # ao feed, à busca nem a metadados. O resumo público é opt-in (public_excerpt).
+            # ao feed nem à busca. O excerpt continua público: é ele que permite ao
+            # leitor decidir se quer ler.
             body_html, toc = "", []
         else:
             raw_body_html = markdown_to_html(body, root="../")
@@ -443,7 +444,7 @@ def main():
             "title": meta.get("title", md_file.stem),
             "date": meta.get("date", ""),
             "updated": meta.get("updated", "").strip().strip('"\''),
-            "excerpt": meta.get("public_excerpt", "") if adult else meta.get("excerpt", ""),
+            "excerpt": meta.get("excerpt", ""),
             "classification": classification,
             "tags": tags,
             "images": extract_images(body),
