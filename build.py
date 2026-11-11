@@ -560,8 +560,8 @@ def main():
           <h2>Esta publicação é destinada a adultos</h2>
           <p>Confirme que você tem 18 anos ou mais para carregar o conteúdo.</p>
           <div class="age-gate-actions">
-            <button type="button" data-age-yes>Tenho 18 anos ou mais</button>
-            <button type="button" data-age-no>Não tenho 18 anos</button>
+            <button class="age-gate-button age-gate-yes" type="button" data-age-yes>Tenho 18 anos ou mais</button>
+            <button class="age-gate-button" type="button" data-age-no>Não tenho 18 anos</button>
           </div>
         </div>
         <div class="age-gate-denied" data-age-denied hidden>
@@ -570,7 +570,7 @@ def main():
           <p>Você recusou a confirmação de maioridade.</p>
           <a href="../index.html">Voltar ao início</a>
         </div>
-        <div data-age-content hidden aria-live="polite">
+        <div class="age-gate-content" data-age-content hidden aria-live="polite">
           <p data-age-status role="status">Carregando publicação...</p>
           <div data-age-body></div>
           <button type="button" data-age-retry hidden>Tentar carregar novamente</button>
