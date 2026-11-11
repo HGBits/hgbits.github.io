@@ -36,7 +36,7 @@ O front matter é um bloco opcional no início de cada arquivo Markdown, delimit
 | `updated` | Não | Data da última revisão no formato `AAAA-MM-DD`. Quando preenchida, é exibida no cabeçalho do post como “Atualizado em”; não altera a ordenação nem a data original do RSS. |
 | `excerpt` | Não | Resumo curto exibido na listagem inicial e usado nas descrições de metadados/compartilhamento. Se omitido, fica vazio. |
 | `tags` | Não | Lista de tags separadas por vírgulas. Cada tag gera links e uma página própria. |
-| `classification` | Não | Classificação de conteúdo. `18+` e `adult` restringem a publicação (corpo não é publicado) e exibem o selo `+18`; `14+` e `teen` exibem somente o selo `+14`, sem bloqueio. |
+| `classification` | Não | Classificação de conteúdo. `18+` e `adult` restringem o carregamento do corpo até a confirmação e exibem o selo `+18`; `14+` e `teen` exibem somente o selo `+14`, sem bloqueio. |
 
 Todos os campos são opcionais para o parser. Na prática, recomenda-se informar pelo menos `title`, `date` e `excerpt` para que a publicação apareça corretamente identificada e contextualizada.
 
