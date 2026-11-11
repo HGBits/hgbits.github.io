@@ -517,22 +517,8 @@ def main():
         <p class="share-status" data-share-status role="status" aria-live="polite"></p>
       </section>
 
-      <section class="giscus-wrap" aria-label="comentários">
-        <script src="https://giscus.app/client.js"
-                data-repo="HGBits/hgbits.github.io"
-                data-repo-id="R_kgDOTQ92dw"
-                data-category="Comentários"
-                data-category-id="DIC_kwDOTQ92d84DGItE"
-                data-mapping="pathname"
-                data-strict="0"
-                data-reactions-enabled="1"
-                data-emit-metadata="0"
-                data-input-position="bottom"
-                data-theme="noborder_dark"
-                data-lang="pt"
-                crossorigin="anonymous"
-                async>
-        </script>
+      <section class="giscus-wrap" data-age-comments hidden aria-label="comentários">
+        <div data-giscus></div>
       </section>
 
       <nav class="post-nav" aria-label="navegação entre posts">
