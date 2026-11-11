@@ -28,19 +28,56 @@
     const content = gate.querySelector("[data-age-content]");
     const yesButton = gate.querySelector("[data-age-yes]");
     const noButton = gate.querySelector("[data-age-no]");
+    const status = gate.querySelector("[data-age-status]");
+    const body = gate.querySelector("[data-age-body]");
+    const retryButton = gate.querySelector("[data-age-retry]");
+    const contentUrl = gate.dataset.ageContentUrl;
 
-    if (!prompt || !denied || !content || !yesButton || !noButton) return;
+    if (!prompt || !denied || !content || !yesButton || !noButton ||
+        !status || !body || !contentUrl) return;
 
-    const showAccepted = () => {
-      prompt.hidden = true;
-      denied.hidden = true;
-      content.hidden = false;
-    };
+    let request = null;
+    let loaded = false;
 
     const showDenied = () => {
       prompt.hidden = true;
       content.hidden = true;
       denied.hidden = false;
+    };
+
+    const loadContent = () => {
+      if (loaded) return Promise.resolve();
+      if (request) return request;
+
+      status.textContent = "Carregando publicação...";
+      retryButton.hidden = true;
+      request = fetch(contentUrl, { credentials: "same-origin" })
+        .then((response) => {
+          if (!response.ok) throw new Error("HTTP " + response.status);
+          return response.text();
+        })
+        .then((markup) => {
+          body.innerHTML = markup;
+          loaded = true;
+          status.hidden = true;
+        })
+        .catch(() => {
+          status.hidden = false;
+          status.textContent = "Não foi possível carregar a publicação. Verifique sua conexão.";
+          retryButton.hidden = false;
+        })
+        .finally(() => {
+          request = null;
+        });
+
+      return request;
+    };
+
+    const showAccepted = () => {
+      prompt.hidden = true;
+      denied.hidden = true;
+      content.hidden = false;
+      loadContent();
     };
 
     const savedChoice = readChoice();
@@ -56,6 +93,8 @@
       saveChoice(deniedValue);
       showDenied();
     });
+
+    retryButton.addEventListener("click", () => loadContent());
   });
 
   document.querySelectorAll("[data-age-gallery]").forEach((gallery) => {

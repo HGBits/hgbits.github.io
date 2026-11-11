@@ -401,7 +401,7 @@ def find_restricted_assets(posts):
                 public.add(key)
     return restricted - public
 
-def copy_public_files(restricted=()):
+def copy_public_files():
     """Copia para OUT_DIR somente a lista explícita PUBLIC_COPY."""
     for name in PUBLIC_COPY:
         src = ROOT_DIR / name
@@ -412,10 +412,6 @@ def copy_public_files(restricted=()):
             shutil.copy2(src, dst)
         else:
             print(f"AVISO: {name} está em PUBLIC_COPY mas não existe.")
-    for key in restricted:
-        target = (OUT_DIR / key).resolve()
-        if OUT_DIR.resolve() in target.parents and target.is_file():
-            target.unlink()
     (OUT_DIR / ".nojekyll").touch()
 
 def main():
@@ -431,14 +427,8 @@ def main():
         tags = [t.strip() for t in meta.get("tags", "").split(",") if t.strip()]
         classification = meta.get("classification", "").strip().strip('"\'').lower()
         adult = classification in {"18+", "adult"}
-        if adult:
-            # Posts 18+ NUNCA têm o corpo renderizado: o texto não pode chegar ao HTML,
-            # ao feed nem à busca. O excerpt continua público: é ele que permite ao
-            # leitor decidir se quer ler.
-            body_html, toc = "", []
-        else:
-            raw_body_html = markdown_to_html(body, root="../")
-            body_html, toc = add_heading_ids(raw_body_html)
+        raw_body_html = markdown_to_html(body, root="../")
+        body_html, toc = add_heading_ids(raw_body_html)
         posts.append({
             "slug": md_file.stem,
             "title": meta.get("title", md_file.stem),
@@ -552,18 +542,38 @@ def main():
     </article>'''
 
         if is_adult_post(post):
+            restricted_dir = OUT_DIR / "restricted"
+            restricted_dir.mkdir(exist_ok=True)
+            (restricted_dir / f'{post["slug"]}.html').write_text(
+                post["body_html"], encoding="utf-8"
+            )
             body = f'''    <article class="article-wrap">
       <header class="post-header">
         <h1>{html.escape(post["title"])} <span class="adult-badge" aria-label="Classificação indicativa: 18 anos ou mais">+18</span></h1>
         <p class="byline">Publicado em: {format_date(post["date"])}</p>
         <p class="tags">{tag_pills(post["tags"], root="../")}</p>
       </header>
-      <section class="age-gate" id="post-content">
-        <div class="age-gate-denied">
+      <section class="age-gate" id="post-content" data-age-gate
+               data-age-content-url="../restricted/{html.escape(post["slug"], quote=True)}.html">
+        <div class="age-gate-prompt" data-age-prompt>
           <p class="age-gate-label">conteúdo restrito</p>
-          <h2>Publicação disponível apenas para leitores autorizados</h2>
-          <p>Esta publicação é destinada a adultos e o texto não é distribuído nesta página.</p>
+          <h2>Esta publicação é destinada a adultos</h2>
+          <p>Confirme que você tem 18 anos ou mais para carregar o conteúdo.</p>
+          <div class="age-gate-actions">
+            <button class="age-gate-button age-gate-yes" type="button" data-age-yes>Tenho 18 anos ou mais</button>
+            <button class="age-gate-button" type="button" data-age-no>Não tenho 18 anos</button>
+          </div>
+        </div>
+        <div class="age-gate-denied" data-age-denied hidden>
+          <p class="age-gate-label">acesso recusado</p>
+          <h2>O conteúdo não foi carregado</h2>
+          <p>Você recusou a confirmação de maioridade.</p>
           <a href="../index.html">Voltar ao início</a>
+        </div>
+        <div class="age-gate-content" data-age-content hidden aria-live="polite">
+          <p data-age-status role="status">Carregando publicação...</p>
+          <div data-age-body></div>
+          <button type="button" data-age-retry hidden>Tentar carregar novamente</button>
         </div>
       </section>
 
@@ -819,7 +829,7 @@ def main():
     (OUT_DIR / "feed.xml").write_text(build_rss(posts), encoding="utf-8")
     (OUT_DIR / "sitemap.xml").write_text(build_sitemap(posts, tag_map), encoding="utf-8")
 
-    copy_public_files(find_restricted_assets(posts))
+    copy_public_files()
 
     print(f"OK: {len(posts)} posts, {len(tag_map)} tags, index.html, sobre.html, "
           f"artes.html, {len(tag_map)} páginas de tag, feed.xml e sitemap.xml gerados.")
