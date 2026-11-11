@@ -39,6 +39,34 @@
     let request = null;
     let loaded = false;
 
+    const loadComments = () => {
+      const comments = gate.parentElement.querySelector("[data-age-comments]");
+      if (!comments || comments.dataset.loaded === "true") return;
+
+      const mount = comments.querySelector("[data-giscus]");
+      if (!mount) return;
+
+      const script = document.createElement("script");
+      script.src = "https://giscus.app/client.js";
+      script.setAttribute("data-repo", "HGBits/hgbits.github.io");
+      script.setAttribute("data-repo-id", "R_kgDOTQ92dw");
+      script.setAttribute("data-category", "Comentários");
+      script.setAttribute("data-category-id", "DIC_kwDOTQ92d84DGItE");
+      script.setAttribute("data-mapping", "pathname");
+      script.setAttribute("data-strict", "0");
+      script.setAttribute("data-reactions-enabled", "1");
+      script.setAttribute("data-emit-metadata", "0");
+      script.setAttribute("data-input-position", "bottom");
+      script.setAttribute("data-theme", "noborder_dark");
+      script.setAttribute("data-lang", "pt");
+      script.setAttribute("crossorigin", "anonymous");
+      script.async = true;
+
+      comments.hidden = false;
+      comments.dataset.loaded = "true";
+      mount.appendChild(script);
+    };
+
     const showDenied = () => {
       prompt.hidden = true;
       content.hidden = true;
@@ -78,6 +106,7 @@
       denied.hidden = true;
       content.hidden = false;
       loadContent();
+      loadComments();
     };
 
     const savedChoice = readChoice();
