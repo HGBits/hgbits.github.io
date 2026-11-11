@@ -96,12 +96,13 @@ Qualquer outro valor, inclusive `public` ou a ausência do campo, não restringe
 
 Para posts restritos (`18+`/`adult`), o build:
 
-1. **Não renderiza o corpo.** A página publicada contém só título, data, tags, selo `+18` e um aviso. O texto não aparece no HTML, no feed, na busca nem em metadados.
-2. **Mantém o `excerpt` público** (listagem, metadados, feed e busca): é ele que permite ao leitor decidir se quer ler o post.
-3. **Não publica imagens do corpo** usadas somente nesse post (a capa, `![Capa do Post](...)`, continua pública) e não as lista na galeria de artes.
-4. Remove os comentários (Giscus) e o compartilhamento da página.
+1. Gera a página do post sem o corpo. Ela contém título, data, tags, selo `+18` e o Age Gate.
+2. Renderiza o corpo em um fragmento HTML separado em `_site/restricted/<slug>.html`. Esse arquivo não é incluído na página inicial, no feed, na busca nem nos metadados.
+3. O navegador só solicita o fragmento depois que o leitor confirma ter 18 anos ou mais. Se a pessoa recusar, nenhuma requisição é feita. Se a confirmação já estiver salva em `localStorage`, o fragmento é carregado automaticamente ao abrir o post.
+4. Mantém o `excerpt` público para contextualizar a publicação. Posts adultos continuam fora da galeria Artes, dos comentários Giscus e do compartilhamento.
+5. As imagens referenciadas pelo fragmento usam os caminhos normais de `assets/`; como o site é estático, esses arquivos também podem ser acessados diretamente.
 
-O Markdown original nunca é publicado: apenas `_site/` vai ao servidor. **Atenção:** isso vale daqui para frente. O que já esteve publicado antes (site, histórico do Git, caches) deve ser considerado exposto. Ainda não há distribuição do texto restrito a leitores autorizados; a página é um marcador até que essa etapa exista.
+**Limite importante:** o Age Gate controla quando o navegador carrega o conteúdo, não quem pode baixá-lo. O fragmento em `/restricted/` é um recurso público e qualquer pessoa que descubra sua URL pode acessá-lo sem confirmar idade. Isso é lazy loading e uma barreira de interface, não autenticação nem proteção de conteúdo. O Markdown original continua fora da pasta publicada; somente o HTML renderizado do fragmento é publicado.
 
 ## Revisão de publicações
 
