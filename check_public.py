@@ -28,7 +28,7 @@ def parse(text):
 
 
 def is_adult(meta):
-    return meta.get("classification", "").strip().strip("\\"'").lower() in {"18+", "adult"}
+    return meta.get("classification", "").strip().strip("\\'\"").lower() in {"18+", "adult"}
 
 
 def main():
