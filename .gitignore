@@ -1,6 +1,7 @@
 # Gerados pelo build (somente _site/ é publicado)
 _site/
 *.html
+!templates/page.html
 
 # Python
 __pycache__/

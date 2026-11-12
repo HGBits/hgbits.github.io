@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESCRIPTION}}">
+<meta name="color-scheme" content="dark">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+{{HEAD_EXTRA}}
+<link rel="stylesheet" href="{{ROOT}}css/style.css">
+<script src="{{ROOT}}js/effects.js" defer></script>
+<script src="{{ROOT}}js/search.js" defer></script>
+<script src="{{ROOT}}js/tts.js" defer></script>
+<script src="{{ROOT}}js/age-gate.js" defer></script>
+<script src="{{ROOT}}js/share.js" defer></script>
+<script src="{{ROOT}}js/terms-notice.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <p class="wordmark"><a href="{{ROOT}}index.html">hgbits</a></p>
+    <nav class="site-nav" aria-label="navegação principal">
+      <a href="{{ROOT}}index.html">início</a>
+      <a href="{{ROOT}}artes.html">artes</a>
+      <a href="{{ROOT}}sobre.html">sobre</a>
+      <a href="{{ROOT}}termos.html">termos</a>
+      <a href="{{ROOT}}privacidade.html">privacidade</a>
+      <a href="{{ROOT}}feed.xml">rss</a>
+    </nav>
+  </div>
+</header>
+
+<div class="site-shell">
+  <main id="main-content" class="wrap">
+{{BODY}}
+  </main>
+
+  <footer class="site-footer wrap">
+    <p>hgbits :: {{YEAR}} &middot; <a href="{{ROOT}}termos.html">termos de uso</a> &middot; <a href="{{ROOT}}privacidade.html">privacidade</a> &middot; <a href="{{ROOT}}feed.xml">rss</a> &middot; <a href="{{ROOT}}sitemap.xml">sitemap</a></p>
+    <p class="footer-terms">Ao usar este site você concorda com os <a href="{{ROOT}}termos.html">termos de uso</a> e a <a href="{{ROOT}}privacidade.html">política de privacidade</a>.</p>
+    <p class="footer-licenses">textos: <a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> &middot; código: <a rel="license" href="https://www.gnu.org/licenses/gpl-3.0.html">GPL-3.0-only</a> &middot; ilustrações com a fursona (geradas com IA) e foto de perfil: fora da CC BY &middot; <a href="https://github.com/HGBits/hgbits.github.io/blob/main/LICENSE">detalhes</a></p>
+  </footer>
+</div>
+
+<dialog class="terms-notice" data-terms-notice aria-labelledby="terms-notice-title" aria-describedby="terms-notice-description">
+  <p class="terms-notice-label">aviso de primeira visita</p>
+  <h2 id="terms-notice-title">Antes de continuar</h2>
+  <p id="terms-notice-description">Este site possui termos de uso e uma política de privacidade que explicam as condições de navegação, o conteúdo publicado, o funcionamento de recursos como comentários e o tratamento de dados. Leia os documentos antes de continuar.</p>
+  <div class="terms-notice-actions">
+    <a class="terms-notice-button terms-notice-read" href="{{ROOT}}termos.html">Ler termos de uso</a>
+    <a class="terms-notice-button terms-notice-read" href="{{ROOT}}privacidade.html">Ler política de privacidade</a>
+    <a class="terms-notice-button terms-notice-reject" href="https://github.com/HGBits/hgbits.github.io">Não aceito, sair do site</a>
+    <button class="terms-notice-button terms-notice-accept" type="button" data-terms-accept>Li e aceito os termos</button>
+  </div>
+</dialog>
+
+</body>
+</html>
