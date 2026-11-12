@@ -1,0 +1,78 @@
+# Licenças do projeto
+
+Este repositório reúne código-fonte, textos, ilustrações e outros materiais. Cada categoria possui seu próprio regime de licenciamento. **Não presuma que uma licença cobre todo o conteúdo do repositório.**
+
+## Código-fonte
+
+O código-fonte e os componentes de software do site são disponibilizados sob a **GNU General Public License, versão 3, somente (GPL-3.0-only)**, salvo indicação expressa em contrário em um arquivo específico. Não se aplicam versões posteriores da GPL. Os arquivos de código trazem o aviso de copyright e o identificador `SPDX-License-Identifier: GPL-3.0-only` no cabeçalho; o template `templates/page.html` é coberto pelo arquivo `templates/page.html.license`.
+
+Consulte o arquivo [LICENSE-GPL-3.0.txt](LICENSE-GPL-3.0.txt) e o texto oficial da [GNU GPL v3.0](https://www.gnu.org/licenses/gpl-3.0.html).
+
+## Textos e obras autorais
+
+Salvo indicação em contrário, os textos, artigos e demais obras autorais publicados no blog são disponibilizados sob a **Creative Commons Atribuição 4.0 Internacional (CC BY 4.0)**, **exceto as imagens e ilustrações tratadas nas seções abaixo** (fursona, fotografia de perfil e materiais de terceiros).
+
+A licença permite copiar, redistribuir, adaptar e utilizar o material, inclusive comercialmente, desde que sejam cumpridas suas condições de atribuição. Em termos práticos:
+
+- credite o autor como **hgbits**;
+- inclua, quando razoavelmente possível, um link para a publicação original;
+- indique a licença [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/);
+- informe se fez modificações;
+- não sugira que hgbits apoia, patrocina ou endossa seu uso.
+
+O texto legal oficial está disponível em [LICENSE-CC-BY-4.0.txt](LICENSE-CC-BY-4.0.txt). A versão canônica também pode ser consultada no site da [Creative Commons](https://creativecommons.org/licenses/by/4.0/legalcode).
+
+## Fursona e identidade visual pessoal
+
+A fursona de hgbits é uma representação visual associada à identidade pessoal do autor e **não está abrangida pela licença CC BY 4.0 geral do conteúdo do blog**.
+
+**Escopo:** a fursona aparece na grande maioria das ilustrações do blog, em especial nas capas dos posts. Por isso, **toda imagem em `assets/`, exceto `assets/avatar.jpg`, é tratada como ilustração com a fursona e fica fora da CC BY 4.0**, a menos que o título da imagem no Markdown indique expressamente outra licença (veja a seção sobre identificação de licença em imagens, ao final). Essas imagens seguem o regime descrito a seguir.
+
+A ilustração pode ser reutilizada como recurso visual independente, **inclusive por meio de adaptações e obras derivadas e para fins comerciais**, sem associá-la à pessoa, identidade, participação, apoio ou endosso de hgbits, desde que seja mantida a atribuição de autoria e observado o aviso de uso descrito nos [Termos de Uso](https://hgbits.github.io/termos.html).
+
+Não é permitido utilizar a fursona para retratar ou sugerir a participação, apoio ou responsabilidade de hgbits em atividades ilícitas ou em conteúdos que façam essa associação. A autorização de uso visual independente não equivale a autorização para representar a pessoa ou atribuir-lhe posicionamentos.
+
+Consulte a seção **Propriedade intelectual e licenças** dos [Termos de Uso](https://hgbits.github.io/termos.html), que prevalece para os detalhes dessa autorização específica.
+
+## Origem das ilustrações (IA generativa)
+
+As ilustrações e capas do blog, inclusive as que retratam a fursona, são geradas com o auxílio de ferramentas de inteligência artificial generativa (como ChatGPT, Gemini e outros modelos), a partir de instruções de hgbits. A titularidade e a proteção autoral desse tipo de material dependem da legislação aplicável e dos termos de uso de cada ferramenta, e podem ser limitadas ou incertas. Por isso, as permissões descritas neste documento e nos Termos de Uso para essas imagens são concedidas **na medida dos direitos que hgbits efetivamente possua** sobre cada uma, sem garantia de titularidade exclusiva, de registrabilidade ou de ausência de reivindicações de terceiros.
+
+## Fotografia pessoal de perfil
+
+A fotografia `assets/avatar.jpg` retrata pessoalmente hgbits e **não está abrangida pela licença CC BY 4.0 geral aplicada aos demais conteúdos autorais do site**.
+
+Sua reprodução, redistribuição, adaptação ou utilização em outros contextos depende de autorização prévia do titular. A licença geral do site não concede direitos de uso sobre essa fotografia.
+
+## Marca, logotipo e identidade do projeto
+
+O nome, a marca, o logotipo e os demais elementos de identidade visual **hgbits** não são licenciados pela GPL-3.0 ou pela CC BY 4.0. Seu uso é permitido apenas na medida necessária para identificar corretamente a origem do projeto e de seus materiais, sem sugerir afiliação, patrocínio ou endosso.
+
+## Materiais de terceiros
+
+Imagens, fontes, bibliotecas, trechos de código e quaisquer outros materiais pertencentes a terceiros permanecem sujeitos às licenças e aos direitos de seus respectivos titulares. A presença desses materiais no repositório ou no site não os coloca automaticamente sob as licenças acima. Isso inclui marcas e logotipos de terceiros que aparecem em algumas capas (por exemplo Discord, ANPD, Google e Apple): pertencem aos seus titulares, não são licenciados por este projeto e não estão cobertos pela autorização de reutilização das ilustrações.
+
+## Resumo
+
+| Material | Licença / condição |
+| --- | --- |
+| Código-fonte e componentes de software | GPL-3.0-only, salvo aviso específico |
+| Textos e demais obras autorais do blog | CC BY 4.0, salvo aviso específico |
+| Fursona e ilustrações em `assets/` (capas dos posts, geradas com IA), exceto `avatar.jpg` | Fora da CC BY 4.0; reutilização visual independente (inclui obras derivadas e uso comercial) com atribuição e aviso, conforme os Termos de Uso; outra licença só se indicada no título da imagem |
+| Fotografia pessoal `assets/avatar.jpg` | Fora da CC BY 4.0 geral; uso sujeito à autorização prévia |
+| Marca, logotipo e identidade hgbits | Todos os direitos reservados, exceto usos limitados de identificação |
+| Materiais de terceiros (inclui logotipos que aparecem nas capas) | Licença de seus respectivos titulares |
+
+Este documento é um guia de leitura das licenças e não substitui os textos legais oficiais nem os Termos de Uso.
+
+## Identificação de licença em imagens dos posts
+
+O campo de título da imagem no Markdown pode identificar sua licença. Para licenças reconhecidas pelo gerador, a página exibe automaticamente o nome e um link para o texto oficial:
+
+```md
+![Descrição alternativa](assets/screenshot.png "CC BY 4.0")
+```
+
+São reconhecidos: CC BY 4.0, CC BY-SA 4.0, CC BY-NC 4.0, CC0 1.0 e GPL-3.0. A identificação automática não substitui a atribuição exigida pela licença: quando necessário, informe também o autor, a fonte e eventuais modificações no texto do post.
+
+Títulos que não correspondam a uma licença reconhecida continuam sendo tratados como legendas comuns. A ausência de um título de licença não significa que o material esteja em domínio público ou coberto pela licença geral do blog.
