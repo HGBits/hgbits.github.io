@@ -481,7 +481,11 @@ def main():
         shutil.rmtree(OUT_DIR)
     OUT_DIR.mkdir()
     (OUT_DIR / "posts").mkdir()
-    post_files = sorted((CONTENT / "posts").glob("*.md"))
+    # Arquivos de instrução para agentes não são publicações.
+    post_files = sorted(
+        path for path in (CONTENT / "posts").glob("*.md")
+        if path.name.lower() != "agent.md"
+    )
     post_links = {
         key: f"/posts/{md_file.stem}.html"
         for md_file in post_files
