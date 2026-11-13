@@ -4,6 +4,7 @@ date: 2025-05-10
 tags: Artigos
 updated: 2026-11-06
 excerpt: A Privacidade não deve ser uma concessão mas, um direito pleno.
+authorship: ai-generated
 ---
 
 ![Capa do Post](assets/A-Liberdade-é-um-risco.png)

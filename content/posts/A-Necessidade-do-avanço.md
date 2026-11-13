@@ -4,6 +4,7 @@ date: 2025-04-16
 tags: Artigos
 updated: 2026-11-06
 excerpt: A liberdade é o único ponto de partida legítimo. ela não é concessão do Estado, nem privilégio de maioria.
+authorship: ai-generated
 ---
 
 ![Capa do Post](assets/A-Necessidade-do-Avanço.png)

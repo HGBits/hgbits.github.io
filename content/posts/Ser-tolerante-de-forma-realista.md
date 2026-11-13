@@ -4,7 +4,7 @@ date: 2026-11-12
 tags: Artigos
 excerpt: A tolerância não exige concordância, submissão ideológica ou abandono das próprias convicções. É possível discordar de alguém, rebater suas ideias e ainda reconhecer o valor de suas contribuições. Uma reflexão sobre divergência ideológica, convivência e a capacidade de separar ideias, pessoas e ferramentas.
 updated:
-authorship: ai-assisted
+authorship: human
 ---
 
 ![Capa do Post](assets/Tolerância-Realista.png)

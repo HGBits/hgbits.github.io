@@ -3,6 +3,7 @@ title: Criptografia de ponta a ponta está ameaçada?
 date: 2026-11-06
 tags: Notícias
 excerpt: A discussão entre a proteção de menores e a criptografia de ponta a ponta levanta uma questão importante: até que ponto devemos abrir mão da privacidade para permitir o monitoramento de nossas comunicações?
+authorship: ai-generated
 ---
 
 ![Capa do Post](assets/Criptografia-de-ponta-a-Ponta.png)

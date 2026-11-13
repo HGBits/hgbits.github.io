@@ -3,6 +3,7 @@ title: Chrome deitou e te deixou na mão
 date: 2026-08-13
 tags: Notícias
 excerpt: Você confia nas extensões que instala no Chrome? Uma investigação revelou **737 extensões maliciosas**, expondo usuários a riscos de espionagem, roubo de dados e invasão de privacidade. Nem mesmo as lojas oficiais são territórios livres de ameaças. Afinal, se você não controla o que instala, quem está controlando o seu navegador?
+authorship: ai-generated
 ---
 
 ![Capa do Post](assets/Chrome’s-Malicious-Extension-Warning.png)

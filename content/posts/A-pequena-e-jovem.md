@@ -3,6 +3,7 @@ title: A pequena e jovem
 date: 2025-08-05
 tags: Poesia
 excerpt: O dia em que me silenciei
+authorship: human
 ---
 
 ![Capa do Post](assets/A-pequena-e-jovem.png)

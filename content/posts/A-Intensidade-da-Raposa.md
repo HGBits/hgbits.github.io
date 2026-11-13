@@ -4,6 +4,7 @@ date: 2026-10-13
 tags: O-Conto-da-Raposa, Poesia
 excerpt: o instante em que o medo as faz estremecer...
 classification: 18+
+authorship: ai-assisted
 ---
 
 ![Capa do Post](assets/A-Intensidade-da-Raposa.png)

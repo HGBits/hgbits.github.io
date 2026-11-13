@@ -4,6 +4,7 @@ date: 2026-10-29
 tags: Diário
 excerpt: Caro diário, eu venho aqui contá-lo algo novo.
 classification: 18+
+authorship: human
 ---
 
 ![Capa do Post](assets/algo-novo.jpg)

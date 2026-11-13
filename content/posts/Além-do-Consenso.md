@@ -4,6 +4,7 @@ date: 2026-11-12
 tags: Guia de Leitura, Lista de canais, Libertárianismo, Cypherpunk
 excerpt: Referências e reflexões sobre libertarianismo, cypherpunk, liberdade individual e tecnologia, acompanhadas de críticas e questionamentos.
 updated:
+authorship: human
 ---
 
 ![Capa do Post](assets/Além-do-Consenso.png)

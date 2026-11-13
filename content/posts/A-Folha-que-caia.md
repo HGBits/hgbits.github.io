@@ -3,6 +3,7 @@ title: A Folha que caia
 date: 2026-08-07
 tags: Poesia
 excerpt: Vôo para longe e levou meu amor junto.
+authorship: human
 ---
 
 ![Capa do Post](assets/A-Folha-que-caia.png)

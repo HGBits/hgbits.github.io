@@ -3,6 +3,7 @@ title: A Polícia contra o GrapheneOS
 date: 2026-11-11
 excerpt: Um ativista americano, uma tentativa de acesso policial e um sistema operacional capaz de destruir seus próprios dados. Desde quando proteger sua privacidade se tornou motivo de suspeita?
 tags: Notícias
+authorship: ai-assisted
 ---
 
 ![Capa do Post](assets/GrapheneOS-vs-Border-Surveillance.png)
