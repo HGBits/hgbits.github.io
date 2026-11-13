@@ -14,7 +14,7 @@ import html
 import posixpath
 import shutil
 import unicodedata
-from urllib.parse import unquote
+from urllib.parse import unquote, urlsplit, urlunsplit
 from pathlib import Path
 from datetime import datetime, timezone
 from email.utils import format_datetime
@@ -156,7 +156,24 @@ def image_license_html(title, root=""):
             f'<a href="{url}" rel="license noopener" target="_blank">{label}</a></span>')
 
 
-def inline_md(text, root=""):
+def resolve_post_link(href, post_links):
+    """Converte links para arquivos Markdown em URLs das páginas geradas."""
+    if not post_links:
+        return href
+
+    parts = urlsplit(html.unescape(href))
+    if parts.scheme or parts.netloc or not parts.path.lower().endswith(".md"):
+        return href
+
+    filename = unquote(parts.path).rsplit("/", 1)[-1]
+    target = post_links.get(filename)
+    if not target:
+        return href
+
+    return urlunsplit(("", "", target, parts.query, parts.fragment))
+
+
+def inline_md(text, root="", post_links=None):
     text = html.escape(text, quote=False)
 
     def render_inline_img(m):
@@ -171,11 +188,16 @@ def inline_md(text, root=""):
     text = re.sub(r"`([^`]+)`", r"<code>\1</code>", text)
     text = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", text)
     text = re.sub(r"(?<!\*)\*([^*]+)\*(?!\*)", r"<em>\1</em>", text)
-    text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', text)
+    def render_link(m):
+        label, href = m.group(1), m.group(2)
+        resolved = resolve_post_link(href, post_links)
+        return f'<a href="{html.escape(resolved, quote=True)}">{label}</a>'
+
+    text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", render_link, text)
     return text
 
 
-def markdown_to_html(md, root=""):
+def markdown_to_html(md, root="", post_links=None):
     lines = md.strip("\n").split("\n")
     out = []
     i = 0
@@ -209,7 +231,7 @@ def markdown_to_html(md, root=""):
             if license_html:
                 fig += f"<figcaption>{license_html}</figcaption>"
             elif caption:
-                fig += f"<figcaption>{inline_md(caption, root)}</figcaption>"
+                fig += f"<figcaption>{inline_md(caption, root, post_links)}</figcaption>"
             fig += "</figure>"
             out.append(fig)
             i += 1
@@ -231,7 +253,7 @@ def markdown_to_html(md, root=""):
 
             def cell(tag, value, align):
                 style = f' style="text-align:{align}"' if align else ""
-                return f"<{tag}{style}>{inline_md(value, root)}</{tag}>"
+                return f"<{tag}{style}>{inline_md(value, root, post_links)}</{tag}>"
 
             thead = "<tr>" + "".join(
                 cell("th", c, aligns[j] if j < len(aligns) else "")
@@ -249,11 +271,11 @@ def markdown_to_html(md, root=""):
 
         # cabeçalhos
         if line.startswith("## "):
-            out.append(f"<h2>{inline_md(line[3:], root)}</h2>")
+            out.append(f"<h2>{inline_md(line[3:], root, post_links)}</h2>")
             i += 1
             continue
         if line.startswith("### "):
-            out.append(f"<h3>{inline_md(line[4:], root)}</h3>")
+            out.append(f"<h3>{inline_md(line[4:], root, post_links)}</h3>")
             i += 1
             continue
 
@@ -263,7 +285,7 @@ def markdown_to_html(md, root=""):
             while i < len(lines) and lines[i].startswith("> "):
                 quote_lines.append(lines[i][2:])
                 i += 1
-            out.append(f"<blockquote><p>{inline_md(' '.join(quote_lines), root)}</p></blockquote>")
+            out.append(f"<blockquote><p>{inline_md(' '.join(quote_lines), root, post_links)}</p></blockquote>")
             continue
 
         # lista
@@ -271,7 +293,7 @@ def markdown_to_html(md, root=""):
             if not in_list:
                 out.append("<ul>")
                 in_list = True
-            out.append(f"<li>{inline_md(line[2:], root)}</li>")
+            out.append(f"<li>{inline_md(line[2:], root, post_links)}</li>")
             i += 1
             continue
         else:
@@ -292,7 +314,7 @@ def markdown_to_html(md, root=""):
         ):
             para_lines.append(lines[i])
             i += 1
-        out.append(f"<p>{inline_md(' '.join(para_lines), root)}</p>")
+        out.append(f"<p>{inline_md(' '.join(para_lines), root, post_links)}</p>")
 
     if in_list:
         out.append("</ul>")
@@ -458,13 +480,19 @@ def main():
         shutil.rmtree(OUT_DIR)
     OUT_DIR.mkdir()
     (OUT_DIR / "posts").mkdir()
-    for md_file in sorted((CONTENT / "posts").glob("*.md")):
+    post_files = sorted((CONTENT / "posts").glob("*.md"))
+    post_links = {
+        key: f"/posts/{md_file.stem}.html"
+        for md_file in post_files
+        for key in (md_file.name, md_file.stem)
+    }
+    for md_file in post_files:
         raw = md_file.read_text(encoding="utf-8")
         meta, body = parse_frontmatter(raw)
         tags = [t.strip() for t in meta.get("tags", "").split(",") if t.strip()]
         classification = meta.get("classification", "").strip().strip('"\'').lower()
         adult = classification in {"18+", "adult"}
-        raw_body_html = markdown_to_html(body, root="../")
+        raw_body_html = markdown_to_html(body, root="../", post_links=post_links)
         body_html, toc = add_heading_ids(raw_body_html)
         posts.append({
             "slug": md_file.stem,
