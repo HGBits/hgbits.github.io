@@ -6,7 +6,7 @@ excerpt: cada vez mais nascem menos filhos no mundo e já prevem que em 2100 a t
 updated:
 ---
 
-![Capa do Post](assets/Existe-um-problema-de-superpopulação-no-mundo.jpg)
+![Capa do Post](assets/Superpopulação.png)
 
 > Nota: Esse post originalmente foi feito entre 2022 e 2023 por mim e publicado no telegram, posteriormente foi reupado em outros lugares. Para todos os feitos considerem as informações contidas nesta publicação como parcialmente datadas porém ainda relevantes.
 Hoje a taxa de natalidade brasileira está em 1,5 mas, no passado em 1960 a taxa era de 6,28 filhos por mulher.

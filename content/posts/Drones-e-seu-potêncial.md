@@ -5,7 +5,7 @@ excerpt: Uma exploração sobre o potencial da combinação entre inteligência 
 tags: Artigos
 ---
 
-![Capa do Post](assets/Drones-e-seu-potêncial.jpg)
+![Capa do Post](assets/Drones-e-seu-Potencial.png)
 
 ## Introdução
 Eu quero falar sobre algumas possibilidades para o futuro que poucas pessoas, neste momento, pararam para calcular.
