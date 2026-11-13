@@ -3,6 +3,7 @@ title: Direito de atribuição existe?
 date: 2026-07-11
 tags: Artigos
 updated: 2026-11-03
+development: true
 excerpt: É Importante que separemos para compreensão o que os termos "Propriedade Privada", "Propriedade Interlectual" e "Emissor Primário" significam...
 ---
 
