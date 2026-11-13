@@ -2,7 +2,7 @@
 title: Descoberta
 date: 2026-09-04
 tags: Diário
-excerpt: é como eu disse a umas semanas atrás "sou como uma raposa faminta que quando sente uma presa por perto tem vontade de comer"
+excerpt: Falta de sexo, junto de uma libido muito alta é uma mistura infernal.
 classification: 18+
 ---
 
