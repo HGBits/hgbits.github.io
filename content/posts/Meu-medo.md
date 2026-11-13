@@ -5,6 +5,7 @@ tags: Diário
 updated: 2026-11-11
 excerpt: eu tenho medo de ser mal compreendido pelo que vou falar aqui...
 classification: 18+
+authorship: human
 ---
 
 ![Capa do Post](assets/Meu-medo.jpg)

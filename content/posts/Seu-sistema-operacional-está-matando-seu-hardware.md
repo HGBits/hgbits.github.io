@@ -3,6 +3,7 @@ title: Seu sistema operacional está matando seu hardware?"
 date: 2026-11-06
 tags: Notícias
 excerpt: O sistema operacional que você utiliza pode determinar por quanto tempo seu hardware continuará recebendo atualizações e funcionando adequadamente.
+authorship: human
 ---
 
 ![Capa do Post](assets/Seu-sistema-operacional-está-matando-seu-hardware.jpg)

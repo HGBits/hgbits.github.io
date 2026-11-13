@@ -4,6 +4,7 @@ date: 2026-07-09
 tags: Artigos
 updated: 2026-11-03
 excerpt: essa é uma pergunta importante e a resposta dela deve levar várias coisas em consideração seja a Liberdade de customização, o Sideload de apps, ou a possibilidade de trocar de sistema, etc
+authorship: human
 ---
 
 ![Capa do Post](assets/Seu-Celular-Realmente-Te-Pertence.jpg)

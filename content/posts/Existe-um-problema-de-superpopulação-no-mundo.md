@@ -4,6 +4,7 @@ date: 2026-11-12
 tags: Artigos
 excerpt: cada vez mais nascem menos filhos no mundo e já prevem que em 2100 a taxa mundial será de 1,66 e com isso teremos uma redução da população mundial.
 updated:
+authorship: human
 ---
 
 ![Capa do Post](assets/Superpopulação.png)

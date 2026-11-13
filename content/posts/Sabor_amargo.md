@@ -3,7 +3,8 @@ title: Sabor Amargo
 date: 2026-09-11
 revision: 2026-09-16
 tags: Poesia, Devaneios
-excerpt: ela empolgada me puxava de um lado ao outro para explorar a noite, fazia-me de brinquedo... 
+excerpt: ela empolgada me puxava de um lado ao outro para explorar a noite, fazia-me de brinquedo...
+authorship: human
 ---
 
 ![Capa do Post](assets/Sabor-Amargo.png)

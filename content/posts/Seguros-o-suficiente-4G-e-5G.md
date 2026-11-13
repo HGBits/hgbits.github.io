@@ -3,6 +3,7 @@ title: 4G e 5G são seguros o suficiente?
 date: 2026-11-06
 tags: Notícias
 excerpt: Pesquisadores identificaram 84 vulnerabilidades em implementações de redes 4G e 5G. Algumas podem permitir ataques de negação de serviço e até sequestro de sessões de usuários.
+authorship: ai-assisted
 ---
 
 ![Capa do Post](assets/Segurança-4G-e-5G.png)

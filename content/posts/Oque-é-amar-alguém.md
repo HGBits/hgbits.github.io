@@ -3,6 +3,7 @@ title: Oque é amar alguém?
 date: 2026-08-07
 tags: Poesia
 excerpt: Por que me nartirizo tanto?
+authorship: human
 ---
 
 ![Capa do Post](assets/Oque-é-amar-alguém.jpg)

@@ -3,6 +3,7 @@ title: O Tempo Passa
 date: 2026-08-13
 tags: Poesia
 excerpt: Vi meus sentimentos tolhidos pelo tempo..
+authorship: human
 ---
 
 ![Capa do Post](assets/O-Tempo-Passa.png) 

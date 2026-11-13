@@ -3,6 +3,7 @@ title: Dispositivos Inteligentes são Perigosos?
 date: 2026-11-06
 tags: Notícias
 excerpt: Até que ponto sua casa ainda é sua quando os dispositivos dependem de empresas e serviços de terceiros?
+authorship: ai-assisted
 ---
 
 ![Capa do Post](assets/Dispositivos-Inteligentes.png)

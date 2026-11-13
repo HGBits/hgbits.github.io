@@ -5,6 +5,7 @@ tags: Poesia, Devaneios
 excerpt: Só está noite me permita que eu a machuque, que eu a faça sentir em pequenas dores o que sinto,
 um gesto doloroso de amor.
 classification: 18+
+authorship: human
 ---
 
 ![Capa do Post](assets/Só-essa-noite.jpg)

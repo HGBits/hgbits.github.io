@@ -4,6 +4,7 @@ date: 2026-09-04
 tags: Diário
 excerpt: Falta de sexo, junto de uma libido muito alta é uma mistura infernal.
 classification: 18+
+authorship: human
 ---
 
 ![Capa do Post](assets/Descoberta.png)

@@ -4,6 +4,7 @@ date: 2024-03-18
 tags: Artigos
 updated: 2026-11-06
 excerpt: "Promessas foram feitas para serem cumpridas" (O Vendedor de sonhos)
+authorship: human
 ---
 
 ![Capa do Post](assets/Promessas-e-Contratos.png)
@@ -22,4 +23,4 @@ A medida que cumprimos promessas ganhamos a confiança dos outros e do contrári
 
 Para um Libertário tudo isso é ainda mais importante, nós que defendemos a propriedade privada absoluta do indivíduo temos o papel fundamental de cumprimos com nossas promessas, acordos ou contratos pois é isso que defendemos, um futuro baseado não na confiança ingênua mais numa sociedade de leis privadas, uma sociedade de contratos e cidades privadas.  
 
-"O mundo que você anseia pode ser conquistaddo. Existe, é real, é possível, é seu." (Ayn Rand)
+"O mundo que você anseia pode ser conquistado. Existe, é real, é possível, é seu." (Ayn Rand)

@@ -4,6 +4,7 @@ date: 2026-10-09
 tags: O-Conto-da-Raposa, Poesia
 excerpt: carne e sangue, estou satisfeito.
 classification: 18+
+authorship: ai-assisted
 ---
 
 ![Capa do Post](assets/Entre-as-folhas.jpg)

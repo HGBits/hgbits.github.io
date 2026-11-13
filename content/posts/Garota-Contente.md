@@ -3,6 +3,7 @@ title: A Garota Contente
 date: 2026-07-17
 tags: Poesia, Devaneios
 excerpt: Quantas vezes nós não nos pegamos pensando no sorriso de uma garota?
+authorship: human
 ---
 
 ![Capa do Post](assets/Garota-Contente.jpg)

@@ -4,6 +4,7 @@ date: 2026-11-06
 tags: Notícias
 updated: 2026-11-11
 excerpt: A concentração da infraestrutura digital nas mãos de empresas americanas está criando uma dependência tecnológica que pode afetar países inteiros.
+authorship: ai-assisted
 ---
 
 ![Capa do Post](assets/Empresas-dos-EUA-estão-criando-um-Lock-in.png)

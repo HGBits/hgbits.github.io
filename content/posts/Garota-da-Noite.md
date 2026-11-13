@@ -2,7 +2,8 @@
 title: Garota da Noite
 date: 2026-07-24
 tags: Poesia, Devaneios
-excerpt: garota da noite você me fala coisas tão bonitas.. 
+excerpt: garota da noite você me fala coisas tão bonitas..
+authorship: human
 ---
 
 ![Capa do Post](assets/Garota-da-Noite.png)

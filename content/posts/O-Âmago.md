@@ -4,6 +4,7 @@ date: 2026-10-13
 tags: O-Conto-da-Raposa, Poesia
 excerpt: a raposa me adotou sem perceber...
 classification: 18+
+authorship: human
 ---
 
 ![Capa do Post](assets/O-Âmago.jpg)

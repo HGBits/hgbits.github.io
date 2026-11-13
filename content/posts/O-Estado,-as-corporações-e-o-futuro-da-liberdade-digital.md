@@ -3,6 +3,7 @@ title: O Estado, as corporações e o futuro da liberdade digital
 date: 2026-11-11
 excerpt: Quando o poder de vigiar, investigar e atacar no ciberespaço deixa de ser exclusividade dos Estados, precisamos discutir quem realmente controla nossa liberdade digital.
 tags: Notícias
+authorship: ai-assisted
 ---
 
 ![Capa do Post](assets/O-Estado-e-o-Futuro-da-Liberdade-Digital.png)

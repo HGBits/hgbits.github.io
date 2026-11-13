@@ -3,6 +3,7 @@ title: Drones e seu Potêncial
 date: 2026-11-12
 excerpt: Uma exploração sobre o potencial da combinação entre inteligência artificial, anonimização, infraestrutura distribuída e robótica, considerando desde tecnologias atuais de privacidade até data centers espaciais e operações autônomas com drones.
 tags: Artigos
+authorship: ai-generated
 ---
 
 ![Capa do Post](assets/Drones-e-seu-Potencial.png)

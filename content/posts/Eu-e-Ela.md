@@ -3,6 +3,7 @@ title: Eu e Ela
 date: 2025-08-05
 tags: Poesia
 excerpt: Uma poesia sobre a mais desejável do mundo. 
+authorship: human
 ---
 
 ![Capa do Post](assets/Eu-e-Ela.jpg)

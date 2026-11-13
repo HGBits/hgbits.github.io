@@ -4,6 +4,7 @@ date: 2026-07-08
 tags: Diário
 classification: +14
 excerpt: não faz tanto tempo que eu descobrir algo sobre um amigo que fez com que eu me afastasse dele, eu sinto por isso por que sou um cara de poucos amigos...
+authorship: human
 ---
 
 ![Capa do Post](assets/Revelação-e-Preconceito.jpg)
