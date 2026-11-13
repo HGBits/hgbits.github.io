@@ -489,8 +489,8 @@ def main():
         raw = md_file.read_text(encoding="utf-8")
         meta, body = parse_frontmatter(raw)
         tags = [t.strip() for t in meta.get("tags", "").split(",") if t.strip()]
-        classification = meta.get("classification", "").strip().strip('"\\'').lower()
-        authorship = meta.get("authorship", "").strip().strip('"\\'').lower()
+        classification = meta.get("classification", "").strip().strip("\\\"'").lower()
+        authorship = meta.get("authorship", "").strip().strip("\\\"'").lower()
         authorship_labels = {
             "human": ("Feito por humano", "Autoria humana"),
             "ai-assisted": ("Auxiliado por IA", "Conteúdo produzido com auxílio de inteligência artificial"),
@@ -513,7 +513,7 @@ def main():
             "classification": classification,
             "authorship": authorship,
             "authorship_badge": authorship_badge,
-            "development": meta.get("development", "").strip().strip('"\\'').lower() == "true",
+            "development": meta.get("development", "").strip().strip("\\\"'").lower() == "true",
             "tags": tags,
             "images": extract_images(body),
             "cover": extract_cover(body),
