@@ -85,7 +85,7 @@ O bloco é inspirado na sintaxe YAML, mas **não é um parser YAML completo**. O
 - Não use listas YAML, objetos aninhados, continuações de linha ou estruturas complexas.
 - Para `tags`, escreva os nomes na mesma linha, separados por vírgulas. Não use a sintaxe de lista com hífens.
 - `authorship` aceita `human`, `ai-assisted` ou `ai-generated`. Campo ausente ou valor desconhecido não exibe selo.
-- Valores de texto são mantidos como texto. Em `classification`, espaços externos e aspas simples ou duplas são removidos e o valor é convertido para minúsculas.
+- Valores de texto são mantidos como texto. Em `classification` e `authorship`, espaços externos e aspas simples ou duplas são removidos e o valor é convertido para minúsculas.
 - Se não houver front matter delimitado corretamente no início do arquivo, o arquivo inteiro será tratado como corpo Markdown e os metadados ficarão vazios.
 
 Os campos `date` e `updated`, quando informados, devem usar o formato `AAAA-MM-DD`. `date` representa a publicação original; `updated` registra a última revisão e só aparece no cabeçalho quando preenchido. A revisão não altera a ordem cronológica das publicações nem a data original do RSS. Datas válidas em `date` são organizadas cronologicamente. Uma publicação sem data aparece no grupo **sem data**; uma data que não possa ser interpretada pode aparecer como texto literal e ser agrupada em **sem mês**.
