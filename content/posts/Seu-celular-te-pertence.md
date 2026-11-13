@@ -6,7 +6,7 @@ updated: 2026-11-03
 excerpt: essa é uma pergunta importante e a resposta dela deve levar várias coisas em consideração seja a Liberdade de customização, o Sideload de apps, ou a possibilidade de trocar de sistema, etc
 ---
 
-![Capa do Post](assets/Seu-Celular-Realmente-Te-Pertence.png)
+![Capa do Post](assets/Seu-Celular-Realmente-Te-Pertence.jpg)
 
 ## Introdução
 Para todos nós usuários de smartphones essa é uma pergunta importante e a resposta dela deve levar várias coisas em consideração seja a Liberdade de customização, o Sideload de apps, ou a possibilidade de trocar de sistema, etc 
