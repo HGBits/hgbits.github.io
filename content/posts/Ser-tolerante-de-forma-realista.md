@@ -6,7 +6,7 @@ excerpt: A tolerância não exige concordância, submissão ideológica ou aband
 updated:
 ---
 
-![Capa do Post](assets/Ser-tolerante-de-forma-realista.jpg)
+![Capa do Post](assets/Tolerância-Realista.png)
 
 [[TOC]]
 ## Introdução
