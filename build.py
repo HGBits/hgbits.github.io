@@ -355,6 +355,7 @@ def render_post_list(posts_list, root=""):
         else:
             classification_badge = ""
         development_badge = '<span class="development-badge" aria-label="Post em desenvolvimento">Em desenvolvimento</span>' if post.get("development") else ""
+        authorship_badge = post.get("authorship_badge", "")
         # Capas são prévias visuais independentes da classificação do conteúdo.
         cover_html = ""
         if post["cover"]:
@@ -363,7 +364,7 @@ def render_post_list(posts_list, root=""):
             cover_html = (f'<a class="post-cover" href="{root}posts/{post["slug"]}.html" tabindex="-1" aria-hidden="true">'
                           f'<img src="{cover_src}" alt="{cover_alt}" loading="lazy"></a>\n        ')
         items.append(f'''      <li data-search="{html.escape((post["title"] + " " + post["excerpt"] + " " + " ".join(post["tags"])).lower(), quote=True)}">
-        {cover_html}<div><a href="{root}posts/{post["slug"]}.html">{html.escape(post["title"])}</a> {classification_badge} {development_badge}</div>
+        {cover_html}<div><a href="{root}posts/{post["slug"]}.html">{html.escape(post["title"])}</a> {classification_badge} {development_badge} {authorship_badge}</div>
         <p class="meta">{format_date(post["date"])} &middot; {post["reading"]} min de leitura {tag_pills(post["tags"], root)}</p>
         <p class="excerpt">{html.escape(post["excerpt"])}</p>
       </li>''')
@@ -488,7 +489,18 @@ def main():
         raw = md_file.read_text(encoding="utf-8")
         meta, body = parse_frontmatter(raw)
         tags = [t.strip() for t in meta.get("tags", "").split(",") if t.strip()]
-        classification = meta.get("classification", "").strip().strip('"\'').lower()
+        classification = meta.get("classification", "").strip().strip('"\\'').lower()
+        authorship = meta.get("authorship", "").strip().strip('"\\'').lower()
+        authorship_labels = {
+            "human": ("Feito por humano", "Autoria humana"),
+            "ai-assisted": ("Auxiliado por IA", "Conteúdo produzido com auxílio de inteligência artificial"),
+            "ai-generated": ("Feito integralmente por IA", "Conteúdo gerado integralmente por inteligência artificial"),
+        }
+        authorship_label, authorship_aria = authorship_labels.get(authorship, ("", ""))
+        authorship_badge = (
+            f'<span class="authorship-badge" aria-label="{authorship_aria}">{authorship_label}</span>'
+            if authorship_label else ""
+        )
         adult = classification in {"18+", "adult"}
         raw_body_html = markdown_to_html(body, root="../", post_links=post_links)
         body_html, toc = add_heading_ids(raw_body_html)
@@ -499,7 +511,9 @@ def main():
             "updated": meta.get("updated", "").strip().strip('"\''),
             "excerpt": meta.get("excerpt", ""),
             "classification": classification,
-            "development": meta.get("development", "").strip().strip("\"'").lower() == "true",
+            "authorship": authorship,
+            "authorship_badge": authorship_badge,
+            "development": meta.get("development", "").strip().strip('"\\'').lower() == "true",
             "tags": tags,
             "images": extract_images(body),
             "cover": extract_cover(body),
@@ -566,7 +580,7 @@ def main():
         )
         body = f'''    <article class="article-wrap">
       <header class="post-header">
-        <h1>{html.escape(post["title"])}{teen_badge} {development_badge}</h1>
+        <h1>{html.escape(post["title"])}{teen_badge} {development_badge} {post["authorship_badge"]}</h1>
         <p class="byline">Publicado em: {format_date(post["date"])}{f' &middot; Atualizado em: {format_date(post["updated"])}' if post["updated"] else ''} &middot; {post["reading"]} min de leitura</p>
         <p class="tags">{tag_pills(post["tags"], root="../")}</p>
       </header>
@@ -621,7 +635,7 @@ def main():
             )
             body = f'''    <article class="article-wrap">
       <header class="post-header">
-        <h1>{html.escape(post["title"])} <span class="adult-badge" aria-label="Classificação indicativa: 18 anos ou mais">+18</span> {development_badge}</h1>
+        <h1>{html.escape(post["title"])} <span class="adult-badge" aria-label="Classificação indicativa: 18 anos ou mais">+18</span> {development_badge} {post["authorship_badge"]}</h1>
         <p class="byline">Publicado em: {format_date(post["date"])}</p>
         <p class="tags">{tag_pills(post["tags"], root="../")}</p>
       </header>
