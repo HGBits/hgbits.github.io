@@ -5,6 +5,7 @@ tags: Artigos
 updated: 2026-11-03
 development: true
 excerpt: É Importante que separemos para compreensão o que os termos "Propriedade Privada", "Propriedade Interlectual" e "Emissor Primário" significam...
+authorship: ai-assisted
 ---
 
 ![Capa do Post](assets/Direito-de-Atribuição-Existe.png)
