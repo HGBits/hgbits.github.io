@@ -125,6 +125,7 @@ date: 2026-11-13
 updated: 2026-11-13
 excerpt: Resumo curto da publicação.
 tags: Linux, Privacidade, Artigos
+authorship: human
 ---
 ```
 
@@ -135,6 +136,8 @@ Atenção:
 - Não invente datas. `date` é a data original de publicação; não a altere durante uma revisão.
 - Use `updated` para registrar a data da revisão quando o texto publicado for efetivamente atualizado. Não preencha com uma data futura ou presumida.
 - `excerpt` deve resumir o conteúdo real, sem clickbait e sem prometer algo que o post não entrega.
+- Use `authorship`: `human` (feito por humano), `ai-assisted` (humano com auxílio de IA) ou `ai-generated` (feito integralmente por IA).
+- Escolha o valor com base no processo real de produção. Não infira nem altere esse campo sem evidência ou instrução do autor; posts antigos sem o campo permanecem sem selo.
 - Preserve tags existentes, a menos que o autor peça para alterá-las ou que estejam claramente incorretas.
 - Antes de usar qualquer campo adicional, confira sua implementação atual em `build.py` e sua documentação em `README.md`. Não presuma que um campo reconhecido em outro projeto funciona aqui.
 - Não remova metadados existentes, como classificação ou sinalização editorial, sem autorização.
@@ -161,7 +164,7 @@ Verifique:
 - A ideia central continua sendo a do autor?
 - O gênero e a voz foram preservados?
 - As afirmações factuais continuam sustentadas pelas fontes?
-- Datas, links, imagens, tags e classificação foram preservados?
+- Datas, links, imagens, tags, classificação e autoria declarada foram preservados?
 - O front matter continua no formato aceito pelo gerador?
 - A revisão corrigiu problemas reais sem deixar o texto artificial?
 
