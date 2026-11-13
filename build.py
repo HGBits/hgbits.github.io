@@ -137,8 +137,7 @@ IMAGE_LICENSES = {
     "cc by-sa 4.0": ("CC BY-SA 4.0", "https://creativecommons.org/licenses/by-sa/4.0/"),
     "cc-by-sa-4.0": ("CC BY-SA 4.0", "https://creativecommons.org/licenses/by-sa/4.0/"),
     "cc by-nc 4.0": ("CC BY-NC 4.0", "https://creativecommons.org/licenses/by-nc/4.0/"),
-    "cc-by-nc-4.0": ("CC BY-NC 4.0", "https://creativecommons.org/licenses/by-nc/4.0/"),
-    "cc0 1.0": ("CC0 1.0", "https://creativecommons.org/publicdomain/zero/1.0/"),
+    "cc-by-nc-4.0": ("CC BY-NC 4.0", "https://creativecommons.org/licenses/by-nc/4.0/"),    "cc0 1.0": ("CC0 1.0", "https://creativecommons.org/publicdomain/zero/1.0/"),
     "cc0-1.0": ("CC0 1.0", "https://creativecommons.org/publicdomain/zero/1.0/"),
     "gpl-3.0": ("GPL-3.0", "https://www.gnu.org/licenses/gpl-3.0.html"),
 }
@@ -278,7 +277,6 @@ def markdown_to_html(md, root="", post_links=None):
             out.append(f"<h3>{inline_md(line[4:], root, post_links)}</h3>")
             i += 1
             continue
-
         # citação
         if line.startswith("> "):
             quote_lines = []
@@ -356,6 +354,7 @@ def render_post_list(posts_list, root=""):
             classification_badge = '<span class="teen-badge" aria-label="Classificação indicativa: 14 anos ou mais">+14</span>'
         else:
             classification_badge = ""
+        development_badge = '<span class="development-badge" aria-label="Post em desenvolvimento">Em desenvolvimento</span>' if post.get("development") else ""
         # Capas são prévias visuais independentes da classificação do conteúdo.
         cover_html = ""
         if post["cover"]:
@@ -364,7 +363,7 @@ def render_post_list(posts_list, root=""):
             cover_html = (f'<a class="post-cover" href="{root}posts/{post["slug"]}.html" tabindex="-1" aria-hidden="true">'
                           f'<img src="{cover_src}" alt="{cover_alt}" loading="lazy"></a>\n        ')
         items.append(f'''      <li data-search="{html.escape((post["title"] + " " + post["excerpt"] + " " + " ".join(post["tags"])).lower(), quote=True)}">
-        {cover_html}<div><a href="{root}posts/{post["slug"]}.html">{html.escape(post["title"])}</a> {classification_badge}</div>
+        {cover_html}<div><a href="{root}posts/{post["slug"]}.html">{html.escape(post["title"])}</a> {classification_badge} {development_badge}</div>
         <p class="meta">{format_date(post["date"])} &middot; {post["reading"]} min de leitura {tag_pills(post["tags"], root)}</p>
         <p class="excerpt">{html.escape(post["excerpt"])}</p>
       </li>''')
@@ -417,8 +416,7 @@ def build_rss(posts):
   <channel>
     <title>{html.escape(SITE_NAME, quote=True)}</title>
     <link>{SITE_URL}/</link>
-    <description>{html.escape(SITE_DESCRIPTION, quote=True)}</description>
-    <lastBuildDate>{now}</lastBuildDate>
+    <description>{html.escape(SITE_DESCRIPTION, quote=True)}</description>    <lastBuildDate>{now}</lastBuildDate>
 {chr(10).join(items)}
   </channel>
 </rss>
@@ -501,6 +499,7 @@ def main():
             "updated": meta.get("updated", "").strip().strip('"\''),
             "excerpt": meta.get("excerpt", ""),
             "classification": classification,
+            "development": meta.get("development", "").strip().strip("\"'").lower() == "true",
             "tags": tags,
             "images": extract_images(body),
             "cover": extract_cover(body),
@@ -557,13 +556,16 @@ def main():
         elif not toc_html:
             post["body_html"] = toc_marker.sub("", post["body_html"])
 
-        teen_badge = (
-            ' <span class="teen-badge" aria-label="Classificação indicativa: 14 anos ou mais">+14</span>'
+        teen_badge = (            ' <span class="teen-badge" aria-label="Classificação indicativa: 14 anos ou mais">+14</span>'
             if is_teen_post(post) else ""
+        )
+        development_badge = (
+            '<span class="development-badge" aria-label="Post em desenvolvimento">Em desenvolvimento</span>'
+            if post.get("development") else ""
         )
         body = f'''    <article class="article-wrap">
       <header class="post-header">
-        <h1>{html.escape(post["title"])}{teen_badge}</h1>
+        <h1>{html.escape(post["title"])}{teen_badge} {development_badge}</h1>
         <p class="byline">Publicado em: {format_date(post["date"])}{f' &middot; Atualizado em: {format_date(post["updated"])}' if post["updated"] else ''} &middot; {post["reading"]} min de leitura</p>
         <p class="tags">{tag_pills(post["tags"], root="../")}</p>
       </header>
@@ -618,7 +620,7 @@ def main():
             )
             body = f'''    <article class="article-wrap">
       <header class="post-header">
-        <h1>{html.escape(post["title"])} <span class="adult-badge" aria-label="Classificação indicativa: 18 anos ou mais">+18</span></h1>
+        <h1>{html.escape(post["title"])} <span class="adult-badge" aria-label="Classificação indicativa: 18 anos ou mais">+18</span> {development_badge}</h1>
         <p class="byline">Publicado em: {format_date(post["date"])}</p>
         <p class="tags">{tag_pills(post["tags"], root="../")}</p>
       </header>
@@ -698,7 +700,6 @@ def main():
       </li>''' for tag, plist in tag_map.items())
 
     tag_cloud = " ".join(tag_link(t) for t in sorted(tag_map.keys()))
-
     month_names = {
         1: "janeiro", 2: "fevereiro", 3: "março", 4: "abril",
         5: "maio", 6: "junho", 7: "julho", 8: "agosto",
@@ -838,7 +839,6 @@ def main():
     termos_body = f'''    <article class="article-wrap">
       <h1>{html.escape(termos_title)}</h1>
       <p class="tagline">Condições de acesso e utilização do site.</p>
-
 {markdown_to_html(termos_content)}
     </article>'''
     termos_html = render(
