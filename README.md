@@ -41,6 +41,7 @@ O front matter é um bloco opcional no início de cada arquivo Markdown, delimit
 | `excerpt` | Não | Resumo curto exibido na listagem inicial e usado nas descrições de metadados/compartilhamento. Se omitido, fica vazio. |
 | `tags` | Não | Lista de tags separadas por vírgulas. Cada tag gera links e uma página própria. |
 | `classification` | Não | Classificação de conteúdo. `18+` e `adult` restringem o carregamento do corpo até a confirmação e exibem o selo `+18`; `14+` e `teen` exibem somente o selo `+14`, sem bloqueio. |
+| `authorship` | Não | Origem da produção editorial. Aceita `human`, `ai-assisted` ou `ai-generated`; exibe um selo no post e nas listagens. |
 
 Todos os campos são opcionais para o parser. Na prática, recomenda-se informar pelo menos `title`, `date` e `excerpt` para que a publicação apareça corretamente identificada e contextualizada.
 
@@ -54,6 +55,7 @@ updated: 2026-11-03
 excerpt: Um resumo curto que aparece na página inicial.
 tags: Linux, Segurança, Desenvolvimento
 classification: public
+authorship: human
 ---
 
 O conteúdo da publicação começa aqui.
@@ -82,10 +84,21 @@ O bloco é inspirado na sintaxe YAML, mas **não é um parser YAML completo**. O
 - O texto antes do primeiro `:` é o nome do campo; o restante é o valor.
 - Não use listas YAML, objetos aninhados, continuações de linha ou estruturas complexas.
 - Para `tags`, escreva os nomes na mesma linha, separados por vírgulas. Não use a sintaxe de lista com hífens.
+- `authorship` aceita `human`, `ai-assisted` ou `ai-generated`. Campo ausente ou valor desconhecido não exibe selo.
 - Valores de texto são mantidos como texto. Em `classification`, espaços externos e aspas simples ou duplas são removidos e o valor é convertido para minúsculas.
 - Se não houver front matter delimitado corretamente no início do arquivo, o arquivo inteiro será tratado como corpo Markdown e os metadados ficarão vazios.
 
 Os campos `date` e `updated`, quando informados, devem usar o formato `AAAA-MM-DD`. `date` representa a publicação original; `updated` registra a última revisão e só aparece no cabeçalho quando preenchido. A revisão não altera a ordem cronológica das publicações nem a data original do RSS. Datas válidas em `date` são organizadas cronologicamente. Uma publicação sem data aparece no grupo **sem data**; uma data que não possa ser interpretada pode aparecer como texto literal e ser agrupada em **sem mês**.
+
+### Autoria e uso de IA
+
+O campo opcional `authorship` informa como o conteúdo editorial foi produzido:
+
+- `human`: texto produzido por uma pessoa, sem participação de IA na elaboração do conteúdo.
+- `ai-assisted`: texto produzido por uma pessoa com auxílio de IA em pesquisa, revisão, estruturação ou redação parcial.
+- `ai-generated`: texto gerado integralmente por IA, sem autoria humana substantiva do conteúdo.
+
+O valor aparece como selo no cabeçalho do post e nas listagens. Correção ortográfica automatizada, por si só, não exige classificar um texto como integralmente gerado por IA. Posts antigos sem o campo continuam sem selo.
 
 ### Classificação e posts 18+
 
