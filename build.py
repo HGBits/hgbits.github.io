@@ -465,7 +465,9 @@ def copy_public_files():
         src = ROOT_DIR / name
         dst = OUT_DIR / name
         if src.is_dir():
-            shutil.copytree(src, dst)
+            # Arquivos Markdown em assets/ são documentação interna, não recursos do site.
+            ignore = shutil.ignore_patterns("*.md") if name == "assets" else None
+            shutil.copytree(src, dst, ignore=ignore)
         elif src.is_file():
             shutil.copy2(src, dst)
         else:
