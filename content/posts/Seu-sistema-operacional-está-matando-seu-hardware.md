@@ -7,8 +7,6 @@ excerpt: O sistema operacional que você utiliza pode determinar por quanto temp
 
 ![Capa do Post](assets/Seu-sistema-operacional-está-matando-seu-hardware.jpg)
 
-# Como o sistema operacional que você usa interfere na qualidade da internet?
-
 Ao longo do tempo, além das mudanças no software, também existem melhorias no hardware.
 
 Dentro do seu celular ou computador, cada componente precisa receber atualizações para continuar funcionando adequadamente. Sua câmera, o módulo de rede (Wi-Fi e Bluetooth), os sensores e diversos outros componentes dependem de suporte do sistema operacional.
