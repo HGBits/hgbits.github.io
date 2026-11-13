@@ -18,7 +18,7 @@ Para gerar o site localmente:
 python build.py
 ```
 
-O gerador usa apenas a biblioteca padrão do Python. Todo o site é escrito em `_site/` (ignorada pelo Git) e **somente essa pasta é publicada**. O build copia para lá apenas os itens listados em `PUBLIC_COPY` no `build.py` (`css/`, `js/`, `assets/`, `favicon.svg`); `content/`, `templates/`, `build.py` e o restante do repositório nunca chegam ao servidor.
+O gerador usa apenas a biblioteca padrão do Python. Todo o site é escrito em `_site/` (ignorada pelo Git) e **somente essa pasta é publicada**. O build copia para lá apenas os itens listados em `PUBLIC_COPY` no `build.py` (`css/`, `js/`, `assets/`, `favicon.svg`). Dentro de `assets/`, arquivos Markdown (como instruções `agent.md`) são excluídos da cópia; apenas os recursos estáticos são publicados. `content/`, `templates/`, `build.py` e o restante do repositório nunca chegam ao servidor.
 
 Para testar localmente:
 
