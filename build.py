@@ -556,7 +556,8 @@ def main():
         elif not toc_html:
             post["body_html"] = toc_marker.sub("", post["body_html"])
 
-        teen_badge = (            ' <span class="teen-badge" aria-label="Classificação indicativa: 14 anos ou mais">+14</span>'
+        teen_badge = (
+            ' <span class="teen-badge" aria-label="Classificação indicativa: 14 anos ou mais">+14</span>'
             if is_teen_post(post) else ""
         )
         development_badge = (
