@@ -88,6 +88,33 @@ def image_size(src):
         return None
     return None
 
+# Larguras geradas por tools/optimize_images.py (assets/web/<nome>-<largura>.webp).
+WEBP_WIDTHS = (320, 640, 1200)
+
+def webp_source(src, root, sizes):
+    """<source> WebP com srcset se existirem variantes em assets/web/ para a imagem
+    local `src` (assets/<nome>.ext). Sem variantes devolve \"\" e a <img> segue sozinha."""
+    key = asset_key(src)
+    if key is None or posixpath.dirname(key) != "assets":
+        return ""
+    stem = posixpath.splitext(posixpath.basename(key))[0]
+    found = [(w, f"assets/web/{stem}-{w}.webp") for w in WEBP_WIDTHS
+             if (ROOT_DIR / f"assets/web/{stem}-{w}.webp").is_file()]
+    if not found:
+        return ""
+    srcset = ", ".join(f"{root}{quote(path)} {w}w" for w, path in found)
+    return f'<source type="image/webp" srcset="{srcset}" sizes="{sizes}">'
+
+def picture(img_html, src, root, sizes):
+    """Envolve a <img> em <picture> quando há variantes WebP; senão devolve a <img>."""
+    source = webp_source(src, root, sizes)
+    return f"<picture>{source}{img_html}</picture>" if source else img_html
+
+SIZES_POST = "(min-width: 760px) 720px, 94vw"
+SIZES_CARD = "(min-width: 860px) 660px, 94vw"
+SIZES_THUMB = "144px"
+SIZES_GRID = "250px"
+
 def img_attrs(src):
     """width/height + decoding para evitar salto de layout (CLS) ao carregar a imagem."""
     size = image_size(src)
@@ -223,7 +250,7 @@ def inline_md(text, root="", post_links=None):
         alt_safe = alt.replace('"', "&quot;")
         src_safe = resolve_src(src, root).replace('"', "&quot;")
         license_html = image_license_html(title, root)
-        image = f'<img src="{src_safe}" alt="{alt_safe}"{img_attrs(src)} loading="lazy">'
+        image = picture(f'<img src="{src_safe}" alt="{alt_safe}"{img_attrs(src)} loading="lazy">', src, root, SIZES_POST)
         return f'<span class="inline-image">{image}{license_html}</span>' if license_html else image
 
     text = IMG_INLINE_RE.sub(render_inline_img, text)
@@ -286,7 +313,7 @@ def markdown_to_html(md, root="", post_links=None, hard_breaks=False):
                 continue
             src_r = resolve_src(src, root).replace('"', "&quot;")
             alt_safe = html.escape(alt or "", quote=True)
-            fig = f'<figure><img src="{src_r}" alt="{alt_safe}"{img_attrs(src)} loading="lazy">'
+            fig = "<figure>" + picture(f'<img src="{src_r}" alt="{alt_safe}"{img_attrs(src)} loading="lazy">', src, root, SIZES_POST)
             license_html = image_license_html(caption, root)
             if license_html:
                 fig += f"<figcaption>{license_html}</figcaption>"
@@ -430,7 +457,7 @@ def render_post_list(posts_list, root=""):
             cover_src = html.escape(resolve_src(post["cover"], root), quote=True)
             cover_alt = html.escape(f'Capa de {post["title"]}', quote=True)
             cover_html = (f'<a class="post-cover" href="{root}posts/{post["slug"]}.html" tabindex="-1" aria-hidden="true">'
-                          f'<img src="{cover_src}" alt="{cover_alt}"{img_attrs(post["cover"])} loading="lazy"></a>\n        ')
+                          + picture(f'<img src="{cover_src}" alt="{cover_alt}"{img_attrs(post["cover"])} loading="lazy">', post["cover"], root, SIZES_CARD) + '</a>\n        ')
         items.append(f'''      <li data-search="{html.escape((post["title"] + " " + post["excerpt"] + " " + " ".join(post["tags"])).lower(), quote=True)}">
         {cover_html}<div><a href="{root}posts/{post["slug"]}.html">{html.escape(post["title"])}</a> {classification_badge} {development_badge} {authorship_badge}</div>
         <p class="meta">{format_date(post["date"])} &middot; {post["reading"]} min de leitura {tag_pills(post["tags"], root)}</p>
@@ -610,7 +637,7 @@ def main():
             if target["cover"]:
                 cover_src = html.escape(resolve_src(target["cover"], "../"), quote=True)
                 cover_alt = html.escape(f'Capa de {target["title"]}', quote=True)
-                cover_html = f'<img src="{cover_src}" alt="{cover_alt}"{img_attrs(target["cover"])} loading="lazy">'
+                cover_html = picture(f'<img src="{cover_src}" alt="{cover_alt}"{img_attrs(target["cover"])} loading="lazy">', target["cover"], "../", SIZES_THUMB)
             label = "Post anterior" if direction == "prev" else "Próximo post"
             arrow = "&larr;" if direction == "prev" else "&rarr;"
             return (f'<a class="post-nav-card post-nav-{direction}" href="{target["slug"]}.html" rel="{direction}">'
@@ -867,7 +894,7 @@ def main():
         <div class="sidebar-card">
           <div class="sidebar-profile">
             <div class="sidebar-avatar">
-              <img src="assets/avatar.jpg" alt="Foto de hgbits" width="44" height="44" loading="lazy">
+              {picture('<img src="assets/avatar.jpg" alt="Foto de hgbits" width="44" height="44" loading="lazy">', "assets/avatar.jpg", "", "44px")}
             </div>
             <p class="sidebar-mark">hgbits</p>
           </div>
@@ -978,7 +1005,7 @@ def main():
             if is_adult and img["alt"] != "Capa do Post":
                 continue
             image_html = f'''        <a href="posts/{post["slug"]}.html">
-          <img src="{src_r}" alt="{alt_safe}"{img_attrs(img["src"])} loading="lazy">
+          {picture(f'<img src="{src_r}" alt="{alt_safe}"{img_attrs(img["src"])} loading="lazy">', img["src"], "", SIZES_GRID)}
         </a>'''
             card_class = "art-card"
             arte_items.append(f'''      <figure class="{card_class}">

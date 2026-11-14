@@ -242,6 +242,17 @@ O mecanismo de imagens tem três etapas:
 2. **Carregamento:** as imagens geradas recebem `loading="lazy"`, permitindo que o navegador adie o carregamento até que elas estejam próximas da área visível.
 3. **Galeria Artes:** o gerador coleta as imagens referenciadas no corpo dos posts e cria `artes.html`, reunindo cada imagem com sua legenda (ou texto alternativo, quando não há legenda) e um link para a publicação de origem.
 
+### Otimização de imagens (WebP responsivo)
+
+As imagens originais de `assets/` são pesadas (capas de ~2 MB). Para o navegador baixar bem menos, rode uma vez, localmente, depois de adicionar ou trocar imagens:
+
+```bash
+pip install pillow        # ou: sudo pacman -S python-pillow
+python tools/optimize_images.py
+```
+
+O script cria `assets/web/<nome>-320.webp`, `-640.webp` e `-1200.webp` (sem ampliar; só larguras menores que a original). Faça commit dessa pasta. Quando as variantes existem, o `build.py` envolve a imagem em `<picture>` com `srcset`/`sizes` e mantém a `<img>` original como fallback; sem elas nada muda. O `og:image` continua apontando para o original. O Pillow é só da ferramenta: o build segue sem dependências, e o CI não precisa dele. O `build.py` também grava `width` e `height` em toda imagem local PNG/JPEG/GIF, lendo o cabeçalho do arquivo, para evitar salto de layout.
+
 Trechos de código cercados por crases triplas são ignorados pela coleta da galeria. Uma referência de imagem escrita dentro de um bloco de código, portanto, aparece como código e não é adicionada à página Artes.
 
 A galeria não é um repositório separado: ela é montada automaticamente a partir das referências encontradas nos arquivos Markdown durante cada execução de `build.py`.
