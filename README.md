@@ -267,6 +267,8 @@ Além das páginas individuais e da página inicial, o gerador cria:
 - `artes.html`: galeria das imagens usadas nas publicações;
 - páginas em `tags/`: uma página para cada tag;
 - `feed.xml`: feed RSS;
-- `sitemap.xml`: mapa do site.
+- `sitemap.xml`: mapa do site;
+- `404.html`: página de erro servida pelo GitHub Pages;
+- `robots.txt`: libera o site, aponta o sitemap e bloqueia `/restricted/` para buscadores (os fragmentos 18+ continuam públicos; isso só evita que sejam indexados).
 
 A publicação no GitHub Pages é feita pelo workflow em `.github/workflows/build.yml`.

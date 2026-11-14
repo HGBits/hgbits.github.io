@@ -1082,6 +1082,30 @@ def main():
     (OUT_DIR / "feed.xml").write_text(build_rss(posts), encoding="utf-8")
     (OUT_DIR / "sitemap.xml").write_text(build_sitemap(posts, tag_map), encoding="utf-8")
 
+    # ---------- 404.html (GitHub Pages serve este arquivo em URLs inexistentes) ----------
+    # ROOT="/" porque a página é servida em qualquer caminho.
+    not_found_body = '''    <article class="article-wrap">
+      <h1>página não encontrada</h1>
+      <p class="tagline">Esse endereço não existe (ou foi movido).</p>
+      <p><a href="/index.html">&larr; voltar pra todos os posts</a></p>
+    </article>'''
+    (OUT_DIR / "404.html").write_text(render(
+        TEMPLATE,
+        TITLE="página não encontrada :: hgbits",
+        DESCRIPTION="Página não encontrada.",
+        HEAD_EXTRA='<meta name="robots" content="noindex">',
+        YEAR=str(datetime.now().year),
+        ROOT="/",
+        BODY=not_found_body,
+    ), encoding="utf-8")
+
+    # ---------- robots.txt ----------
+    # Os fragmentos 18+ são públicos por design (ver README); isto só os tira da
+    # indexação dos buscadores, não é controle de acesso.
+    (OUT_DIR / "robots.txt").write_text(
+        "User-agent: *\nAllow: /\nDisallow: /restricted/\n\n"
+        f"Sitemap: {SITE_URL}/sitemap.xml\n", encoding="utf-8")
+
     copy_public_files()
 
     print(f"OK: {len(posts)} posts, {len(tag_map)} tags, index.html, sobre.html, termos.html, privacidade.html, "
