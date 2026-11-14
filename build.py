@@ -491,11 +491,15 @@ def head_extra(canonical, og_type, og_title, og_description, og_image=""):
 <meta name="twitter:description" content="{d}">'''
 
 
+ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
 def build_rss(posts):
     items = []
+    dates = []
     for p in posts:
         try:
             dt = datetime.strptime(p["date"], "%Y-%m-%d").replace(tzinfo=timezone.utc)
+            dates.append(dt)
         except Exception:
             dt = datetime.now(timezone.utc)
         link = post_url(p["slug"])
@@ -506,27 +510,42 @@ def build_rss(posts):
       <pubDate>{format_datetime(dt)}</pubDate>
       <description>{html.escape(p["excerpt"], quote=True)}</description>
     </item>''')
-    now = format_datetime(datetime.now(timezone.utc))
+    # lastBuildDate = data do post mais recente: o feed só muda quando o conteúdo muda.
+    now = format_datetime(max(dates) if dates else datetime.now(timezone.utc))
     return f'''<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>{html.escape(SITE_NAME, quote=True)}</title>
     <link>{SITE_URL}/</link>
-    <description>{html.escape(SITE_DESCRIPTION, quote=True)}</description>    <lastBuildDate>{now}</lastBuildDate>
+    <atom:link href="{SITE_URL}/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>{html.escape(SITE_DESCRIPTION, quote=True)}</description>
+    <language>pt-br</language>
+    <lastBuildDate>{now}</lastBuildDate>
 {chr(10).join(items)}
   </channel>
 </rss>
 '''
 
 def build_sitemap(posts, tag_map):
-    today = datetime.now().strftime("%Y-%m-%d")
-    urls = [(f"{SITE_URL}/", today), (f"{SITE_URL}/sobre.html", today), (f"{SITE_URL}/termos.html", today), (f"{SITE_URL}/privacidade.html", today), (f"{SITE_URL}/artes.html", today)]
-    urls += [(post_url(p["slug"]), p["date"] or today) for p in posts]
-    urls += [(f'{SITE_URL}/tags/{slugify(t)}.html', today) for t in tag_map]
-    entries = "\n".join(f'''  <url>
-    <loc>{u}</loc>
-    <lastmod>{lastmod}</lastmod>
-  </url>''' for u, lastmod in urls)
+    """lastmod só quando é verdadeiro: data do post (ou updated), e para tags/índice/artes
+    a do post mais recente. Páginas sem data própria (sobre, termos, privacidade) ficam
+    sem lastmod em vez de receber a data do build."""
+    def mod(p):
+        for key in ("updated", "date"):
+            if ISO_DATE_RE.match(p.get(key) or ""):
+                return p[key]
+        return ""
+    newest = max((mod(p) for p in posts), default="")
+    urls = [(f"{SITE_URL}/", newest), (f"{SITE_URL}/artes.html", newest),
+            (f"{SITE_URL}/sobre.html", ""), (f"{SITE_URL}/termos.html", ""),
+            (f"{SITE_URL}/privacidade.html", "")]
+    urls += [(post_url(p["slug"]), mod(p)) for p in posts]
+    urls += [(f"{SITE_URL}/tags/{slugify(t)}.html", max((mod(p) for p in plist), default=""))
+             for t, plist in tag_map.items()]
+    entries = "\n".join(
+        "  <url>\n    <loc>" + u + "</loc>\n"
+        + (f"    <lastmod>{lastmod}</lastmod>\n" if lastmod else "")
+        + "  </url>" for u, lastmod in urls)
     return f'''<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {entries}
