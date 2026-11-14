@@ -41,6 +41,7 @@ O front matter é um bloco opcional no início de cada arquivo Markdown, delimit
 | `excerpt` | Não | Resumo curto exibido na listagem inicial e usado nas descrições de metadados/compartilhamento. Se omitido, fica vazio. |
 | `tags` | Não | Lista de tags separadas por vírgulas. Cada tag gera links e uma página própria. |
 | `classification` | Não | Classificação de conteúdo. `18+` e `adult` restringem o carregamento do corpo até a confirmação e exibem o selo `+18`; `14+` e `teen` exibem somente o selo `+14`, sem bloqueio. |
+| `breaks` | Não | `true` preserva cada quebra de linha do parágrafo como `<br>` (útil para versos e diário). Posts com a tag `Poesia` já têm esse comportamento automaticamente. Sem isso, linhas consecutivas são unidas num parágrafo, como no Markdown comum. Em qualquer post, uma linha terminada em dois espaços ou em `\` também gera `<br>`. |
 | `authorship` | Não | Origem da produção editorial. Aceita `human`, `ai-assisted` ou `ai-generated`; exibe um selo no post e nas listagens. |
 
 Todos os campos são opcionais para o parser. Na prática, recomenda-se informar pelo menos `title`, `date` e `excerpt` para que a publicação apareça corretamente identificada e contextualizada.

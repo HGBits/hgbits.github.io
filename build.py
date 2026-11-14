@@ -204,7 +204,23 @@ def inline_md(text, root="", post_links=None):
     return text
 
 
-def markdown_to_html(md, root="", post_links=None):
+def render_paragraph(lines, root, post_links, hard_breaks):
+    """Junta as linhas de um parágrafo. Por padrão a quebra simples vira espaço
+    (Markdown comum). Vira <br> quando hard_breaks está ligado (poesia/breaks: true)
+    ou quando a linha termina com dois espaços ou barra invertida."""
+    chunks, current = [], []
+    for n, raw in enumerate(lines):
+        is_last = n == len(lines) - 1
+        explicit = not is_last and raw.endswith(("  ", "\\"))
+        current.append(raw.rstrip().rstrip("\\").rstrip() if explicit else raw.rstrip())
+        if not is_last and (hard_breaks or explicit):
+            chunks.append(current)
+            current = []
+    chunks.append(current)
+    return "<br>\n".join(inline_md(" ".join(c), root, post_links) for c in chunks)
+
+
+def markdown_to_html(md, root="", post_links=None, hard_breaks=False):
     lines = md.strip("\n").split("\n")
     out = []
     i = 0
@@ -327,7 +343,7 @@ def markdown_to_html(md, root="", post_links=None):
         ):
             para_lines.append(lines[i])
             i += 1
-        out.append(f"<p>{inline_md(' '.join(para_lines), root, post_links)}</p>")
+        out.append(f"<p>{render_paragraph(para_lines, root, post_links, hard_breaks)}</p>")
 
     if in_list:
         out.append("</ul>")
@@ -523,7 +539,9 @@ def main():
             if authorship_label else ""
         )
         adult = classification in {"18+", "adult"}
-        raw_body_html = markdown_to_html(body, root="../", post_links=post_links)
+        hard_breaks = (meta.get("breaks", "").strip().strip("\\\"'").lower() in {"true", "1", "yes", "sim"}
+                       or any(t.lower() == "poesia" for t in tags))
+        raw_body_html = markdown_to_html(body, root="../", post_links=post_links, hard_breaks=hard_breaks)
         body_html, toc = add_heading_ids(raw_body_html)
         posts.append({
             "slug": md_file.stem,
