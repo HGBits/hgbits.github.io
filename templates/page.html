@@ -23,25 +23,35 @@
   <div class="wrap header-inner">
     <p class="wordmark"><a href="{{ROOT}}index.html">hgbits</a></p>
     <nav class="site-nav" aria-label="navegação principal">
-      <a href="{{ROOT}}sobre.html">sobre</a>
+      <a class="nav-about" href="{{ROOT}}sobre.html">sobre</a>
       <details class="nav-more">
-        <summary aria-label="Abrir seções" title="Seções">
-          <svg class="nav-sections-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-            <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 15.5 Q24 9 43 15.5 Q24 21 5 15.5Z"/>
-              <path d="M13 14.5 Q15 3.5 24 3.5 Q33 3.5 35 14.5"/>
-              <path d="M15 17 Q13.5 20 14.5 24"/>
-              <rect x="7" y="22" width="34" height="21" rx="2.8"/>
-              <path d="M18 43.5h12"/>
-              <path d="M24 27v10m-4-4 4 4 4-4"/>
-            </g>
+        <summary aria-label="Abrir mais seções" title="Mais seções">
+          <svg class="nav-sections-icon" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+            <path class="icon-hat" d="M10 22c3-3 12-5 22-5s19 2 22 5c-3 4-14 6-22 6S13 26 10 22Zm9-2c1-9 5-14 13-14s12 5 13 14l-5 2H24Z"/>
+            <path class="icon-face" d="M22 28h20l-2 9c-2 5-5 7-8 7s-6-2-8-7l-2-9Z"/>
+            <path class="icon-eye" d="m25 33 5 2-4 2Zm14 0-5 2 4 2Z"/>
+            <rect class="icon-screen" x="9" y="39" width="46" height="20" rx="3"/>
+            <path class="icon-arrow" d="M32 42v11m-5-5 5 5 5-5"/>
           </svg>
+          <svg class="nav-chevron" viewBox="0 0 16 16" aria-hidden="true"><path d="m3 6 5 5 5-5"/></svg>
         </summary>
         <div class="nav-more-menu">
-          <a href="{{ROOT}}artes.html">artes</a>
-          <a href="{{ROOT}}termos.html">termos de uso</a>
-          <a href="{{ROOT}}privacidade.html">privacidade</a>
-          <a href="{{ROOT}}feed.xml">rss</a>
+          <a href="{{ROOT}}artes.html">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.2a2 2 0 0 0 1.4-3.4 1.7 1.7 0 0 1 1.2-2.9H18a3 3 0 0 0 3-3c0-4.8-4-8.7-9-8.7Z"/><path d="M7.5 10h.1M11 7h.1M16 9h.1"/></svg>
+            <span>artes</span>
+          </a>
+          <a href="{{ROOT}}termos.html">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+            <span>termos de uso</span>
+          </a>
+          <a href="{{ROOT}}privacidade.html">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 8 3v6c0 5-3.4 8.7-8 11-4.6-2.3-8-6-8-11V5z"/><path d="m9 12 2 2 4-4"/></svg>
+            <span>privacidade</span>
+          </a>
+          <a href="{{ROOT}}feed.xml">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19h.01M4 4a16 16 0 0 1 16 16M4 10a10 10 0 0 1 10 10"/><circle cx="4" cy="19" r="1"/></svg>
+            <span>rss</span>
+          </a>
         </div>
       </details>
     </nav>
