@@ -4,6 +4,7 @@ date: 2026-11-12
 tags: Notícias
 excerpt: 
 updated:
+authorship:
 ---
 
 ![Capa do Post](assets/)
