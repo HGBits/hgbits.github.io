@@ -1315,3 +1315,20 @@ p, li, figcaption, .colophon,
   stroke-width: 1;
   stroke-linejoin: round;
 }
+
+
+/* Símbolo fornecido para o botão de seções */
+.nav-sections-icon {
+  display: block;
+  width: 34px;
+  height: 34px;
+  max-width: none;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(43%) sepia(95%) saturate(1800%) hue-rotate(194deg) brightness(101%) contrast(102%);
+}
+@media (max-width: 640px) {
+  .nav-sections-icon { width: 31px; height: 31px; }
+}
+@media (max-width: 360px) {
+  .nav-sections-icon { width: 29px; height: 29px; }
+}
