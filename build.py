@@ -169,7 +169,8 @@ def resolve_post_link(href, post_links):
     if not target:
         return href
 
-    return urlunsplit(("", "", target, parts.query, parts.fragment))
+    # href chega já escapado (inline_md escapa o texto antes); devolve no mesmo estado.
+    return html.escape(urlunsplit(("", "", target, parts.query, parts.fragment)), quote=False)
 
 
 def inline_md(text, root="", post_links=None):
@@ -190,7 +191,9 @@ def inline_md(text, root="", post_links=None):
     def render_link(m):
         label, href = m.group(1), m.group(2)
         resolved = resolve_post_link(href, post_links)
-        return f'<a href="{html.escape(resolved, quote=True)}">{label}</a>'
+        # O texto já foi escapado no início de inline_md; escapar de novo
+        # transformava "&amp;" em "&amp;amp;" e quebrava query strings.
+        return f'<a href="{resolved.replace(chr(34), "&quot;")}">{label}</a>'
 
     text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", render_link, text)
     return text
