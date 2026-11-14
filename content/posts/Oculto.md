@@ -5,7 +5,7 @@ tags: Diário
 excerpt: 
 classification:
 authorship: human
-devlopment: true
+development: true
 ---
 
 ![Capa do Post](assets/)
