@@ -559,20 +559,6 @@ def asset_key(src):
         return None
     return posixpath.normpath(src)
 
-def find_restricted_assets(posts):
-    """Imagens usadas SOMENTE no corpo de posts 18+ (não-capa). Não são publicadas."""
-    restricted, public = set(), set()
-    for post in posts:
-        for img in post["images"]:
-            key = asset_key(img["src"])
-            if key is None:
-                continue
-            if is_adult_post(post) and img["alt"] != "Capa do Post":
-                restricted.add(key)
-            else:
-                public.add(key)
-    return restricted - public
-
 def copy_public_files():
     """Copia para OUT_DIR somente a lista explícita PUBLIC_COPY."""
     for name in PUBLIC_COPY:

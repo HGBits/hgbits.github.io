@@ -127,49 +127,4 @@
 
     retryButton.addEventListener("click", () => loadContent());
   });
-
-  document.querySelectorAll("[data-age-gallery]").forEach((gallery) => {
-    const prompt = gallery.querySelector("[data-art-prompt]");
-    const denied = gallery.querySelector("[data-art-denied]");
-    const yesButton = gallery.querySelector("[data-art-yes]");
-    const noButton = gallery.querySelector("[data-art-no]");
-
-    if (!prompt || !denied || !yesButton || !noButton) return;
-
-    const unlock = () => {
-      gallery.classList.add("is-unlocked");
-      prompt.hidden = true;
-      denied.hidden = true;
-    };
-
-    const refuse = () => {
-      prompt.hidden = true;
-      denied.hidden = false;
-    };
-
-    const savedChoice = readChoice();
-    if (savedChoice === acceptedValue) unlock();
-    else if (savedChoice === deniedValue) refuse();
-
-    yesButton.addEventListener("click", () => {
-      saveChoice(acceptedValue);
-      document.querySelectorAll("[data-age-gallery]").forEach((item) => {
-        item.classList.add("is-unlocked");
-        const itemPrompt = item.querySelector("[data-art-prompt]");
-        const itemDenied = item.querySelector("[data-art-denied]");
-        if (itemPrompt) itemPrompt.hidden = true;
-        if (itemDenied) itemDenied.hidden = true;
-      });
-    });
-
-    noButton.addEventListener("click", () => {
-      saveChoice(deniedValue);
-      document.querySelectorAll("[data-age-gallery]").forEach((item) => {
-        const itemPrompt = item.querySelector("[data-art-prompt]");
-        const itemDenied = item.querySelector("[data-art-denied]");
-        if (itemPrompt) itemPrompt.hidden = true;
-        if (itemDenied) itemDenied.hidden = false;
-      });
-    });
-  });
 })();

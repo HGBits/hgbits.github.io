@@ -117,7 +117,7 @@ Para posts restritos (`18+`/`adult`), o build:
 1. Gera a página do post sem o corpo. Ela contém título, data, tags, selo `+18` e o Age Gate.
 2. Renderiza o corpo em um fragmento HTML separado em `_site/restricted/<slug>.html`. Esse arquivo não é incluído na página inicial, no feed, na busca nem nos metadados.
 3. O navegador só solicita o fragmento depois que o leitor confirma ter 18 anos ou mais. Se a pessoa recusar, nenhuma requisição é feita. Se a confirmação já estiver salva em `localStorage`, o fragmento é carregado automaticamente ao abrir o post.
-4. Mantém o `excerpt` público para contextualizar a publicação. Posts adultos continuam fora da galeria Artes, dos comentários Giscus e do compartilhamento.
+4. Mantém o `excerpt` público para contextualizar a publicação. Posts adultos continuam sem botão de compartilhamento; a capa (`![Capa do Post](...)`) segue pública na listagem e na galeria Artes, e os comentários Giscus só carregam depois da confirmação de maioridade.
 5. As imagens referenciadas pelo fragmento usam os caminhos normais de `assets/`; como o site é estático, esses arquivos também podem ser acessados diretamente.
 
 **Limite importante:** o Age Gate controla quando o navegador carrega o conteúdo, não quem pode baixá-lo. O fragmento em `/restricted/` é um recurso público e qualquer pessoa que descubra sua URL pode acessá-lo sem confirmar idade. Isso é lazy loading e uma barreira de interface, não autenticação nem proteção de conteúdo. O Markdown original continua fora da pasta publicada; somente o HTML renderizado do fragmento é publicado.
@@ -257,7 +257,7 @@ Trechos de código cercados por crases triplas são ignorados pela coleta da gal
 
 A galeria não é um repositório separado: ela é montada automaticamente a partir das referências encontradas nos arquivos Markdown durante cada execução de `build.py`.
 
-Imagens pertencentes a publicações classificadas como `18+` ou `adult` aparecem borradas na galeria Artes, com uma confirmação de maioridade sobre a miniatura. A confirmação usa a mesma escolha armazenada pelo Age Gate das publicações (`localStorage`); ao aceitar, todas as miniaturas adultas da galeria são liberadas. Ao recusar, elas permanecem ocultas.
+Em publicações `18+`/`adult` só a capa (`![Capa do Post](...)`) entra na galeria Artes; as demais imagens do corpo ficam de fora. Atenção: elas continuam acessíveis por URL direta em `assets/`, como o README descreve em “Classificação e posts 18+”.
 
 ## Outros recursos gerados
 
