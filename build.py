@@ -14,7 +14,7 @@ import html
 import posixpath
 import shutil
 import unicodedata
-from urllib.parse import unquote, urlsplit, urlunsplit
+from urllib.parse import quote, unquote, urlsplit, urlunsplit
 from pathlib import Path
 from datetime import datetime, timezone
 from email.utils import format_datetime
@@ -51,6 +51,11 @@ def resolve_src(src, root):
     if re.match(r'^([a-zA-Z][a-zA-Z0-9+.\-]*:)?//', src) or src.startswith(("/", "#")):
         return src
     return root + src
+
+def post_url(slug):
+    """URL absoluta do post, com percent-encoding (slugs acentuados são válidos
+    nos hrefs relativos, mas RSS, sitemap, canonical e Open Graph exigem URL codificada)."""
+    return f"{SITE_URL}/posts/{quote(slug)}.html"
 
 def slugify(text):
     text = unicodedata.normalize("NFD", text)
@@ -406,7 +411,7 @@ def build_rss(posts):
             dt = datetime.strptime(p["date"], "%Y-%m-%d").replace(tzinfo=timezone.utc)
         except Exception:
             dt = datetime.now(timezone.utc)
-        link = f'{SITE_URL}/posts/{p["slug"]}.html'
+        link = post_url(p["slug"])
         items.append(f'''    <item>
       <title>{html.escape(p["title"], quote=True)}</title>
       <link>{link}</link>
@@ -429,7 +434,7 @@ def build_rss(posts):
 def build_sitemap(posts, tag_map):
     today = datetime.now().strftime("%Y-%m-%d")
     urls = [(f"{SITE_URL}/", today), (f"{SITE_URL}/sobre.html", today), (f"{SITE_URL}/termos.html", today), (f"{SITE_URL}/privacidade.html", today), (f"{SITE_URL}/artes.html", today)]
-    urls += [(f'{SITE_URL}/posts/{p["slug"]}.html', p["date"] or today) for p in posts]
+    urls += [(post_url(p["slug"]), p["date"] or today) for p in posts]
     urls += [(f'{SITE_URL}/tags/{slugify(t)}.html', today) for t in tag_map]
     entries = "\n".join(f'''  <url>
     <loc>{u}</loc>
@@ -682,14 +687,14 @@ def main():
       </nav>
     </article>'''
 
-        canonical = f'{SITE_URL}/posts/{post["slug"]}.html'
+        canonical = post_url(post["slug"])
         html_out = render(
             TEMPLATE,
             TITLE=html.escape(f'{post["title"]} :: hgbits', quote=True),
             DESCRIPTION=html.escape(post["excerpt"], quote=True),
             HEAD_EXTRA=head_extra(
                 canonical, "article", post["title"], post["excerpt"],
-                og_image=(f'{SITE_URL}/{post["cover"]}' if post["cover"]
+                og_image=(f'{SITE_URL}/{quote(post["cover"], safe="/")}' if post["cover"]
                           and not post["cover"].startswith(("http", "/")) else "")),
             YEAR=str(datetime.now().year),
             ROOT="../",
