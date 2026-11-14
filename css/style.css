@@ -912,3 +912,204 @@ ul.postlist a:not(.tag):hover, ul.postlist a:not(.tag):focus-visible { color: va
   font-size: .72rem;
   margin-top: .15rem;
 }
+
+
+/* ---------- ajustes de responsividade mobile ---------- */
+/* Evita que filhos flex/grid e textos longos alarguem o documento. */
+html, body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+img, video, iframe, svg {
+  max-width: 100%;
+}
+
+.wrap,
+.article-wrap,
+.age-gate,
+.layout-grid,
+.sidebar,
+.site-shell,
+main,
+.site-footer {
+  min-width: 0;
+}
+
+p, li, figcaption, .colophon,
+.site-footer a, .post-nav-title,
+.archive-month-title {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* A navegação deixa de tentar caber em uma única linha. */
+@media (max-width: 640px) {
+  .header-inner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: .55rem;
+    padding: .9rem 1rem 1rem;
+  }
+
+  .wordmark {
+    font-size: clamp(1.35rem, 6vw, 1.6rem);
+    line-height: 1.2;
+  }
+
+  .site-nav {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    min-width: 0;
+    gap: .2rem .9rem;
+    font-size: var(--fs-small);
+    line-height: 1.8;
+  }
+
+  .site-nav a {
+    white-space: normal;
+  }
+
+  main {
+    padding: 1.35rem 0 2rem;
+  }
+
+  .wrap {
+    padding-inline: .85rem;
+  }
+
+  .article-wrap,
+  .age-gate {
+    width: 100%;
+    max-width: 100%;
+    padding-inline: .85rem;
+  }
+
+  .hero {
+    margin-bottom: 1.35rem;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.55rem, 7vw, 2.2rem);
+    overflow-wrap: anywhere;
+  }
+
+  .hero .tagline {
+    font-size: var(--fs-small);
+  }
+
+  ul.postlist li {
+    min-width: 0;
+    padding: 1rem;
+  }
+
+  ul.postlist a:not(.tag) {
+    overflow-wrap: anywhere;
+  }
+
+  .tab-labels {
+    flex-wrap: wrap;
+    gap: .2rem;
+  }
+
+  .tab-labels label {
+    padding: .45rem .65rem;
+  }
+
+  .sidebar-card {
+    min-width: 0;
+    padding: 1rem;
+  }
+
+  .tag-cloud {
+    gap: .35rem;
+  }
+
+  .tag-cloud .tag,
+  .tag {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .classification-entry {
+    gap: .55rem;
+  }
+
+  .classification-entry p {
+    min-width: 0;
+  }
+
+  .site-footer {
+    padding: 1rem 0 1.5rem;
+  }
+
+  .site-footer .wrap {
+    min-width: 0;
+  }
+
+  .site-footer p {
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+  }
+
+  .post-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .65rem;
+  }
+
+  .post-nav-card {
+    min-width: 0;
+  }
+
+  .post-nav-card img {
+    width: 100%;
+    max-width: 144px;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+
+  .table-wrap {
+    max-width: 100%;
+  }
+}
+
+/* Em aparelhos muito estreitos, preserva espaço útil sem esmagar texto. */
+@media (max-width: 360px) {
+  .wrap,
+  .article-wrap,
+  .age-gate {
+    padding-inline: .7rem;
+  }
+
+  .site-nav {
+    column-gap: .7rem;
+  }
+
+  .post-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .post-nav-next {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .classification-entry {
+    flex-wrap: wrap;
+  }
+}
+
+/* Evita zoom automático e mantém controles utilizáveis no toque. */
+.search-input,
+.terms-notice-button,
+.age-gate-button,
+.share-toggle {
+  min-height: 44px;
+}
+
+@media (max-width: 640px) {
+  .search-input {
+    font-size: 16px;
+  }
+}
