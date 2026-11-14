@@ -1306,3 +1306,12 @@ p, li, figcaption, .colophon,
 @media (prefers-reduced-motion: reduce) {
   .nav-chevron { transition: none; }
 }
+
+
+/* Base do notebook no ícone hacker */
+.nav-sections-icon .icon-laptop-base {
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 1;
+  stroke-linejoin: round;
+}
