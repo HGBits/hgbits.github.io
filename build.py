@@ -552,7 +552,7 @@ def main():
 
         toc_html = ""
         if len(post["toc"]) >= 2:
-            toc_items = "\\n".join(
+            toc_items = "\n".join(
                 f'          <li class="toc-{level}"><a href="#{slug}">{text}</a></li>'
                 for level, text, slug in post["toc"]
             )
