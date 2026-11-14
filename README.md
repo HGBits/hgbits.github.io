@@ -158,7 +158,7 @@ Cada publicação pode receber um sumário automático com links para suas seç�
 1. O `build.py` converte o corpo Markdown para HTML e, em seguida, identifica os elementos `<h2>` e `<h3>`.
 2. Cada título recebe um identificador (`id`) derivado do texto: letras são convertidas para minúsculas, acentos são removidos e sequências de caracteres não alfanuméricos viram hífens.
 3. Se dois títulos gerarem o mesmo identificador, o gerador acrescenta um sufixo numérico (`-2`, `-3` etc.) para manter os links únicos.
-4. Quando a publicação tem pelo menos **dois títulos** entre `##` e `###`, o sumário é criado automaticamente. Títulos `#` e `####` ou níveis mais profundos não entram nele.
+4. Quando a publicação tem pelo menos **dois títulos** entre `##` e `###`, o sumário é criado automaticamente. Títulos `#` e `####` ou níveis mais profundos não entram nele. Um `# Título` no corpo é renderizado como `<h2 class="body-title">` (a página já tem o `<h1>` do título do post) e fica fora do sumário; `####` ainda não é reconhecido.
 
 Por padrão, o sumário aparece logo depois do cabeçalho da publicação, antes do corpo do texto.
 

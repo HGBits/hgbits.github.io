@@ -276,6 +276,13 @@ def markdown_to_html(md, root="", post_links=None):
             out.append(f'<div class="table-wrap"><table><thead>{thead}</thead><tbody>{tbody}</tbody></table></div>')
             continue
 
+        # "# " no corpo: o <h1> da página é o título do post, então vira um h2
+        # com classe (o HEADING_RE só casa <h2> sem atributos: fica fora do sumário).
+        if line.startswith("# "):
+            out.append(f'<h2 class="body-title">{inline_md(line[2:], root, post_links)}</h2>')
+            i += 1
+            continue
+
         # cabeçalhos
         if line.startswith("## "):
             out.append(f"<h2>{inline_md(line[3:], root, post_links)}</h2>")
@@ -316,7 +323,7 @@ def markdown_to_html(md, root="", post_links=None):
         para_lines = [line]
         i += 1
         while i < len(lines) and lines[i].strip() and not lines[i].startswith(
-            ("## ", "### ", "> ", "- ", "```")
+            ("# ", "## ", "### ", "> ", "- ", "```")
         ):
             para_lines.append(lines[i])
             i += 1
