@@ -435,6 +435,14 @@ pre code {
   margin-top: -1px;
 }
 
+/* foco de teclado: os radios/checkbox ficam invisíveis, então o foco aparece no rótulo */
+#tab-posts:focus-visible ~ .tab-labels label[for="tab-posts"],
+#tab-tags:focus-visible  ~ .tab-labels label[for="tab-tags"],
+#tab-anos:focus-visible  ~ .tab-labels label[for="tab-anos"] {
+  outline: 2px solid var(--yellow);
+  outline-offset: 2px;
+}
+
 .tab-panels h2 { margin-top: 0; }
 .tab-panel { display: none; }
 #tab-posts:checked ~ .tab-panels .panel-posts,
@@ -587,6 +595,7 @@ ul.postlist a:not(.tag):hover, ul.postlist a:not(.tag):focus-visible { color: va
   user-select: none;
 }
 .toc-button:hover { color: var(--blue); }
+.toc-checkbox:focus-visible ~ .toc-button { outline: 2px solid var(--yellow); outline-offset: 2px; }
 .toc-button::after { content: "▾"; transition: transform .15s ease; }
 .toc-checkbox:checked ~ .toc-button::after { transform: rotate(180deg); }
 .toc-panel { display: none; padding: 0 1rem 1rem; }
