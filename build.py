@@ -11,6 +11,8 @@ Uso:
 """
 import re
 import html
+import struct
+from functools import lru_cache
 import posixpath
 import shutil
 import unicodedata
@@ -56,6 +58,41 @@ def post_url(slug):
     """URL absoluta do post, com percent-encoding (slugs acentuados são válidos
     nos hrefs relativos, mas RSS, sitemap, canonical e Open Graph exigem URL codificada)."""
     return f"{SITE_URL}/posts/{quote(slug)}.html"
+
+@lru_cache(maxsize=None)
+def image_size(src):
+    """(largura, altura) de uma imagem local PNG/JPEG/GIF lendo só o cabeçalho
+    (stdlib, sem Pillow). None se for URL externa, não existir ou formato desconhecido."""
+    key = asset_key(src)
+    if key is None:
+        return None
+    path = ROOT_DIR / key
+    try:
+        with open(path, "rb") as fh:
+            head = fh.read(32)
+            if head[:8] == b"\x89PNG\r\n\x1a\n":
+                return struct.unpack(">II", head[16:24])
+            if head[:6] in (b"GIF87a", b"GIF89a"):
+                return struct.unpack("<HH", head[6:10])
+            if head[:2] == b"\xff\xd8":
+                fh.seek(2)
+                while True:
+                    marker = fh.read(4)
+                    if len(marker) < 4 or marker[0] != 0xFF:
+                        return None
+                    if marker[1] in (0xC0, 0xC1, 0xC2):
+                        h, w = struct.unpack(">HH", fh.read(5)[1:5])
+                        return w, h
+                    fh.seek(struct.unpack(">H", marker[2:4])[0] - 2, 1)
+    except (OSError, struct.error):
+        return None
+    return None
+
+def img_attrs(src):
+    """width/height + decoding para evitar salto de layout (CLS) ao carregar a imagem."""
+    size = image_size(src)
+    dims = f' width="{size[0]}" height="{size[1]}"' if size else ""
+    return f'{dims} decoding="async"'
 
 def slugify(text):
     text = unicodedata.normalize("NFD", text)
@@ -186,7 +223,7 @@ def inline_md(text, root="", post_links=None):
         alt_safe = alt.replace('"', "&quot;")
         src_safe = resolve_src(src, root).replace('"', "&quot;")
         license_html = image_license_html(title, root)
-        image = f'<img src="{src_safe}" alt="{alt_safe}" loading="lazy">'
+        image = f'<img src="{src_safe}" alt="{alt_safe}"{img_attrs(src)} loading="lazy">'
         return f'<span class="inline-image">{image}{license_html}</span>' if license_html else image
 
     text = IMG_INLINE_RE.sub(render_inline_img, text)
@@ -249,7 +286,7 @@ def markdown_to_html(md, root="", post_links=None, hard_breaks=False):
                 continue
             src_r = resolve_src(src, root).replace('"', "&quot;")
             alt_safe = html.escape(alt or "", quote=True)
-            fig = f'<figure><img src="{src_r}" alt="{alt_safe}" loading="lazy">'
+            fig = f'<figure><img src="{src_r}" alt="{alt_safe}"{img_attrs(src)} loading="lazy">'
             license_html = image_license_html(caption, root)
             if license_html:
                 fig += f"<figcaption>{license_html}</figcaption>"
@@ -393,7 +430,7 @@ def render_post_list(posts_list, root=""):
             cover_src = html.escape(resolve_src(post["cover"], root), quote=True)
             cover_alt = html.escape(f'Capa de {post["title"]}', quote=True)
             cover_html = (f'<a class="post-cover" href="{root}posts/{post["slug"]}.html" tabindex="-1" aria-hidden="true">'
-                          f'<img src="{cover_src}" alt="{cover_alt}" loading="lazy"></a>\n        ')
+                          f'<img src="{cover_src}" alt="{cover_alt}"{img_attrs(post["cover"])} loading="lazy"></a>\n        ')
         items.append(f'''      <li data-search="{html.escape((post["title"] + " " + post["excerpt"] + " " + " ".join(post["tags"])).lower(), quote=True)}">
         {cover_html}<div><a href="{root}posts/{post["slug"]}.html">{html.escape(post["title"])}</a> {classification_badge} {development_badge} {authorship_badge}</div>
         <p class="meta">{format_date(post["date"])} &middot; {post["reading"]} min de leitura {tag_pills(post["tags"], root)}</p>
@@ -573,7 +610,7 @@ def main():
             if target["cover"]:
                 cover_src = html.escape(resolve_src(target["cover"], "../"), quote=True)
                 cover_alt = html.escape(f'Capa de {target["title"]}', quote=True)
-                cover_html = f'<img src="{cover_src}" alt="{cover_alt}" loading="lazy">'
+                cover_html = f'<img src="{cover_src}" alt="{cover_alt}"{img_attrs(target["cover"])} loading="lazy">'
             label = "Post anterior" if direction == "prev" else "Próximo post"
             arrow = "&larr;" if direction == "prev" else "&rarr;"
             return (f'<a class="post-nav-card post-nav-{direction}" href="{target["slug"]}.html" rel="{direction}">'
@@ -941,7 +978,7 @@ def main():
             if is_adult and img["alt"] != "Capa do Post":
                 continue
             image_html = f'''        <a href="posts/{post["slug"]}.html">
-          <img src="{src_r}" alt="{alt_safe}" loading="lazy">
+          <img src="{src_r}" alt="{alt_safe}"{img_attrs(img["src"])} loading="lazy">
         </a>'''
             card_class = "art-card"
             arte_items.append(f'''      <figure class="{card_class}">
