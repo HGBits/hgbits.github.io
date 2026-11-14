@@ -25,7 +25,18 @@
     <nav class="site-nav" aria-label="navegação principal">
       <a href="{{ROOT}}sobre.html">sobre</a>
       <details class="nav-more">
-        <summary>mais</summary>
+        <summary aria-label="Abrir seções" title="Seções">
+          <svg class="nav-sections-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+            <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 15.5 Q24 9 43 15.5 Q24 21 5 15.5Z"/>
+              <path d="M13 14.5 Q15 3.5 24 3.5 Q33 3.5 35 14.5"/>
+              <path d="M15 17 Q13.5 20 14.5 24"/>
+              <rect x="7" y="22" width="34" height="21" rx="2.8"/>
+              <path d="M18 43.5h12"/>
+              <path d="M24 27v10m-4-4 4 4 4-4"/>
+            </g>
+          </svg>
+        </summary>
         <div class="nav-more-menu">
           <a href="{{ROOT}}artes.html">artes</a>
           <a href="{{ROOT}}termos.html">termos de uso</a>
