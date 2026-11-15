@@ -2,7 +2,7 @@
 title: Oculto
 date: 2026-11-14
 tags: Diário
-excerpt: 
+excerpt: Uma reflexão sobre falhas, arrependimentos e a consciência de nossas próprias limitações. Entre lembranças, pessoas e sentimentos não resolvidos, reconheço que nem sempre fui aquilo que deveria ser. Talvez amadurecer também seja aprender a conviver com o peso dos erros e aceitar que nunca conseguiremos consertar tudo.
 updated: 2026-11-15
 authorship: human
 development: true
