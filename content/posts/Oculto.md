@@ -12,7 +12,7 @@ development: true
 
 Em meus sentimentos, entre as minhas incertezas eu sei que para algumas pessoas eu não fui um bom amigo, um bom colega, alguém que se importasse. Eu Falhei de diversas formas com as pessoas.
 
-miah eu falhei com você quando mais precisou por várias vezes, coffe talvez eu não seja tão atencioso contigo quanto deveria, Yuri eu fui idiota. 
+miah eu falhei com você quando mais precisou por várias vezes, coffe talvez eu não seja tão atencioso contigo quanto deveria, Yuri eu fui idiota. Perséfone o que eu fiz foi besteira não foi de propósito, Júlia eu não lembro o que foi, já faz tanto tempo, acho que agora nem faria diferença saber.
 
 há algumas dezenas de pessoas certamente com as quais falhei mas, essas são as que me lembro os nomes de imediato, carrego o fardo de saber que não sou perfeito, de falhar e continuar falhando.
 
