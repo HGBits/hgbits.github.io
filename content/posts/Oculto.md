@@ -3,12 +3,12 @@ title: Oculto
 date: 2026-11-14
 tags: Diário
 excerpt: 
-classification:
+updated: 2026-11-15
 authorship: human
 development: true
 ---
 
-![Capa do Post](assets/)
+![Capa do Post](assets/Oculto.png)
 
 Em meus sentimentos, entre as minhas incertezas eu sei que para algumas pessoas eu não fui um bom amigo, um bom colega, alguém que se importasse. Eu Falhei de diversas formas com as pessoas.
 
