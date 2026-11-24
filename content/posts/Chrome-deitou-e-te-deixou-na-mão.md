@@ -2,21 +2,14 @@
 title: Chrome deitou e te deixou na mão
 date: 2026-08-13
 tags: Notícias
+updated: 2026-11-21
 excerpt: Você confia nas extensões que instala no Chrome? Uma investigação revelou **737 extensões maliciosas**, expondo usuários a riscos de espionagem, roubo de dados e invasão de privacidade. Nem mesmo as lojas oficiais são territórios livres de ameaças. Afinal, se você não controla o que instala, quem está controlando o seu navegador?
-authorship: ai-generated
+authorship: ai-assisted
 ---
 
 ![Capa do Post](assets/Chrome’s-Malicious-Extension-Warning.png)
 
-# Chrome deitou e te deixou na mão
-
-*As 737 extensões maliciosas de VPN que passaram pela Chrome Web Store.*
-
-Uma campanha identificada por pesquisadores de segurança revelou algo preocupante: **737 extensões maliciosas ou suspeitas, distribuídas pela Chrome Web Store, acumularam mais de 75 mil instalações.**
-
-E sabe qual é a parte mais interessante? Muitas delas utilizavam nomes e identidades visuais de empresas conhecidas para convencer os usuários de que estavam instalando ferramentas legítimas.
-
-### Como funcionava o golpe das VPNs falsas?
+### Como funcionava o golpe das extensões falsas?
 
 A campanha explorava uma das maiores vulnerabilidades da segurança digital: a confiança.
 
@@ -59,7 +52,5 @@ Você pode ter o melhor antivírus, o sistema mais atualizado e uma conexão cri
 A pergunta é simples:
 
 **Você confia no software que instala ou apenas na loja onde encontrou ele?**
-
-Porque, aparentemente, até a loja oficial precisa de alguém fiscalizando o fiscal.
 
 **Fonte:** [Extensões VPN Falsas: Chrome e Proxy Malicioso](https://sempreupdate.com.br/extensoes-vpn-falsas-chrome-proxy-malicioso/)
