@@ -20,7 +20,7 @@ authorship: ai-assisted
 
 **Propriedade Interlectual** é uma concepção social que diz respeito a posse de bens não excassos a princípio ideias ou palavras, a defesa da propriedade interlectual se fixa numa equiparação relativa com relaçao a propriedade privada na qual o "dono" daquela ideia se dá ao direito de proibir que outros possam fazer uso daquela idealização enquanto nega o fato de que outra pessoa poderia chegar na mesma conclusão, além disto uma vez que uma idéia se propaga perde-se o vínculo com o pensador original sem que isto represente um dano real diferentemente de um bem fisíco, está mesma lógica se aplica as mídias digitais modernas de entreternimento.
 
-**Emissor Primário** É Aquele a ter sido o primeiro a desenvolver, cogitar e distribuir um bem sejam estes fisícos ou não, sua influência sobre o bem não necessáriamente implica que outros não podem subdesenvolver aquela criação das mais diversas formas. essencialmente importante para o contexto de desenvolvimento de software e da Inteligência artificial mas, não somente a estes.
+**Emissor Primário** É Aquele a ter sido o primeiro a desenvolver, cogitar e distribuir um bem sejam estes fisícos ou não, sua influência sobre o bem não necessáriamente implica que outros não podem subdesenvolver aquela criação das mais diversas formas. essencialmente importante para o contexto de desenvolvimento de software e da Inteligência artificial mas, não somente a estes. uma idéia que não sai do papel, não torna-se algo palpável o emissor primário é sobre tudo aquele a ter sido o primário a expôr ao mundo.
 
 ## Meios Fisícos de distribuição
 O Emissor é o dono dos canais oficiais de distribuição da sua idéia sejam estes fisícos ou virtuais mas, isto não impede outros de fora destes meios de propagarem a sua idéia, o Emissor só pode reclamar daqueles que ele tem um contrato definido vou citar um exemplo imagine um escritor que contrata um terceiro para fazer a capa e corrigir a ortografia do seu livro e firma um acordo de confidencialidade, se este terceiro divulgar clandestinamente o livro ele pode ser processado não por copiar o texto em sí mas, por ter tido acesso ao conteúdo fisíco e violado o contrato mas, o escritor não pode processar o zé pilantra da esquina que está vendendo seu livro, por que? por que ele não fazia parte dessa relação de negócio, não existe contrato firmado que possa ser exigido.
@@ -64,8 +64,8 @@ A ideia central é que o valor do conhecimento não está na sua capacidade de p
 
 Em última análise, trata-se de uma mudança de paradigma: sair de uma economia da escassez artificial da informação para uma cultura de abundância intelectual, cooperação e liberdade de acesso.
 
-## Como garantir o efetivo reconhecimento do criador?
-se todo conteúdo pode ser copiado, modificado e redistribuído como garantir quem fez o que?, essa é uma pergunta muito antiga, veja é impossível garantir 100% de reconhecimento. você pode claro fazê-lo em um local isolado com algumas pessoas por meio de um sistema que rastreie mudanças é a ideia do NFT's (Tokens não fungíveis) muitas pessoas na época que surgiu confundiram NFT's como forma de fazer arte digital, a ideia dos NFT's não é resolver arte, é resolver rastreabilidade e posse. cem pessoas podem ter a mesma imagem baixada mas, só uma é de fato dona, as outras só possuem cópias, este é o verdadeiro valor.
+## Como garantir o efetivo reconhecimento/atribuição do criador?
+se todo conteúdo pode ser copiado, modificado e redistribuído como garantir quem fez o que?, essa é uma pergunta muito antiga, veja é impossível garantir 100% de reconhecimento. você pode claro fazê-lo em um local isolado com algumas pessoas por meio de um sistema que rastreie mudanças é a ideia de NFT's (Tokens não fungíveis) muitas pessoas na época em que surgiu confundiram NFT's como forma de fazer arte digital, a ideia dos NFT's não é resolver arte, é resolver rastreabilidade e posse. cem pessoas podem ter a mesma imagem baixada mas, só uma pode ter uma versão certificada pelo autor, as outras só possuem cópias, este é o verdadeiro valor. Assim podemos preservar o histórico da públicação, a proveniência e as atribuições. 
 
 É semelhante mas, diferente do que é o Bitcoin para entender a diferença vamos ao dicionário.
 `Significado de Fungível: que se pode substituir ou ser substituído por outro de mesma natureza (espécie, qualidade e quantidade), falando especialmente de bens, móveis etc.`
@@ -73,13 +73,32 @@ se todo conteúdo pode ser copiado, modificado e redistribuído como garantir qu
 
 O Bitcoin é um bem fungível, por ser uma moeda pode ser trocado por outro da mesma espécie, diferentemente de uma obra de arte e é aqui que entra uma confusão enorme, uma obra de arte para ser única ela não precisa ser restrita, ela precisa ser limitada. quantas pessoas no mundo não possuem cópias de produtos de marcas de relógio, bolsas, sapatos e outros bens? ter uma cópia é diferente de está no roll de pessoas que de fato detém aquele produto. quem possui uma cópia da monalisa na sua casa ou no seu celular não detém a obra, apenas uma representação dela. um similar.
 
-eu não posso garantir a nenhum artista ou criador de conteúdo que produza suas obras no Youtube, Instagram, Tik Tok, Kawai que receberão seus devidos créditos, a internet é fortemente guiada por copyleft. se quer que seu trabalho seja de alguma forma eternizado e possa ser descoberto a melhor forma de fazê-lo é com NFT e Blockchain.
+eu não posso garantir a nenhum artista ou criador de conteúdo que produza suas obras no Youtube, Instagram, Tik Tok, Kwai que receberão seus devidos créditos, a internet é fortemente guiada por copyleft em um amplo sentido. se quer que seu trabalho seja de alguma forma eternizado e possa ser descoberto a melhor forma de fazê-lo é com Blockchain.
+
+A característica fundamental da atribuição é que ela identifica a origem de uma criação; não implica necessariamente exclusividade sobre sua reprodução. no mundo que vivemos hoje e para aquele que ainda surgirá essa distinção é a diferença entre li
+dar com a resposabilidade de ser livre e esperar que outros esperem no final da corrida.
+
+A internet sofre mudanças mais radicais em ordens de grandeza de magnitude do que burocratas são capazes de legislar sobre a tecnologia e a vida, não serão papéis que vão salvar seu trabalho e o capítulo a seguir exemplifica isso.
 
 ## Como as IA's nos ajudam?
 A IA foi o último prego no caixão da falsa ideia de "Direito Autoral" na perspectiva tradicional.
 TODA A INTERNET, cada livro, cada música, artes, jornais e mensagens, foram usados para treinar os modelos de IA. se você ainda se importa com direitos autorais então neste momento deveria está processando cada modelo de IA mas, sabemos que não irá fazer isso, pare de tratar bens imateriais como propriedade e aceite que isso tudo desde o começo sempre foi uma mentira, te venderam um história para crianças dormirem como se fosse um exemplo do mundo real.
 
 Não existe propriedade sobre ideias, artes, textos e muito menos sobre mecânicas de jogos ou processos de produção, se algoo existe e é de amplo conhecimento será copiado, a única forma de garantir o contrário é com a cooperação dos participantes para manter a confidêncialidade.
+
+### A Originalidade e a Inspiração de IA
+"Se uma criação pode ser utilizada para produzir outras criações sem reproduzir necessariamente sua expressão original, onde termina a influência intelectual e começa a reprodução protegida?"
+
+A IA é como um um programador ou mesmo um escritor no início da carreira, bons escritores foram um dia bons leitores, bons programadores aprenderam olhando o código dos outros e criando seus primeiros scripts, a diferença é a escala e a quantidade de "aprendizados" que ela foi capaz de assimilar em múltiplas áreas a um nível ridículamente alto.
+
+### Aprendizado a partir de obras existentes.
+
+
+### Influência e transformação de ideias.
+
+
+### Reprodução de expressões criativas protegidas.
+O que é uma expressão artistíca protegida?
 
 ## Como isso impacta em uma sociedade de Leis Privadas?
 Numa sociedade de leis privadas você pode ter sistemas de leis que possuem um instrumento similar ao de direitos autorais atual mas, não sendo universal. aplicável somente a aqueles que pertencem a aquele sistema juridíco. não existe nenhuma garantia em um mundo Libertário que essa será a regra pelo contrário tende a ser uma exceção.
